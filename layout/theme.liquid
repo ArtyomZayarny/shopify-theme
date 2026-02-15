@@ -307,6 +307,10 @@
       {%- render 'cart-drawer' -%}
     {%- endif -%}
 
+    {%- comment -%}
+      Header and footer are section groups — configurable via Theme Customizer.
+      Main content area renders JSON template sections via content_for_layout.
+    {%- endcomment -%}
     {% sections 'header-group' %}
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
