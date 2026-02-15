@@ -10,7 +10,7 @@ The full project specification is in `goal.md` (written in Ukrainian).
 
 ## Project Status
 
-Project is in the specification/planning phase. No theme code has been scaffolded yet.
+Phase 0 (bootstrap) and Phase 1 (theme structure) are complete. Dawn theme cloned as base, GitHub repo created, theme renamed to "Portfolio Theme". Ready for Phase 2 (Figma to code).
 
 ## Expected Tech Stack
 
@@ -18,30 +18,33 @@ Project is in the specification/planning phase. No theme code has been scaffolde
 - **Templating:** Liquid
 - **JavaScript:** Vanilla JS (no jQuery, no global side effects)
 - **CSS:** Mobile-first, responsive
-- **Theme base:** Dawn or custom theme
+- **Theme base:** Dawn (v15.4.1)
 - **Dev tools:** Shopify CLI, GitHub integration
 
 ## Common Commands
 
 ```bash
-# Initialize theme development
-shopify theme dev              # Start local development server
-shopify theme push             # Push theme to Shopify store
-shopify theme pull             # Pull theme from Shopify store
-shopify theme check            # Lint Liquid/theme files (Theme Check)
+# Theme development (all commands use --path for client/ subfolder)
+shopify theme dev --path=client/ --store=portfolio-dev-store.myshopify.com
+shopify theme push --path=client/
+shopify theme pull --path=client/
+shopify theme check --path=client/
 ```
 
-## Architecture (Shopify 2.0 Theme Structure)
+## Project Structure
 
 ```
-├── assets/           # CSS, JS, images
-├── config/           # settings_schema.json, settings_data.json
-├── layout/           # theme.liquid (main layout)
-├── locales/          # Translation files
-├── sections/         # Reusable sections with schema (admin-configurable)
-├── snippets/         # Reusable partial templates
-├── templates/        # Page templates (product, collection, cart, index)
-│   └── *.json        # JSON templates (2.0 style, reference sections)
+├── CLAUDE.md         # Project instructions
+├── goal.md           # Full specification (Ukrainian)
+├── plan.md           # Implementation plan
+├── client/           # Shopify theme files
+│   ├── assets/       # CSS, JS, images
+│   ├── config/       # settings_schema.json, settings_data.json
+│   ├── layout/       # theme.liquid (main layout)
+│   ├── locales/      # Translation files
+│   ├── sections/     # Reusable sections with schema (admin-configurable)
+│   ├── snippets/     # Reusable partial templates
+│   └── templates/    # Page templates (JSON, Shopify 2.0 style)
 ```
 
 **Key patterns:**
