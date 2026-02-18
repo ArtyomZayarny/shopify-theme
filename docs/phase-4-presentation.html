@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 4: Shopify Metafields — Conditional Rendering on PDP</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;1,400;1,600&family=Work+Sans:wght@300;400;500;600&display=swap');
+
+    :root {
+      --ws-beige: #F5F0EB;
+      --ws-navy: #3A3A4A;
+      --ws-navy-dark: #2C2C3A;
+      --ws-warm: #E8DFD6;
+      --ws-text: #1a1a1a;
+    }
+
+    /* ---- Base ---- */
+    .reveal { font-family: 'Work Sans', sans-serif; color: var(--ws-text); }
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: 'Cormorant', serif;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      color: var(--ws-text);
+      margin-bottom: 0.4em;
+    }
+    .reveal h1 { font-size: 2em; line-height: 1.1; }
+    .reveal h2 { font-size: 1.6em; }
+    .reveal h3 { font-size: 1.2em; }
+    .reveal h1 em, .reveal h2 em, .reveal h3 em { font-style: italic; font-weight: inherit; }
+    .reveal p, .reveal li { font-size: 0.62em; line-height: 1.55; letter-spacing: 0.02em; }
+    .reveal .small { font-size: 0.5em; opacity: 0.6; }
+    .reveal .slides section { padding: 1.6rem 2rem; box-sizing: border-box; }
+    .reveal ul { margin: 0; }
+
+    /* ---- Divider ---- */
+    .divider { width: 48px; height: 1px; background: var(--ws-navy); margin: 0.8rem auto; opacity: 0.25; }
+
+    /* ---- Stats ---- */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .stat { text-align: center; }
+    .stat-number { font-family: 'Cormorant', serif; font-size: 2.2em; line-height: 1; color: var(--ws-navy); }
+    .stat-label { font-size: 0.5em; text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.2rem; opacity: 0.6; }
+
+    /* ---- Metafield type cards ---- */
+    .mf-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem; }
+    .mf-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 6px;
+      padding: 1.2rem 1rem;
+      text-align: left;
+    }
+    .mf-type {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.42em;
+      background: var(--ws-warm);
+      color: var(--ws-navy);
+      padding: 0.2em 0.6em;
+      border-radius: 3px;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+    .mf-card h4 {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 0.58em;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0.3rem 0 0.2rem;
+    }
+    .mf-card p { font-size: 0.48em; opacity: 0.6; margin: 0; line-height: 1.5; }
+    .mf-renders {
+      font-size: 0.44em;
+      font-style: italic;
+      opacity: 0.75;
+      margin-top: 0.4rem;
+    }
+
+    /* ---- Demo: metafield UI preview ---- */
+    .demo-badge {
+      display: inline-block;
+      background: rgba(58,58,74,0.1);
+      color: var(--ws-navy);
+      font-size: 0.46em;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.4em 1em;
+      border-radius: 2px;
+      font-family: 'Cormorant', serif;
+    }
+    .demo-skill {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.8rem 0;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      margin-top: 0.5rem;
+    }
+    .demo-skill-label { font-size: 0.5em; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.7; min-width: 80px; }
+    .demo-dots { display: flex; gap: 5px; }
+    .demo-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(0,0,0,0.15); }
+    .demo-dot.filled { background: var(--ws-navy); }
+    .demo-care {
+      border-top: 1px solid rgba(0,0,0,0.1);
+      margin-top: 0.5rem;
+      padding-top: 0.8rem;
+      font-size: 0.5em;
+    }
+    .demo-care-title { text-transform: uppercase; letter-spacing: 0.1em; font-size: 1.1em; font-family: 'Cormorant', serif; }
+
+    /* ---- Changes list ---- */
+    .changes ul { list-style: none; padding: 0; margin: 0; }
+    .changes li { padding: 0.25em 0 0.25em 1.4em; position: relative; }
+    .changes li::before { content: '\2192'; position: absolute; left: 0; color: var(--ws-navy); }
+
+    /* ---- Labels ---- */
+    .label {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.52em;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .label--before { color: #999; }
+    .label--after { color: var(--ws-navy); }
+
+    /* ---- Img slots ---- */
+    .img-slot {
+      background: #f0f0f0;
+      border: 1.5px dashed #ccc;
+      border-radius: 6px;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .img-slot img { max-width: 100%; max-height: 270px; object-fit: contain; border-radius: 3px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+    .img-slot--placeholder { min-height: 180px; flex-direction: column; gap: 0.5rem; }
+    .img-slot--placeholder .placeholder-text { font-size: 0.48em; opacity: 0.4; }
+
+    /* ---- Code block ---- */
+    .code-block {
+      background: var(--ws-navy-dark);
+      color: #e0ddd8;
+      border-radius: 6px;
+      padding: 1rem 1.4rem;
+      text-align: left;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.48em;
+      line-height: 1.55;
+      margin-top: 0.8rem;
+    }
+    .code-block .keyword { color: #c792ea; }
+    .code-block .string  { color: #c3e88d; }
+    .code-block .tag     { color: #89ddff; }
+    .code-block .comment { color: #676e95; font-style: italic; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- SLIDE 1: TITLE -->
+      <section data-background-color="#F5F0EB">
+        <h1>Phase 4:<br><em>Metafields</em></h1>
+        <div class="divider"></div>
+        <p>Conditional Rendering of Product Metafields on the PDP</p>
+        <p class="small">WinSport Theme &middot; 3 Metafield Types &middot; Defensive Rendering</p>
+      </section>
+
+      <!-- SLIDE 2: WHAT ARE METAFIELDS -->
+      <section data-background-color="#fff">
+        <h2>What Are <em>Metafields</em></h2>
+        <div class="stats-grid">
+          <div class="stat">
+            <div class="stat-number">3</div>
+            <div class="stat-label">Field Types</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">0</div>
+            <div class="stat-label">Broken If Blank</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">&#8734;</div>
+            <div class="stat-label">Products Supported</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <p>Metafields extend Shopify's product model with custom data. Most Shopify apps (reviews, sizing, subscriptions) store data as metafields — themes must read them <strong>defensively</strong>: render only when present, never break if missing.</p>
+        <div class="changes" style="margin-top: 0.6rem;">
+          <ul>
+            <li>Defined once in <strong>Admin → Settings → Custom Data</strong></li>
+            <li>Filled per-product in <strong>Admin → Products → [product]</strong></li>
+            <li>Read in Liquid via <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">product.metafields.namespace.key.value</code></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: 3 FIELD TYPES -->
+      <section data-background-color="#E8DFD6">
+        <h2>3 <em>Field Types</em> Used</h2>
+        <div class="mf-grid">
+          <div class="mf-card">
+            <span class="mf-type">boolean</span>
+            <h4>is_new_arrival</h4>
+            <p>True or false — renders a &ldquo;New Arrival&rdquo; pill badge above the product info</p>
+            <div class="mf-renders">Renders: badge pill</div>
+            <div style="margin-top:0.8rem;">
+              <span class="demo-badge">New Arrival</span>
+            </div>
+          </div>
+          <div class="mf-card">
+            <span class="mf-type">number_integer</span>
+            <h4>difficulty_rating</h4>
+            <p>Integer 1–5 — renders a &ldquo;Skill Level&rdquo; row with filled &amp; empty dots</p>
+            <div class="mf-renders">Renders: ●●●○○ dots</div>
+            <div class="demo-skill">
+              <span class="demo-skill-label">Skill Level</span>
+              <div class="demo-dots">
+                <span class="demo-dot filled"></span>
+                <span class="demo-dot filled"></span>
+                <span class="demo-dot filled"></span>
+                <span class="demo-dot"></span>
+                <span class="demo-dot"></span>
+              </div>
+            </div>
+          </div>
+          <div class="mf-card">
+            <span class="mf-type">multi_line_text</span>
+            <h4>care_instructions</h4>
+            <p>Long text — renders a collapsible &ldquo;Care &amp; Maintenance&rdquo; accordion</p>
+            <div class="mf-renders">Renders: expandable tab</div>
+            <div class="demo-care">
+              <div class="demo-care-title">Care &amp; Maintenance &#8964;</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: BEFORE / AFTER -->
+      <section data-background-color="#F5F0EB">
+        <h2>Before <em>&amp;</em> After</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 0.6rem;">
+          <div>
+            <span class="label label--before" style="text-align: center; display: block;">Before — No Metafields</span>
+            <div class="img-slot">
+              <img src="screenshots/phase-4-pdp-before.png" alt="PDP before metafields">
+            </div>
+          </div>
+          <div>
+            <span class="label label--after" style="text-align: center; display: block;">After — With Metafields</span>
+            <div class="img-slot">
+              <img src="screenshots/phase-4-pdp-after.png" alt="PDP after metafields">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: ADMIN METAFIELD PANEL -->
+      <section data-background-color="#fff">
+        <h2>Admin <em>Metafield Panel</em></h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 0.6rem; align-items: start;">
+          <div>
+            <span class="label label--after" style="display: block; margin-bottom: 0.4rem;">Custom Data Definitions</span>
+            <div class="img-slot">
+              <img src="screenshots/phase-4-admin-definitions.png" alt="Admin metafield definitions">
+            </div>
+          </div>
+          <div>
+            <span class="label label--after" style="display: block; margin-bottom: 0.4rem;">Product Metafield Values</span>
+            <div class="img-slot">
+              <img src="screenshots/phase-4-admin-product.png" alt="Admin product metafield values">
+            </div>
+          </div>
+        </div>
+        <div class="changes" style="margin-top: 0.8rem;">
+          <ul>
+            <li>Definitions created once in <strong>Settings → Custom Data → Products</strong></li>
+            <li>Values filled per-product — different products can have different values</li>
+            <li>Products with no values → <strong>nothing renders</strong>, no empty space</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: CODE HIGHLIGHTS -->
+      <section data-background-color="#F5F0EB">
+        <h2>Code <em>Highlights</em></h2>
+        <div class="code-block">
+          <span class="comment">{# Safe access — never assume metafield exists #}</span><br>
+          <span class="tag">{%-</span> <span class="keyword">assign</span> is_new = product.metafields.custom.is_new_arrival.value <span class="tag">-%}</span><br>
+          <span class="tag">{%-</span> <span class="keyword">assign</span> difficulty = product.metafields.custom.difficulty_rating.value <span class="tag">-%}</span><br>
+          <span class="tag">{%-</span> <span class="keyword">assign</span> care = product.metafields.custom.care_instructions.value <span class="tag">-%}</span><br>
+          <br>
+          <span class="comment">{# Boolean — compare to true, not truthiness #}</span><br>
+          <span class="tag">{%-</span> <span class="keyword">if</span> is_new == <span class="string">true</span> <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;&lt;span class=<span class="string">"product-metafields__badge"</span>&gt;New Arrival&lt;/span&gt;<br>
+          <span class="tag">{%-</span> <span class="keyword">endif</span> <span class="tag">-%}</span><br>
+          <br>
+          <span class="comment">{# Integer — dot loop using for range #}</span><br>
+          <span class="tag">{%-</span> <span class="keyword">if</span> difficulty != blank <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">for</span> i <span class="keyword">in</span> (1..5) <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">if</span> i &lt;= difficulty <span class="tag">-%}</span>&lt;span class=<span class="string">"dot--filled"</span>&gt;&lt;/span&gt;<span class="tag">{%-</span> <span class="keyword">else</span> <span class="tag">-%}</span>&lt;span class=<span class="string">"dot"</span>&gt;&lt;/span&gt;<span class="tag">{%-</span> <span class="keyword">endif</span> <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">endfor</span> <span class="tag">-%}</span><br>
+          <span class="tag">{%-</span> <span class="keyword">endif</span> <span class="tag">-%}</span><br>
+          <br>
+          <span class="comment">{# Text — newline_to_br preserves line breaks #}</span><br>
+          <span class="tag">{%-</span> <span class="keyword">if</span> care != blank <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;&lt;div class=<span class="string">"care-content"</span>&gt;<span class="tag">{{</span> care | newline_to_br <span class="tag">}}</span>&lt;/div&gt;<br>
+          <span class="tag">{%-</span> <span class="keyword">endif</span> <span class="tag">-%}</span>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: KEY TAKEAWAYS -->
+      <section data-background-color="#fff">
+        <h2>Key <em>Takeaways</em></h2>
+        <div class="changes" style="max-width: 680px; margin: 0.8rem auto 0;">
+          <ul>
+            <li><strong>3 value types</strong> &mdash; boolean, integer, and multi_line_text each require different render logic</li>
+            <li><strong>Defensive rendering</strong> &mdash; every metafield is checked with <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">!= blank</code> before output</li>
+            <li><strong>Zero output when blank</strong> &mdash; products without metafields render no empty space, no broken layout</li>
+            <li><strong>App-compatible pattern</strong> &mdash; same approach used for third-party app data (reviews, subscriptions, sizing)</li>
+            <li><strong>Theme Customizer block</strong> &mdash; metafields block can be repositioned by merchants in the visual editor</li>
+          </ul>
+        </div>
+        <div class="divider"></div>
+        <p class="small" style="text-align: center;">WinSport Theme &middot; Phase 4 Complete &middot; Dawn v15.4.1 &middot; Shopify 2.0</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      transition: 'fade',
+      transitionSpeed: 'default',
+      controls: true,
+      progress: true,
+      center: false,
+      width: 1200,
+      height: 700,
+      margin: 0.04,
+    });
+  </script>
+</body>
+</html>

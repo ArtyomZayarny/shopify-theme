@@ -674,6 +674,8 @@
                 </product-recommendations>
               {%- when 'icon-with-text' -%}
                 {% render 'icon-with-text', block: block %}
+              {%- when 'metafields' -%}
+                {% render 'product-metafields', product: product, block: block %}
             {%- endcase -%}
           {%- endfor -%}
           <a href="{{ product.url }}" class="link product__view-details animate-arrow">
@@ -2086,6 +2088,12 @@
           "info": "t:sections.main-product.blocks.icon_with_text.settings.heading.info"
         }
       ]
+    },
+    {
+      "type": "metafields",
+      "name": "Product Metafields",
+      "limit": 1,
+      "settings": []
     }
   ],
   "settings": [
