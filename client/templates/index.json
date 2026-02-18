@@ -1,0 +1,120 @@
+{
+  "sections": {
+    "image_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Gear Up for <em>Winter</em>",
+            "heading_size": "h0"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "Performance equipment for every slope. Built for those who live for the mountain.",
+            "text_style": "body"
+          }
+        },
+        "button": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "SHOP GEAR",
+            "button_link_1": "shopify:\/\/collections\/all",
+            "button_style_secondary_1": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text",
+        "button"
+      ],
+      "settings": {
+        "image_overlay_opacity": 30,
+        "image_height": "large",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": false,
+        "show_text_below": false
+      }
+    },
+    "brand_story": {
+      "type": "image-with-text",
+      "blocks": {
+        "brand-heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Our <em>Story</em>",
+            "heading_size": "h1"
+          }
+        },
+        "brand-text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Born in the mountains, WinSport was founded by a group of winter sports enthusiasts who believed that great gear shouldn\u2019t compromise on style. We source the finest technical materials and partner with world-class manufacturers to deliver equipment that performs at the summit and looks good doing it.<\/p>",
+            "text_style": "body"
+          }
+        },
+        "brand-button": {
+          "type": "button",
+          "settings": {
+            "button_label": "LEARN MORE",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "brand-heading",
+        "brand-text",
+        "brand-button"
+      ],
+      "settings": {
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "color_scheme": "scheme-1",
+        "mobile_content_alignment": "left",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Featured <em>Gear</em>",
+        "heading_size": "h2",
+        "collection": "all",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-1",
+        "show_view_all": true,
+        "view_all_style": "link",
+        "enable_quick_add": false,
+        "swipe_on_mobile": true,
+        "image_ratio": "portrait",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "columns_mobile": "2",
+        "padding_top": 40,
+        "padding_bottom": 60
+      }
+    }
+  },
+  "order": [
+    "image_banner",
+    "brand_story",
+    "featured_collection"
+  ]
+}
