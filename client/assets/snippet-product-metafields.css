@@ -1,4 +1,4 @@
-/* Product Metafields Snippet — Phase 4 */
+/* Product Metafields Snippet — Phases 4 & 5 */
 
 /* New Arrival Badge */
 .product-metafields__badge {
@@ -104,4 +104,82 @@
   line-height: 1.7;
   color: rgb(var(--color-foreground));
   opacity: 0.8;
+}
+
+/* ── Phase 5: App-data certifications accordion on PDP ── */
+.product-metafields__app-data {
+  border-top: 1px solid rgba(var(--color-foreground), 0.1);
+  margin-top: 0.4rem;
+}
+
+.product-metafields__app-data details {
+  padding: 0;
+}
+
+.product-metafields__app-data summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.4rem 0;
+  cursor: pointer;
+  list-style: none;
+  gap: 1.5rem;
+}
+
+.product-metafields__app-data summary::-webkit-details-marker {
+  display: none;
+}
+
+.product-metafields__app-data-title {
+  font-family: var(--font-heading-family);
+  font-size: 1.3rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground));
+  font-weight: 400;
+  margin: 0;
+}
+
+.product-metafields__app-data details[open] .product-metafields__care-icon {
+  transform: rotate(180deg);
+}
+
+.product-metafields__app-data-content {
+  padding: 0 0 1.6rem;
+}
+
+.product-metafields__app-data-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.5rem 0;
+  font-size: 1.4rem;
+  line-height: 1.6;
+}
+
+.product-metafields__app-data-label {
+  font-family: var(--font-heading-family);
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground));
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.product-metafields__app-data-value {
+  color: rgb(var(--color-foreground));
+  text-align: right;
+}
+
+.product-metafields__cert-tag {
+  display: inline-block;
+  background-color: rgba(var(--color-foreground), 0.08);
+  color: rgb(var(--color-foreground));
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.7rem;
+  margin-left: 0.4rem;
+  border-radius: 2px;
 }
