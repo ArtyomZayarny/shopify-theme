@@ -1,0 +1,453 @@
+/* ==========================================================================
+   Arusa Design System — Custom CSS Overrides
+   Theme: Portfolio Theme (Dawn v15.4.1)
+   Design: Arusa — Warm beige, serif headings, minimal luxury
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. GLOBAL TYPOGRAPHY & RESETS
+   -------------------------------------------------------------------------- */
+
+/* Heading italic accent — used via <em> in section headings */
+h1 em, h2 em, h3 em,
+.h0 em, .h1 em, .h2 em, .h3 em,
+.rte h1 em, .rte h2 em {
+  font-style: italic;
+  font-weight: inherit;
+}
+
+/* Tighter letter-spacing for headings */
+h1, h2, h3, h4, h5, h6,
+.h0, .h1, .h2, .h3, .h4, .h5, .h6 {
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+
+/* Body text — slightly looser for readability */
+body {
+  letter-spacing: 0.04em;
+}
+
+/* Uppercase label style (used for links, buttons, small labels) */
+.arusa-uppercase {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 1.2rem;
+}
+
+/* --------------------------------------------------------------------------
+   2. BUTTONS
+   -------------------------------------------------------------------------- */
+
+/* Outline CTA button style (Arusa "SHOP ALL" style) */
+.button--secondary {
+  background-color: transparent;
+  border: 1px solid currentColor;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  padding: 1.4rem 3.5rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.button--secondary:hover {
+  background-color: rgba(var(--color-foreground), 1);
+  color: rgb(var(--color-background));
+}
+
+/* Primary buttons — solid with uppercase */
+.button:not(.button--secondary):not(.shopify-challenge__button) {
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+}
+
+/* --------------------------------------------------------------------------
+   3. HEADER
+   -------------------------------------------------------------------------- */
+
+/* Header — clean minimal style */
+.section-header {
+  border-bottom: none;
+}
+
+.header-wrapper--border-bottom {
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+}
+
+/* "SHOP" text link in header */
+.header__shop-link {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 1.1rem;
+  text-decoration: none;
+  color: rgb(var(--color-foreground));
+  transition: opacity 0.2s;
+}
+
+.header__shop-link:hover {
+  opacity: 0.6;
+}
+
+/* "BAG" text replacing cart icon */
+.header__bag-text {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 1.1rem;
+  text-decoration: none;
+  color: rgb(var(--color-foreground));
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: opacity 0.2s;
+}
+
+.header__bag-text:hover {
+  opacity: 0.6;
+}
+
+/* Hide default cart SVG icons when using BAG text */
+.header__icon--cart .svg-wrapper {
+  display: none;
+}
+
+/* Style the cart count next to BAG */
+.header__icon--cart .cart-count-bubble {
+  position: static;
+  width: auto;
+  height: auto;
+  background: none;
+  color: rgb(var(--color-foreground));
+  font-size: 1.1rem;
+  min-width: auto;
+  min-height: auto;
+  margin-left: 0.2rem;
+}
+
+.header__icon--cart .cart-count-bubble span {
+  color: inherit;
+}
+
+/* Hide search icon in header */
+.header__search {
+  display: none;
+}
+
+/* Middle-center header layout adjustments */
+.header--middle-center .header__heading {
+  margin: 0;
+}
+
+/* Ensure nav links have Arusa uppercase style */
+.header--middle-center .header__inline-menu .list-menu__item--link {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 1.1rem;
+}
+
+/* --------------------------------------------------------------------------
+   4. HERO BANNER
+   -------------------------------------------------------------------------- */
+
+/* Full-viewport hero */
+.banner--large {
+  min-height: 90vh;
+}
+
+/* Hero heading — large serif with generous sizing */
+.banner__heading {
+  font-size: 4.8rem;
+  line-height: 1.05;
+}
+
+@media screen and (min-width: 750px) {
+  .banner__heading {
+    font-size: 7.2rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .banner__heading {
+    font-size: 9.6rem;
+  }
+}
+
+/* Hero subtext */
+.banner__text {
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+  max-width: 48rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Hero CTA — outline button */
+.banner__buttons .button {
+  min-width: 20rem;
+}
+
+/* --------------------------------------------------------------------------
+   5. PRODUCT CARDS
+   -------------------------------------------------------------------------- */
+
+/* Card — minimal with no background/border */
+.card--standard .card__inner {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.card__information {
+  padding: 1rem 0 0;
+}
+
+/* Card title — clean serif */
+.card__heading {
+  font-family: var(--font-heading-family);
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* Card price — understated */
+.card .price {
+  font-size: 1.3rem;
+  letter-spacing: 0.05em;
+}
+
+/* No quick-add button overlay on cards */
+.quick-add {
+  display: none;
+}
+
+/* Product card image — portrait ratio for fashion */
+.card__media {
+  overflow: hidden;
+}
+
+.card__media img {
+  transition: transform 0.6s ease;
+}
+
+.card:hover .card__media img {
+  transform: scale(1.03);
+}
+
+/* --------------------------------------------------------------------------
+   6. FEATURED COLLECTION (HOMEPAGE)
+   -------------------------------------------------------------------------- */
+
+/* Section title — serif heading centered */
+.collection-hero__title,
+.title--primary {
+  font-family: var(--font-heading-family);
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+/* --------------------------------------------------------------------------
+   7. IMAGE WITH TEXT (BRAND STORY)
+   -------------------------------------------------------------------------- */
+
+.image-with-text__heading {
+  font-size: 3.6rem;
+  line-height: 1.15;
+}
+
+@media screen and (min-width: 750px) {
+  .image-with-text__heading {
+    font-size: 4.8rem;
+  }
+}
+
+.image-with-text__text p {
+  font-size: 1.5rem;
+  line-height: 1.7;
+  letter-spacing: 0.03em;
+}
+
+/* --------------------------------------------------------------------------
+   8. PRODUCT PAGE
+   -------------------------------------------------------------------------- */
+
+/* Product title — large serif */
+.product__title {
+  font-size: 3.2rem;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+}
+
+@media screen and (min-width: 750px) {
+  .product__title {
+    font-size: 4rem;
+  }
+}
+
+/* Product price */
+.product__info-wrapper .price {
+  font-size: 1.8rem;
+  letter-spacing: 0.05em;
+}
+
+/* Collapsible tabs on product page */
+.product__accordion .accordion__title {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 1.2rem;
+}
+
+/* Variant pills — minimal */
+variant-selects .product-form__input label {
+  border-color: rgba(var(--color-foreground), 0.15);
+  letter-spacing: 0.08em;
+  font-size: 1.2rem;
+}
+
+variant-selects .product-form__input label:hover,
+variant-selects .product-form__input label.active {
+  border-color: rgb(var(--color-foreground));
+}
+
+/* Add to cart button — full width on product page */
+.product-form__buttons .product-form__submit {
+  width: 100%;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  padding: 1.6rem;
+}
+
+/* --------------------------------------------------------------------------
+   9. COLLECTION PAGE
+   -------------------------------------------------------------------------- */
+
+/* Collection title */
+.collection-hero__title {
+  font-size: 3.6rem;
+}
+
+@media screen and (min-width: 750px) {
+  .collection-hero__title {
+    font-size: 5.4rem;
+  }
+}
+
+/* Filter/sort — horizontal, minimal */
+.facets-container {
+  border-top: 1px solid rgba(var(--color-foreground), 0.08);
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+  padding: 1.2rem 0;
+}
+
+/* --------------------------------------------------------------------------
+   10. CART PAGE
+   -------------------------------------------------------------------------- */
+
+.cart__heading {
+  font-family: var(--font-heading-family);
+  font-size: 3.2rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   11. FOOTER
+   -------------------------------------------------------------------------- */
+
+/* Footer headings */
+.footer-block__heading {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 1.2rem;
+  font-family: var(--font-body-family);
+}
+
+/* Footer links */
+.footer-block__details-content a {
+  font-size: 1.3rem;
+  letter-spacing: 0.04em;
+  transition: opacity 0.2s;
+}
+
+.footer-block__details-content a:hover {
+  opacity: 0.6;
+}
+
+/* Newsletter input — minimal */
+.footer__newsletter .newsletter-form__field-wrapper {
+  border-bottom: 1px solid currentColor;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+}
+
+.footer__newsletter input {
+  background: transparent;
+  border: none;
+  letter-spacing: 0.08em;
+  font-size: 1.3rem;
+}
+
+/* Footer copyright area */
+.footer__content-bottom {
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  opacity: 0.6;
+}
+
+/* --------------------------------------------------------------------------
+   12. RESPONSIVE OVERRIDES
+   -------------------------------------------------------------------------- */
+
+@media screen and (max-width: 749px) {
+  /* Mobile hero */
+  .banner--large {
+    min-height: 70vh;
+  }
+
+  .banner__heading {
+    font-size: 3.6rem;
+  }
+
+  /* Mobile product grid — 2 columns */
+  .collection .grid--2-col-tablet-down {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Mobile header — hamburger + centered logo + bag */
+  .header--middle-center {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+  }
+
+  .header--middle-center .header__icons {
+    justify-self: end;
+  }
+
+  /* Smaller product title on mobile */
+  .product__title {
+    font-size: 2.6rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   13. ANIMATIONS & TRANSITIONS
+   -------------------------------------------------------------------------- */
+
+/* Smooth fade-in for sections on scroll */
+.shopify-section {
+  opacity: 1;
+}
+
+/* Elegant link underline animation */
+.header__heading-link,
+.list-menu__item--link {
+  position: relative;
+}
+
+/* Smooth transitions for interactive elements */
+a, button, .button, input, select {
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+}

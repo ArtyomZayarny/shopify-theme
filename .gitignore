@@ -10,7 +10,6 @@ Thumbs.db
 
 # Shopify
 .shopify
-client/config/settings_data.json
 
 # Dependencies
 node_modules/
