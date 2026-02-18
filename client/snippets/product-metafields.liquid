@@ -1,0 +1,57 @@
+{{ 'snippet-product-metafields.css' | asset_url | stylesheet_tag }}
+
+{%- assign care = product.metafields.custom.care_instructions.value -%}
+{%- assign is_new = product.metafields.custom.is_new_arrival.value -%}
+{%- assign difficulty = product.metafields.custom.difficulty_rating.value -%}
+
+{%- if is_new == true or care != blank or difficulty != blank -%}
+  <div class="product-metafields" {{ block.shopify_attributes }}>
+
+    {%- if is_new == true -%}
+      <span class="product-metafields__badge">New Arrival</span>
+    {%- endif -%}
+
+    {%- if difficulty != blank -%}
+      <div class="product-metafields__skill">
+        <span class="product-metafields__skill-label">Skill Level</span>
+        <div
+          class="product-metafields__skill-dots"
+          aria-label="Skill level {{ difficulty }} out of 5"
+        >
+          {%- for i in (1..5) -%}
+            {%- if i <= difficulty -%}
+              <span class="product-metafields__dot product-metafields__dot--filled"></span>
+            {%- else -%}
+              <span class="product-metafields__dot"></span>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if care != blank -%}
+      <div class="product-metafields__care">
+        <details>
+          <summary>
+            <h2 class="product-metafields__care-title">Care &amp; Maintenance</h2>
+            <svg
+              class="product-metafields__care-icon"
+              viewBox="0 0 14 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="10"
+              aria-hidden="true"
+            >
+              <path d="M1 1L7 7L13 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </summary>
+          <div class="product-metafields__care-content">
+            {{ care | newline_to_br }}
+          </div>
+        </details>
+      </div>
+    {%- endif -%}
+
+  </div>
+{%- endif -%}

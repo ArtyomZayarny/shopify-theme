@@ -20,6 +20,9 @@
             "text_style": "subtitle"
           }
         },
+        "metafields": {
+          "type": "metafields"
+        },
         "price": {
           "type": "price"
         },
@@ -80,6 +83,7 @@
         "vendor",
         "title",
         "caption",
+        "metafields",
         "price",
         "variant_picker",
         "quantity_selector",

@@ -1,0 +1,107 @@
+/* Product Metafields Snippet — Phase 4 */
+
+/* New Arrival Badge */
+.product-metafields__badge {
+  display: inline-block;
+  background-color: rgba(var(--color-foreground), 0.08);
+  color: rgb(var(--color-foreground));
+  font-family: var(--font-heading-family);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.45rem 1.1rem;
+  border-radius: 2px;
+  margin-bottom: 1.4rem;
+  line-height: 1.4;
+}
+
+/* Skill Level */
+.product-metafields__skill {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 0.4rem;
+  padding: 1.2rem 0;
+  border-top: 1px solid rgba(var(--color-foreground), 0.1);
+}
+
+.product-metafields__skill-label {
+  font-family: var(--font-heading-family);
+  font-size: 1.1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground));
+  flex-shrink: 0;
+  min-width: 8.5rem;
+}
+
+.product-metafields__skill-dots {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.product-metafields__dot {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  background-color: rgba(var(--color-foreground), 0.18);
+}
+
+.product-metafields__dot--filled {
+  background-color: rgb(var(--color-foreground));
+}
+
+/* Care & Maintenance accordion */
+.product-metafields__care {
+  border-top: 1px solid rgba(var(--color-foreground), 0.1);
+  margin-top: 0.4rem;
+}
+
+.product-metafields__care details {
+  padding: 0;
+}
+
+.product-metafields__care summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.4rem 0;
+  cursor: pointer;
+  list-style: none;
+  gap: 1.5rem;
+}
+
+.product-metafields__care summary::-webkit-details-marker {
+  display: none;
+}
+
+.product-metafields__care-title {
+  font-family: var(--font-heading-family);
+  font-size: 1.3rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground));
+  font-weight: 400;
+  margin: 0;
+}
+
+.product-metafields__care-icon {
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: transform 0.2s ease;
+  color: rgb(var(--color-foreground));
+}
+
+.product-metafields__care details[open] .product-metafields__care-icon {
+  transform: rotate(180deg);
+}
+
+.product-metafields__care-content {
+  padding: 0 0 1.6rem;
+  font-size: 1.4rem;
+  line-height: 1.7;
+  color: rgb(var(--color-foreground));
+  opacity: 0.8;
+}
