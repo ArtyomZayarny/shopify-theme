@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 5: App Data Simulation — Resilient Metafields</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;1,400;1,600&family=Work+Sans:wght@300;400;500;600&display=swap');
+
+    :root {
+      --ws-beige: #F5F0EB;
+      --ws-navy: #3A3A4A;
+      --ws-navy-dark: #2C2C3A;
+      --ws-warm: #E8DFD6;
+      --ws-text: #1a1a1a;
+    }
+
+    /* ---- Base ---- */
+    .reveal { font-family: 'Work Sans', sans-serif; color: var(--ws-text); }
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: 'Cormorant', serif;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      color: var(--ws-text);
+      margin-bottom: 0.4em;
+    }
+    .reveal h1 { font-size: 2em; line-height: 1.1; }
+    .reveal h2 { font-size: 1.6em; }
+    .reveal h3 { font-size: 1.2em; }
+    .reveal h1 em, .reveal h2 em, .reveal h3 em { font-style: italic; font-weight: inherit; }
+    .reveal p, .reveal li { font-size: 0.62em; line-height: 1.55; letter-spacing: 0.02em; }
+    .reveal .small { font-size: 0.5em; opacity: 0.6; }
+    .reveal .slides section { padding: 1.6rem 2rem; box-sizing: border-box; }
+    .reveal ul { margin: 0; }
+
+    /* ---- Divider ---- */
+    .divider { width: 48px; height: 1px; background: var(--ws-navy); margin: 0.8rem auto; opacity: 0.25; }
+
+    /* ---- Stats ---- */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .stat { text-align: center; }
+    .stat-number { font-family: 'Cormorant', serif; font-size: 2.2em; line-height: 1; color: var(--ws-navy); }
+    .stat-label { font-size: 0.5em; text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.2rem; opacity: 0.6; }
+
+    /* ---- Namespace cards ---- */
+    .ns-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+    .ns-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 6px;
+      padding: 1.2rem 1rem;
+      text-align: left;
+    }
+    .ns-tag {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.42em;
+      background: var(--ws-warm);
+      color: var(--ws-navy);
+      padding: 0.2em 0.6em;
+      border-radius: 3px;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+    .ns-card h4 {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 0.58em;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0.3rem 0 0.2rem;
+    }
+    .ns-card p { font-size: 0.48em; opacity: 0.6; margin: 0; line-height: 1.5; }
+
+    /* ---- Metafield type cards ---- */
+    .mf-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem; }
+    .mf-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 6px;
+      padding: 1.2rem 1rem;
+      text-align: left;
+    }
+    .mf-type {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.42em;
+      background: var(--ws-warm);
+      color: var(--ws-navy);
+      padding: 0.2em 0.6em;
+      border-radius: 3px;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+    .mf-card h4 {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 0.58em;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0.3rem 0 0.2rem;
+    }
+    .mf-card p { font-size: 0.48em; opacity: 0.6; margin: 0; line-height: 1.5; }
+    .mf-renders {
+      font-size: 0.44em;
+      font-style: italic;
+      opacity: 0.75;
+      margin-top: 0.4rem;
+    }
+
+    /* ---- Demo badge ---- */
+    .demo-app-badge {
+      display: inline-block;
+      background: var(--ws-navy);
+      color: #fff;
+      font-size: 0.42em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.3em 0.8em;
+      font-family: 'Cormorant', serif;
+      margin-top: 0.6rem;
+    }
+
+    /* ---- Demo certifications ---- */
+    .demo-cert-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.3em 0;
+      font-size: 0.48em;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+    .demo-cert-label { text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5; font-size: 0.9em; }
+    .demo-cert-tag {
+      display: inline-block;
+      background: rgba(0,0,0,0.06);
+      font-size: 0.85em;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.15em 0.5em;
+      border-radius: 2px;
+      margin-left: 0.3em;
+    }
+
+    /* ---- Changes list ---- */
+    .changes ul { list-style: none; padding: 0; margin: 0; }
+    .changes li { padding: 0.25em 0 0.25em 1.4em; position: relative; }
+    .changes li::before { content: '\2192'; position: absolute; left: 0; color: var(--ws-navy); }
+
+    /* ---- Labels ---- */
+    .label {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.52em;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .label--before { color: #999; }
+    .label--after { color: var(--ws-navy); }
+
+    /* ---- Img slots ---- */
+    .img-slot {
+      background: #f0f0f0;
+      border: 1.5px dashed #ccc;
+      border-radius: 6px;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .img-slot img { max-width: 100%; max-height: 270px; object-fit: contain; border-radius: 3px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+
+    /* ---- Code block ---- */
+    .code-block {
+      background: var(--ws-navy-dark);
+      color: #e0ddd8;
+      border-radius: 6px;
+      padding: 1rem 1.4rem;
+      text-align: left;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.48em;
+      line-height: 1.55;
+      margin-top: 0.8rem;
+    }
+    .code-block .keyword { color: #c792ea; }
+    .code-block .string  { color: #c3e88d; }
+    .code-block .tag     { color: #89ddff; }
+    .code-block .comment { color: #676e95; font-style: italic; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- SLIDE 1: TITLE -->
+      <section data-background-color="#F5F0EB">
+        <h1>Phase 5:<br><em>App Data Simulation</em></h1>
+        <div class="divider"></div>
+        <p>Resilient rendering of app-like metafields across cards &amp; PDP</p>
+        <p class="small">WinSport Theme &middot; app_data Namespace &middot; Defensive Coding</p>
+      </section>
+
+      <!-- SLIDE 2: THE CONCEPT -->
+      <section data-background-color="#fff">
+        <h2>Why <em>App Data?</em></h2>
+        <div class="stats-grid">
+          <div class="stat">
+            <div class="stat-number">2</div>
+            <div class="stat-label">Touchpoints</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">3</div>
+            <div class="stat-label">Metafield Keys</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">0</div>
+            <div class="stat-label">Errors If Removed</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <p>Shopify apps (reviews, badges, subscriptions) store data as metafields in their own namespaces. Themes must render this data <strong>across multiple surfaces</strong> &mdash; and <strong>survive gracefully</strong> when the app is uninstalled and its data disappears.</p>
+        <div class="ns-grid">
+          <div class="ns-card">
+            <span class="ns-tag">custom.*</span>
+            <h4>Phase 4 &mdash; Store-owned</h4>
+            <p>Metafields defined by the store (care_instructions, difficulty_rating, is_new_arrival). Controlled by the merchant.</p>
+          </div>
+          <div class="ns-card">
+            <span class="ns-tag">app_data.*</span>
+            <h4>Phase 5 &mdash; App-owned</h4>
+            <p>Metafields that simulate an external app (badge text, certifications JSON). May disappear if app is uninstalled.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: 3 METAFIELD KEYS -->
+      <section data-background-color="#E8DFD6">
+        <h2>3 <em>Metafield Keys</em></h2>
+        <div class="mf-grid">
+          <div class="mf-card">
+            <span class="mf-type">boolean</span>
+            <h4>badge_enabled</h4>
+            <p>Controls whether the badge is visible on product cards in collections</p>
+            <div class="mf-renders">Surface: Collection cards</div>
+          </div>
+          <div class="mf-card">
+            <span class="mf-type">single_line_text</span>
+            <h4>badge_text</h4>
+            <p>Custom badge text &mdash; &ldquo;Best Seller&rdquo;, &ldquo;Pro Pick&rdquo;, &ldquo;Award Winner&rdquo;</p>
+            <div class="mf-renders">Surface: Collection cards</div>
+            <div style="margin-top:0.6rem;">
+              <span class="demo-app-badge">Best Seller</span>
+            </div>
+          </div>
+          <div class="mf-card">
+            <span class="mf-type">json</span>
+            <h4>extra_info</h4>
+            <p>Structured object with warranty, origin, and certifications array</p>
+            <div class="mf-renders">Surface: PDP</div>
+            <div style="margin-top:0.6rem;">
+              <div class="demo-cert-row"><span class="demo-cert-label">Warranty</span> <span>2 years</span></div>
+              <div class="demo-cert-row"><span class="demo-cert-label">Certifications</span> <span><span class="demo-cert-tag">CE</span><span class="demo-cert-tag">ISO 9001</span></span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: COLLECTION BADGE -->
+      <section data-background-color="#F5F0EB">
+        <h2>Collection <em>Badge</em></h2>
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.4rem; margin-top: 0.6rem; align-items: start;">
+          <div>
+            <span class="label label--after" style="text-align: center; display: block;">Card with App-Data Badge</span>
+            <div class="img-slot">
+              <img src="screenshots/phase-5-collection-badge.png" alt="Collection page with Best Seller badge">
+            </div>
+          </div>
+          <div class="changes" style="margin-top: 1.8rem;">
+            <ul>
+              <li>Badge reads <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">app_data.badge_enabled</code> &mdash; must be <strong>true</strong></li>
+              <li>Text from <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">app_data.badge_text</code> &mdash; must be non-blank</li>
+              <li>Positioned top-left overlay, separate from Shopify&rsquo;s Sale/Sold Out badges</li>
+              <li>Double-guard: <strong>enabled check first</strong>, then <strong>text check</strong> &mdash; either missing = no output</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: PDP CERTIFICATIONS -->
+      <section data-background-color="#fff">
+        <h2>PDP <em>Certifications</em></h2>
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.4rem; margin-top: 0.6rem; align-items: start;">
+          <div>
+            <span class="label label--after" style="text-align: center; display: block;">Collapsible Certifications Section</span>
+            <div class="img-slot">
+              <img src="screenshots/phase-5-pdp-certifications.png" alt="PDP with Product Certifications">
+            </div>
+          </div>
+          <div class="changes" style="margin-top: 1.8rem;">
+            <ul>
+              <li>Reads <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">app_data.extra_info</code> as <strong>JSON</strong></li>
+              <li>Each key checked independently: <strong>warranty</strong>, <strong>origin</strong>, <strong>certifications[]</strong></li>
+              <li>Certifications rendered as pill tags via <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">for cert in app_info.certifications</code></li>
+              <li>Collapsible accordion matching Phase 4 design pattern</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: ADMIN SETUP -->
+      <section data-background-color="#F5F0EB">
+        <h2>Admin <em>Setup</em></h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 0.6rem; align-items: start;">
+          <div>
+            <span class="label label--after" style="display: block; margin-bottom: 0.4rem;">Metafield Definitions</span>
+            <div class="img-slot">
+              <img src="screenshots/phase-5-admin-definitions.png" alt="Admin metafield definitions">
+            </div>
+          </div>
+          <div>
+            <span class="label label--after" style="display: block; margin-bottom: 0.4rem;">Product Values</span>
+            <div class="img-slot">
+              <img src="screenshots/phase-5-admin-metafields.png" alt="Admin product metafield values">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: CODE HIGHLIGHTS -->
+      <section data-background-color="#fff">
+        <h2>Code <em>Highlights</em></h2>
+        <div class="code-block">
+          <span class="comment">{# Card badge — double guard: enabled + text #}</span><br>
+          <span class="tag">{%-</span> <span class="keyword">assign</span> app_badge_enabled = card_product.metafields.app_data.badge_enabled.value <span class="tag">-%}</span><br>
+          <span class="tag">{%-</span> <span class="keyword">if</span> app_badge_enabled == <span class="string">true</span> <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">assign</span> app_badge_text = card_product.metafields.app_data.badge_text.value <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">if</span> app_badge_text != blank <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;span class=<span class="string">"card__app-badge"</span>&gt;<span class="tag">{{</span> app_badge_text | escape <span class="tag">}}</span>&lt;/span&gt;<br>
+          &nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">endif</span> <span class="tag">-%}</span><br>
+          <span class="tag">{%-</span> <span class="keyword">endif</span> <span class="tag">-%}</span><br>
+          <br>
+          <span class="comment">{# PDP — JSON keys checked independently #}</span><br>
+          <span class="tag">{%-</span> <span class="keyword">assign</span> app_info = product.metafields.app_data.extra_info.value <span class="tag">-%}</span><br>
+          <span class="tag">{%-</span> <span class="keyword">if</span> app_info != blank <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">if</span> app_info.warranty != blank <span class="tag">-%}</span> <span class="comment">&hellip; render warranty</span> <span class="tag">{%-</span> <span class="keyword">endif</span> <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">if</span> app_info.origin != blank <span class="tag">-%}</span> <span class="comment">&hellip; render origin</span> <span class="tag">{%-</span> <span class="keyword">endif</span> <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">if</span> app_info.certifications != blank <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">for</span> cert <span class="keyword">in</span> app_info.certifications <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;span class=<span class="string">"cert-tag"</span>&gt;<span class="tag">{{</span> cert | escape <span class="tag">}}</span>&lt;/span&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">endfor</span> <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">endif</span> <span class="tag">-%}</span><br>
+          <span class="tag">{%-</span> <span class="keyword">endif</span> <span class="tag">-%}</span>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: KEY TAKEAWAYS -->
+      <section data-background-color="#E8DFD6">
+        <h2>Key <em>Takeaways</em></h2>
+        <div class="changes" style="max-width: 680px; margin: 0.8rem auto 0;">
+          <ul>
+            <li><strong>Separate namespace</strong> &mdash; <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">app_data.*</code> vs <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">custom.*</code> mirrors real app architecture</li>
+            <li><strong>Multi-surface rendering</strong> &mdash; same data flows to collection cards AND PDP</li>
+            <li><strong>JSON metafield</strong> &mdash; structured data parsed natively by Shopify, each key accessed independently</li>
+            <li><strong>Defensive at every level</strong> &mdash; namespace, key, and nested keys all checked before rendering</li>
+            <li><strong>App-uninstall safe</strong> &mdash; if all app_data metafields are removed, zero output, zero errors</li>
+          </ul>
+        </div>
+        <div class="divider"></div>
+        <p class="small" style="text-align: center;">WinSport Theme &middot; Phase 5 Complete &middot; Dawn v15.4.1 &middot; Shopify 2.0</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      transition: 'fade',
+      transitionSpeed: 'default',
+      controls: true,
+      progress: true,
+      center: false,
+      width: 1200,
+      height: 700,
+      margin: 0.04,
+    });
+  </script>
+</body>
+</html>
