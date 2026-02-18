@@ -1,0 +1,273 @@
+/* ==========================================================================
+   Product Specs Showcase — Section CSS
+   WinSport Theme | Phase 3: Shopify 2.0 Dynamic Blocks
+   ========================================================================== */
+
+.specs-showcase {
+  max-width: var(--page-width);
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   Section Header
+   -------------------------------------------------------------------------- */
+
+.specs-showcase__header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.specs-showcase__title {
+  letter-spacing: 0.02em;
+}
+
+/* --------------------------------------------------------------------------
+   Content Layout
+   -------------------------------------------------------------------------- */
+
+.specs-showcase__content--full {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.specs-showcase__content--two-column {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+@media screen and (min-width: 990px) {
+  .specs-showcase__content--two-column {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 4rem;
+  }
+
+  /* Subheadings span full width in two-column layout */
+  .specs-showcase__content--two-column .specs-showcase__subheading {
+    grid-column: 1 / -1;
+  }
+
+  /* Images span full width in two-column layout */
+  .specs-showcase__content--two-column .specs-showcase__image {
+    grid-column: 1 / -1;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Block: Subheading
+   -------------------------------------------------------------------------- */
+
+.specs-showcase__subheading {
+  padding: 2rem 0 1rem;
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+  margin-bottom: 0;
+}
+
+.specs-showcase__subheading h3 {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-family: var(--font-body-family);
+  font-weight: 600;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Block: Spec Item (Label ··· Value)
+   -------------------------------------------------------------------------- */
+
+.specs-showcase__spec-item {
+  padding: 1.4rem 0;
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.06);
+}
+
+.specs-showcase__spec-row {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.specs-showcase__spec-icon {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+}
+
+.specs-showcase__spec-icon .svg-wrapper {
+  display: flex;
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.specs-showcase__spec-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.specs-showcase__spec-label {
+  font-size: 1.3rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: var(--font-body-family);
+  opacity: 0.7;
+}
+
+.specs-showcase__spec-divider {
+  flex: 1;
+  border-bottom: 1px dotted rgba(var(--color-foreground), 0.2);
+  min-width: 2rem;
+}
+
+.specs-showcase__spec-value {
+  font-family: var(--font-heading-family);
+  font-size: 1.5rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Block: Highlight (Performance Rating Bar)
+   -------------------------------------------------------------------------- */
+
+.specs-showcase__highlight {
+  padding: 1.6rem 0;
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.06);
+}
+
+.specs-showcase__highlight-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.8rem;
+}
+
+.specs-showcase__highlight-label {
+  font-size: 1.2rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: var(--font-body-family);
+}
+
+.specs-showcase__highlight-score {
+  font-family: var(--font-heading-family);
+  font-size: 1.4rem;
+  letter-spacing: 0.02em;
+  opacity: 0.6;
+}
+
+.specs-showcase__rating-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(var(--color-foreground), 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.specs-showcase__rating-fill {
+  height: 100%;
+  width: var(--rating-percent, 0%);
+  background: rgba(var(--color-foreground), 0.7);
+  border-radius: 2px;
+  transition: width 0.6s ease;
+}
+
+.specs-showcase__highlight-desc {
+  font-size: 1.2rem;
+  letter-spacing: 0.03em;
+  opacity: 0.6;
+  margin: 0.6rem 0 0;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   Block: Feature Image
+   -------------------------------------------------------------------------- */
+
+.specs-showcase__image {
+  padding: 2rem 0;
+}
+
+.specs-showcase__image-wrapper {
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.specs-showcase__image-wrapper.media {
+  position: relative;
+}
+
+.specs-showcase__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Image ratios */
+.specs-showcase__image--landscape .specs-showcase__image-wrapper {
+  aspect-ratio: 16 / 9;
+}
+
+.specs-showcase__image--square .specs-showcase__image-wrapper {
+  aspect-ratio: 1 / 1;
+}
+
+.specs-showcase__image--adapt .specs-showcase__image-wrapper {
+  aspect-ratio: auto;
+}
+
+.specs-showcase__image-wrapper img,
+.specs-showcase__image-wrapper svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.specs-showcase__caption {
+  font-size: 1.2rem;
+  letter-spacing: 0.04em;
+  opacity: 0.5;
+  margin: 1rem 0 0;
+  font-style: italic;
+  font-family: var(--font-heading-family);
+}
+
+/* --------------------------------------------------------------------------
+   Placeholder SVG
+   -------------------------------------------------------------------------- */
+
+.specs-showcase__image-wrapper .placeholder-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: rgba(var(--color-foreground), 0.04);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media screen and (max-width: 749px) {
+  .specs-showcase__header {
+    margin-bottom: 2.4rem;
+  }
+
+  .specs-showcase__subheading {
+    padding: 1.6rem 0 0.8rem;
+  }
+
+  .specs-showcase__spec-item {
+    padding: 1.2rem 0;
+  }
+
+  .specs-showcase__highlight {
+    padding: 1.2rem 0;
+  }
+
+  .specs-showcase__image {
+    padding: 1.6rem 0;
+  }
+}

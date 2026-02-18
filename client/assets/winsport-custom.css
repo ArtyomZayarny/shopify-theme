@@ -1,7 +1,7 @@
 /* ==========================================================================
-   Arusa Design System — Custom CSS Overrides
-   Theme: Portfolio Theme (Dawn v15.4.1)
-   Design: Arusa — Warm beige, serif headings, minimal luxury
+   WinSport Design System — Custom CSS Overrides
+   Theme: WinSport (Dawn v15.4.1)
+   Design: Warm beige tones, serif headings, minimal luxury aesthetic
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -29,7 +29,7 @@ body {
 }
 
 /* Uppercase label style (used for links, buttons, small labels) */
-.arusa-uppercase {
+.winsport-uppercase {
   text-transform: uppercase;
   letter-spacing: 0.15em;
   font-size: 1.2rem;
@@ -39,7 +39,7 @@ body {
    2. BUTTONS
    -------------------------------------------------------------------------- */
 
-/* Outline CTA button style (Arusa "SHOP ALL" style) */
+/* Outline CTA button style ("SHOP GEAR" style) */
 .button--secondary {
   background-color: transparent;
   border: 1px solid currentColor;
@@ -75,62 +75,13 @@ body {
   border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
 }
 
-/* "SHOP" text link in header */
-.header__shop-link {
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  font-size: 1.1rem;
-  text-decoration: none;
-  color: rgb(var(--color-foreground));
+/* Header icons — clean minimal style */
+.header__icon .svg-wrapper {
   transition: opacity 0.2s;
 }
 
-.header__shop-link:hover {
+.header__icon:hover .svg-wrapper {
   opacity: 0.6;
-}
-
-/* "BAG" text replacing cart icon */
-.header__bag-text {
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  font-size: 1.1rem;
-  text-decoration: none;
-  color: rgb(var(--color-foreground));
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  transition: opacity 0.2s;
-}
-
-.header__bag-text:hover {
-  opacity: 0.6;
-}
-
-/* Hide default cart SVG icons when using BAG text */
-.header__icon--cart .svg-wrapper {
-  display: none;
-}
-
-/* Style the cart count next to BAG */
-.header__icon--cart .cart-count-bubble {
-  position: static;
-  width: auto;
-  height: auto;
-  background: none;
-  color: rgb(var(--color-foreground));
-  font-size: 1.1rem;
-  min-width: auto;
-  min-height: auto;
-  margin-left: 0.2rem;
-}
-
-.header__icon--cart .cart-count-bubble span {
-  color: inherit;
-}
-
-/* Hide search icon in header */
-.header__search {
-  display: none;
 }
 
 /* Middle-center header layout adjustments */
@@ -138,7 +89,7 @@ body {
   margin: 0;
 }
 
-/* Ensure nav links have Arusa uppercase style */
+/* Ensure nav links have uppercase style */
 .header--middle-center .header__inline-menu .list-menu__item--link {
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -220,7 +171,7 @@ body {
   display: none;
 }
 
-/* Product card image — portrait ratio for fashion */
+/* Product card image — portrait ratio */
 .card__media {
   overflow: hidden;
 }

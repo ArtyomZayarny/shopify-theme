@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 3: Shopify 2.0 Dynamic Blocks — Product Specs Showcase</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;1,400;1,600&family=Work+Sans:wght@300;400;500;600&display=swap');
+
+    :root {
+      --ws-beige: #F5F0EB;
+      --ws-navy: #3A3A4A;
+      --ws-navy-dark: #2C2C3A;
+      --ws-warm: #E8DFD6;
+      --ws-text: #1a1a1a;
+    }
+
+    /* ---- Base ---- */
+    .reveal { font-family: 'Work Sans', sans-serif; color: var(--ws-text); }
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: 'Cormorant', serif;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      color: var(--ws-text);
+      margin-bottom: 0.4em;
+    }
+    .reveal h1 { font-size: 2em; line-height: 1.1; }
+    .reveal h2 { font-size: 1.6em; }
+    .reveal h3 { font-size: 1.2em; }
+    .reveal h1 em, .reveal h2 em, .reveal h3 em { font-style: italic; font-weight: inherit; }
+    .reveal p, .reveal li { font-size: 0.62em; line-height: 1.55; letter-spacing: 0.02em; }
+    .reveal .small { font-size: 0.5em; opacity: 0.6; }
+    .reveal .slides section { padding: 1.6rem 2rem; box-sizing: border-box; }
+    .reveal ul { margin: 0; }
+
+    /* ---- Backgrounds ---- */
+    .slide-navy h2, .slide-navy p, .slide-navy li, .slide-navy .label { color: #fff !important; }
+
+    /* ---- Divider ---- */
+    .divider { width: 48px; height: 1px; background: var(--ws-navy); margin: 0.8rem auto; opacity: 0.25; }
+
+    /* ---- Stats ---- */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .stat { text-align: center; }
+    .stat-number { font-family: 'Cormorant', serif; font-size: 2.2em; line-height: 1; color: var(--ws-navy); }
+    .stat-label { font-size: 0.5em; text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.2rem; opacity: 0.6; }
+
+    /* ---- Block cards ---- */
+    .block-grid { display: grid; gap: 1rem; margin-top: 1rem; }
+    .block-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 6px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .block-card-icon { font-size: 1.4em; margin-bottom: 0.3rem; }
+    .block-card h4 {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 0.62em;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0.2rem 0;
+    }
+    .block-card p { font-size: 0.45em; opacity: 0.6; margin: 0; }
+
+    /* ---- Changes list ---- */
+    .changes ul { list-style: none; padding: 0; margin: 0; }
+    .changes li { padding: 0.25em 0 0.25em 1.4em; position: relative; }
+    .changes li::before { content: '\2192'; position: absolute; left: 0; color: var(--ws-navy); }
+
+    /* ---- Labels ---- */
+    .label {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.52em;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .label--before { color: #999; }
+    .label--after { color: var(--ws-navy); }
+
+    /* ---- Img slots ---- */
+    .img-slot {
+      background: #f0f0f0;
+      border: 1.5px dashed #ccc;
+      border-radius: 6px;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .img-slot img { max-width: 100%; max-height: 280px; object-fit: contain; border-radius: 3px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+
+    /* ---- Comparison ---- */
+    .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 0.8rem; }
+    .comparison-col { text-align: center; }
+
+    /* ---- Code block ---- */
+    .code-block {
+      background: var(--ws-navy-dark);
+      color: #e0ddd8;
+      border-radius: 6px;
+      padding: 1rem 1.4rem;
+      text-align: left;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.48em;
+      line-height: 1.55;
+      margin-top: 0.8rem;
+    }
+    .code-block .keyword { color: #c792ea; }
+    .code-block .string  { color: #c3e88d; }
+    .code-block .tag     { color: #89ddff; }
+    .code-block .comment { color: #676e95; font-style: italic; }
+
+    /* ---- Demo specs (slide 5) ---- */
+    .demo-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      font-size: 0.6em;
+    }
+    .demo-row-label { text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.65; }
+    .demo-row-dots  { flex: 1; border-bottom: 1px dotted rgba(0,0,0,0.2); }
+    .demo-row-value { font-family: 'Cormorant', serif; font-size: 1.1em; white-space: nowrap; }
+    .demo-bar-header { display: flex; justify-content: space-between; font-size: 0.6em; margin-bottom: 0.3rem; }
+    .demo-bar-track { height: 3px; background: rgba(0,0,0,0.08); border-radius: 2px; }
+    .demo-bar-fill  { height: 100%; background: rgba(0,0,0,0.45); border-radius: 2px; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- SLIDE 1: TITLE -->
+      <section data-background-color="#F5F0EB">
+        <h1>Phase 3:<br><em>Dynamic Blocks</em></h1>
+        <div class="divider"></div>
+        <p>Custom Shopify 2.0 Section with Heterogeneous Block Types</p>
+        <p class="small">WinSport Theme &middot; Product Specs Showcase &middot; 3 Block Types</p>
+      </section>
+
+      <!-- SLIDE 2: WHAT WE BUILT -->
+      <section data-background-color="#fff">
+        <h2>What We <em>Built</em></h2>
+        <div class="stats-grid">
+          <div class="stat">
+            <div class="stat-number">3</div>
+            <div class="stat-label">Block Types</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">1</div>
+            <div class="stat-label">Custom Section</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">2</div>
+            <div class="stat-label">New Files</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">&infin;</div>
+            <div class="stat-label">Combinations</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <p><strong>Product Specs Showcase</strong> &mdash; a section merchants can customize with spec rows, performance ratings, and subheadings. All add / remove / reorder from the Theme Customizer.</p>
+      </section>
+
+      <!-- SLIDE 3: BLOCK TYPES -->
+      <section data-background-color="#E8DFD6">
+        <h2>Block <em>Types</em></h2>
+        <div class="block-grid" style="grid-template-columns: repeat(3, 1fr);">
+          <div class="block-card">
+            <div class="block-card-icon">&#x2550;</div>
+            <h4>Subheading</h4>
+            <p>Section divider with uppercase label &amp; border</p>
+          </div>
+          <div class="block-card">
+            <div class="block-card-icon">&#x2026;</div>
+            <h4>Spec Item</h4>
+            <p>Label &middot;&middot;&middot; Value row with optional icon</p>
+          </div>
+          <div class="block-card">
+            <div class="block-card-icon">&#x2588;</div>
+            <h4>Rating</h4>
+            <p>Performance bar (0–10) with description text</p>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="changes">
+          <ul>
+            <li>Dawn's multicolumn = <strong>single repeating block type</strong></li>
+            <li>This section = <strong>3 heterogeneous types</strong> with different rendering logic</li>
+            <li>All blocks are <strong>add / remove / reorder</strong> in Theme Customizer</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: BEFORE / AFTER -->
+      <section data-background-color="#F5F0EB">
+        <h2>Before <em>&amp;</em> After</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 0.6rem;">
+          <div>
+            <span class="label label--before" style="text-align: center; display: block;">Before — Without Specs</span>
+            <div class="img-slot" style="background: #ebebeb;">
+              <img src="screenshots/phase-3-pdp-before.png" alt="PDP before">
+            </div>
+          </div>
+          <div>
+            <span class="label label--after" style="text-align: center; display: block;">After — With Specs Showcase</span>
+            <div class="img-slot">
+              <img src="screenshots/phase-3-pdp-after.png" alt="PDP after">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: ADMIN CUSTOMIZER -->
+      <section data-background-color="#fff">
+        <h2>Admin <em>Customizer</em></h2>
+        <div class="comparison">
+          <div class="comparison-col">
+            <span class="label label--after">Section Specification</span>
+            <div class="img-slot">
+              <img src="screenshots/phase-3-admin-settings.png" alt="Section settings panel">
+            </div>
+          </div>
+          <div class="comparison-col">
+            <span class="label label--after">Block Settings</span>
+            <div class="img-slot">
+              <img src="screenshots/phase-3-admin-blocks.png" alt="Block settings panel">
+            </div>
+          </div>
+        </div>
+        <div class="changes" style="margin-top: 0.8rem;">
+          <ul>
+            <li>Merchants <strong>add/remove/reorder</strong> blocks without touching code</li>
+            <li>Each block type has <strong>its own settings</strong> panel in the sidebar</li>
+            <li>Rating slider, icon picker &mdash; all admin-native Shopify controls</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: CODE HIGHLIGHTS -->
+      <section data-background-color="#F5F0EB">
+        <h2>Code <em>Highlights</em></h2>
+        <div class="code-block">
+          <span class="comment">{# Dynamic block rendering via case/when #}</span><br>
+          <span class="tag">{%</span> <span class="keyword">for</span> block <span class="keyword">in</span> section.blocks <span class="tag">%}</span><br>
+          &nbsp;&nbsp;<span class="tag">{%</span> <span class="keyword">case</span> block.type <span class="tag">%}</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">{%</span> <span class="keyword">when</span> <span class="string">'heading'</span> <span class="tag">%}</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h3&gt;<span class="tag">{{</span> block.settings.heading <span class="tag">}}</span>&lt;/h3&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">{%</span> <span class="keyword">when</span> <span class="string">'spec_item'</span> <span class="tag">%}</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&lt;!-- Label &middot;&middot;&middot; Value row --&gt;</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">{%</span> <span class="keyword">when</span> <span class="string">'highlight'</span> <span class="tag">%}</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&lt;!-- Rating bar via CSS custom property --&gt;</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div style=<span class="string">"--rating-percent: <span class="tag">{{</span> rating | times: 10 <span class="tag">}}</span>%;"</span>&gt;<br>
+          &nbsp;&nbsp;<span class="tag">{%</span> <span class="keyword">endcase</span> <span class="tag">%}</span><br>
+          <span class="tag">{%</span> <span class="keyword">endfor</span> <span class="tag">%}</span>
+        </div>
+        <div style="margin-top: 0.6rem;" class="code-block">
+          <span class="comment">// Schema: 3 block types, each with unique settings</span><br>
+          <span class="string">"blocks"</span>: [<br>
+          &nbsp;&nbsp;{ <span class="string">"type"</span>: <span class="string">"heading"</span>, &nbsp;&nbsp;<span class="comment">// Subheading divider</span> },<br>
+          &nbsp;&nbsp;{ <span class="string">"type"</span>: <span class="string">"spec_item"</span>, <span class="comment">// Label ··· Value + icon</span> },<br>
+          &nbsp;&nbsp;{ <span class="string">"type"</span>: <span class="string">"highlight"</span>, <span class="comment">// Rating bar 0–10</span> }<br>
+          ]
+        </div>
+      </section>
+
+      <!-- SLIDE 8: KEY TAKEAWAYS -->
+      <section data-background-color="#fff">
+        <h2>Key <em>Takeaways</em></h2>
+        <div class="changes" style="max-width: 680px; margin: 0.8rem auto 0;">
+          <ul>
+            <li><strong>Heterogeneous block types</strong> &mdash; 3 different render patterns in one section, not just repeating columns</li>
+            <li><strong>Admin-configurable</strong> &mdash; add, remove, reorder blocks from Theme Customizer without touching code</li>
+            <li><strong>Dawn patterns</strong> &mdash; dynamic padding, color schemes, scroll animations, <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">shopify_attributes</code></li>
+            <li><strong>Design system</strong> &mdash; Cormorant headings, dotted dividers, uppercase labels match WinSport aesthetic</li>
+            <li><strong>Pure CSS rating bars</strong> &mdash; no JS, driven by <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">--rating-percent</code> custom property</li>
+          </ul>
+        </div>
+        <div class="divider"></div>
+        <p class="small" style="text-align: center;">WinSport Theme &middot; Phase 3 Complete &middot; Dawn v15.4.1 &middot; Shopify 2.0</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      transition: 'fade',
+      transitionSpeed: 'default',
+      controls: true,
+      progress: true,
+      center: false,
+      width: 1200,
+      height: 700,
+      margin: 0.04,
+    });
+  </script>
+</body>
+</html>

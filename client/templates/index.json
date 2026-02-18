@@ -6,21 +6,21 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "The New <em>Collection</em>",
+            "heading": "Gear Up for <em>Winter</em>",
             "heading_size": "h0"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "Timeless pieces crafted with care. Discover styles that define elegance.",
+            "text": "Performance equipment for every slope. Built for those who live for the mountain.",
             "text_style": "body"
           }
         },
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "SHOP ALL",
+            "button_label_1": "SHOP GEAR",
             "button_link_1": "shopify:\/\/collections\/all",
             "button_style_secondary_1": true,
             "button_label_2": "",
@@ -59,7 +59,7 @@
         "brand-text": {
           "type": "text",
           "settings": {
-            "text": "<p>We believe in the power of thoughtful design. Each piece in our collection is carefully curated to bring beauty and purpose to your everyday life. Our commitment to quality craftsmanship means every detail matters.<\/p>",
+            "text": "<p>Born in the mountains, WinSport was founded by a group of winter sports enthusiasts who believed that great gear shouldn\u2019t compromise on style. We source the finest technical materials and partner with world-class manufacturers to deliver equipment that performs at the summit and looks good doing it.<\/p>",
             "text_style": "body"
           }
         },
@@ -92,7 +92,7 @@
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "title": "Featured <em>Products</em>",
+        "title": "Featured <em>Gear</em>",
         "heading_size": "h2",
         "collection": "all",
         "products_to_show": 8,

@@ -45,9 +45,9 @@
         "collapsible-row-0": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Materials",
-            "icon": "leather",
-            "content": "<p>Crafted from premium materials selected for durability and comfort. Each piece undergoes rigorous quality control to ensure the highest standards.<\/p>",
+            "heading": "Materials & Tech",
+            "icon": "iron",
+            "content": "<p>Engineered with cutting-edge materials — from lightweight carbon fiber frames to Gore-Tex membranes and Thinsulate insulation. Every component is selected for peak performance in extreme alpine conditions.</p>",
             "page": ""
           }
         },
@@ -56,7 +56,7 @@
           "settings": {
             "heading": "Produced In",
             "icon": "map_pin",
-            "content": "<p>Ethically produced with care for both people and planet. We partner with skilled artisans who share our commitment to excellence.<\/p>",
+            "content": "<p>Manufactured by certified sports equipment facilities across Europe and North America. Each product meets rigorous safety standards and undergoes extensive field testing in real alpine environments.</p>",
             "page": ""
           }
         },
@@ -103,6 +103,82 @@
         "padding_bottom": 12
       }
     },
+    "specs-showcase": {
+      "type": "product-specs-showcase",
+      "blocks": {
+        "heading-1": {
+          "type": "heading",
+          "settings": {
+            "heading": "Technical Details",
+            "heading_size": "h3"
+          }
+        },
+        "spec-1": {
+          "type": "spec_item",
+          "settings": {
+            "label": "Weight",
+            "value": "1,200g",
+            "icon": "ruler"
+          }
+        },
+        "spec-2": {
+          "type": "spec_item",
+          "settings": {
+            "label": "Insulation",
+            "value": "Gore-Tex Pro",
+            "icon": "snowflake"
+          }
+        },
+        "spec-3": {
+          "type": "spec_item",
+          "settings": {
+            "label": "Flex Rating",
+            "value": "110 — Advanced",
+            "icon": "lightning_bolt"
+          }
+        },
+        "heading-2": {
+          "type": "heading",
+          "settings": {
+            "heading": "Performance",
+            "heading_size": "h3"
+          }
+        },
+        "highlight-1": {
+          "type": "highlight",
+          "settings": {
+            "label": "Waterproof",
+            "rating": 9,
+            "description": "Fully sealed seams with Gore-Tex membrane"
+          }
+        },
+        "highlight-2": {
+          "type": "highlight",
+          "settings": {
+            "label": "Warmth",
+            "rating": 8,
+            "description": "Thinsulate insulation rated to -25\u00b0C"
+          }
+        }
+      },
+      "block_order": [
+        "heading-1",
+        "spec-1",
+        "spec-2",
+        "spec-3",
+        "heading-2",
+        "highlight-1",
+        "highlight-2"
+      ],
+      "settings": {
+        "title": "Technical <em>Specifications</em>",
+        "heading_size": "h1",
+        "layout": "full",
+        "color_scheme": "scheme-5",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
     "related-products": {
       "type": "related-products",
       "settings": {
@@ -122,6 +198,7 @@
   },
   "order": [
     "main",
+    "specs-showcase",
     "related-products"
   ]
 }

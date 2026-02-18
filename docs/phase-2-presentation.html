@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 2: WinSport Design Implementation — Before & After</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    :root {
+      --arusa-beige: #F5F0EB;
+      --arusa-navy: #3A3A4A;
+      --arusa-navy-dark: #2C2C3A;
+      --arusa-warm: #E8DFD6;
+      --arusa-text: #1a1a1a;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;1,400;1,600&family=Work+Sans:wght@300;400;500&display=swap');
+
+    .reveal {
+      font-family: 'Work Sans', sans-serif;
+      color: var(--arusa-text);
+    }
+
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: 'Cormorant', serif;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      color: var(--arusa-text);
+    }
+
+    .reveal h1 { font-size: 2.8em; line-height: 1.1; }
+    .reveal h2 { font-size: 2em; margin-bottom: 0.6em; }
+    .reveal h3 { font-size: 1.4em; }
+
+    .reveal h1 em, .reveal h2 em, .reveal h3 em {
+      font-style: italic;
+      font-weight: inherit;
+    }
+
+    .reveal p, .reveal li {
+      font-size: 0.7em;
+      line-height: 1.7;
+      letter-spacing: 0.03em;
+    }
+
+    .reveal .small { font-size: 0.55em; opacity: 0.7; }
+
+    /* Slide backgrounds */
+    .slide-beige { background: var(--arusa-beige) !important; }
+    .slide-navy { background: var(--arusa-navy) !important; }
+    .slide-navy h2, .slide-navy h3, .slide-navy p, .slide-navy li,
+    .slide-navy .label { color: #fff !important; }
+    .slide-warm { background: var(--arusa-warm) !important; }
+
+    /* Before/After layout */
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+      margin-top: 1.5rem;
+    }
+
+    .comparison-col {
+      text-align: center;
+    }
+
+    .label {
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.6em;
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+      color: var(--arusa-text);
+    }
+
+    .label--before { color: #999; }
+    .label--after { color: var(--arusa-navy); }
+
+    /* Image placeholder */
+    .img-slot {
+      background: #f0f0f0;
+      border: 2px dashed #ccc;
+      border-radius: 8px;
+      padding: 3rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 280px;
+      position: relative;
+    }
+
+    .img-slot img {
+      max-width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .img-slot .placeholder-text {
+      font-size: 0.55em;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    .img-slot .placeholder-icon {
+      font-size: 2em;
+      color: #ccc;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Change list */
+    .changes {
+      text-align: left;
+      margin-top: 1.5rem;
+    }
+
+    .changes ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .changes li {
+      padding: 0.3em 0;
+      padding-left: 1.5em;
+      position: relative;
+    }
+
+    .changes li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--arusa-navy);
+    }
+
+    /* Color swatches */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .swatch {
+      text-align: center;
+    }
+
+    .swatch-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin: 0 auto 0.5rem;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .swatch-label {
+      font-size: 0.5em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .swatch-hex {
+      font-size: 0.45em;
+      opacity: 0.6;
+      font-family: monospace;
+    }
+
+    /* Typography showcase */
+    .type-showcase {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1.5rem;
+      text-align: left;
+    }
+
+    .type-sample h4 {
+      margin-bottom: 0.3rem;
+      font-size: 1.2em;
+    }
+
+    .type-sample p {
+      font-size: 0.6em;
+      opacity: 0.7;
+    }
+
+    .font-demo-heading {
+      font-family: 'Cormorant', serif;
+      font-size: 2em;
+      line-height: 1.1;
+    }
+
+    .font-demo-body {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 0.9em;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    /* File list */
+    .file-list {
+      text-align: left;
+      margin-top: 1rem;
+    }
+
+    .file-list code {
+      background: rgba(0,0,0,0.06);
+      padding: 0.15em 0.4em;
+      border-radius: 3px;
+      font-size: 0.85em;
+    }
+
+    /* Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Cormorant', serif;
+      font-size: 2.5em;
+      line-height: 1;
+      color: var(--arusa-navy);
+    }
+
+    .stat-label {
+      font-size: 0.55em;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-top: 0.3rem;
+      opacity: 0.7;
+    }
+
+    /* Divider */
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: var(--arusa-navy);
+      margin: 1.5rem auto;
+      opacity: 0.3;
+    }
+
+    /* Override reveal defaults */
+    .reveal .slides section { padding: 2rem; }
+    .reveal ul { margin: 0; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ============================================================
+           SLIDE 1: TITLE
+           ============================================================ -->
+      <section data-background-color="#F5F0EB">
+        <h1>Phase 2:<br><em>Design Implementation</em></h1>
+        <div class="divider"></div>
+        <p>Dawn v15.4.1 → WinSport Design System</p>
+        <p class="small">WinSport Theme &middot; Shopify 2.0 &middot; Figma to Code</p>
+      </section>
+
+      <!-- ============================================================
+           SLIDE 2: OVERVIEW
+           ============================================================ -->
+      <section data-background-color="#fff">
+        <h2>What <em>Changed</em></h2>
+        <div class="stats-grid">
+          <div class="stat">
+            <div class="stat-number">10</div>
+            <div class="stat-label">Files Modified</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">453</div>
+            <div class="stat-label">Lines of Custom CSS</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">5</div>
+            <div class="stat-label">Color Schemes</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <p>Pixel-accurate Figma-to-Shopify conversion demonstrating<br>custom design system implementation on Dawn theme base.</p>
+      </section>
+
+      <!-- ============================================================
+           SLIDE 3: COLOR PALETTE
+           ============================================================ -->
+      <section data-background-color="#fff">
+        <h2>Color <em>Palette</em></h2>
+        <div class="color-grid">
+          <div class="swatch">
+            <div class="swatch-circle" style="background: #F5F0EB;"></div>
+            <div class="swatch-label">Beige</div>
+            <div class="swatch-hex">#F5F0EB</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-circle" style="background: #3A3A4A;"></div>
+            <div class="swatch-label">Dark Navy</div>
+            <div class="swatch-hex">#3A3A4A</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-circle" style="background: #2C2C3A;"></div>
+            <div class="swatch-label">Deep Navy</div>
+            <div class="swatch-hex">#2C2C3A</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-circle" style="background: #FFFFFF; border: 1px solid #ddd;"></div>
+            <div class="swatch-label">White</div>
+            <div class="swatch-hex">#FFFFFF</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-circle" style="background: #E8DFD6;"></div>
+            <div class="swatch-label">Warm Beige</div>
+            <div class="swatch-hex">#E8DFD6</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="type-showcase">
+          <div class="type-sample">
+            <h4>Headings</h4>
+            <div class="font-demo-heading">Cormorant <em>Garamond</em></div>
+            <p>Serif with italic accents for luxury feel</p>
+          </div>
+          <div class="type-sample">
+            <h4>Body</h4>
+            <div class="font-demo-body">Work Sans — clean and modern sans-serif for readability and balance.</div>
+            <p>Light weight (300) for elegant body text</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SLIDE 4: HEADER — BEFORE/AFTER
+           ============================================================ -->
+      <section data-background-color="#F5F0EB">
+        <h2>Header</h2>
+        <div class="comparison">
+          <div class="comparison-col">
+            <div class="label label--before">Before — Dawn Default</div>
+            <div class="img-slot">
+              <img src="screenshots/header-before.png" alt="Dawn default header">
+            </div>
+          </div>
+          <div class="comparison-col">
+            <div class="label label--after">After — WinSport</div>
+            <div class="img-slot">
+              <!-- Replace with: <img src="screenshots/header-after.png" alt="WinSport header"> -->
+              <div class="placeholder-icon">&#9776;</div>
+              <div class="placeholder-text">Screenshot: WinSport header</div>
+            </div>
+          </div>
+        </div>
+        <div class="changes">
+          <ul>
+            <li>Logo position: left → <strong>middle-center</strong></li>
+            <li>Menu type: dropdown → <strong>drawer (hamburger)</strong></li>
+            <li>Added <strong>"SHOP"</strong> text link in navigation</li>
+            <li>Cart icon → <strong>"BAG"</strong> text with count</li>
+            <li>Search icon <strong>hidden</strong> for minimal aesthetic</li>
+            <li>Announcement bar <strong>removed</strong></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SLIDE 5: HERO BANNER — BEFORE/AFTER
+           ============================================================ -->
+      <section data-background-color="#fff">
+        <h2>Hero <em>Banner</em></h2>
+        <div class="comparison">
+          <div class="comparison-col">
+            <div class="label label--before">Before — Dawn Default</div>
+            <div class="img-slot">
+              <img src="screenshots/hero-before.png" alt="Dawn default hero">
+            </div>
+          </div>
+          <div class="comparison-col">
+            <div class="label label--after">After — WinSport</div>
+            <div class="img-slot">
+              <!-- Replace with: <img src="screenshots/hero-after.png" alt="WinSport hero"> -->
+              <div class="placeholder-icon">&#x1F5BC;</div>
+              <div class="placeholder-text">Screenshot: WinSport hero</div>
+            </div>
+          </div>
+        </div>
+        <div class="changes">
+          <ul>
+            <li>Height: default → <strong>90vh full-viewport</strong></li>
+            <li>Heading: 4.8rem mobile → <strong>9.6rem desktop</strong> Cormorant serif</li>
+            <li><strong>&lt;em&gt; italic accent</strong> in "Gear Up for <em>Winter</em>"</li>
+            <li>CTA: solid button → <strong>outline "SHOP GEAR"</strong> with hover fill</li>
+            <li>Dark overlay for text contrast on imagery</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SLIDE 6: HOMEPAGE SECTIONS — BEFORE/AFTER
+           ============================================================ -->
+      <section data-background-color="#F5F0EB">
+        <h2>Homepage <em>Sections</em></h2>
+        <div class="comparison">
+          <div class="comparison-col">
+            <div class="label label--before">Before — Dawn Default</div>
+            <div class="img-slot">
+              <img src="screenshots/hero-before.png" alt="Dawn default homepage">
+            </div>
+          </div>
+          <div class="comparison-col">
+            <div class="label label--after">After — WinSport</div>
+            <div class="img-slot">
+              <!-- Replace with: <img src="screenshots/homepage-after.png" alt="WinSport homepage"> -->
+              <div class="placeholder-icon">&#x1F3E0;</div>
+              <div class="placeholder-text">Screenshot: WinSport homepage</div>
+            </div>
+          </div>
+        </div>
+        <div class="changes">
+          <ul>
+            <li>Layout: hero → <strong>brand story (image-with-text)</strong> → featured collection</li>
+            <li>Featured collection: <strong>4 columns, portrait images</strong>, no quick-add</li>
+            <li>Warm beige background (scheme-1) throughout</li>
+            <li>Product cards: transparent bg, serif titles, subtle hover zoom</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SLIDE 7: PRODUCT PAGE — BEFORE/AFTER
+           ============================================================ -->
+      <section class="slide-navy">
+        <h2>Product <em>Page</em></h2>
+        <div class="comparison">
+          <div class="comparison-col">
+            <div class="label" style="color: rgba(255,255,255,0.5);">Before — Dawn Default</div>
+            <div class="img-slot" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15);">
+              <img src="screenshots/product-before.png" alt="Dawn product page">
+            </div>
+          </div>
+          <div class="comparison-col">
+            <div class="label" style="color: rgba(255,255,255,0.8);">After — WinSport</div>
+            <div class="img-slot" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15);">
+              <!-- Replace with: <img src="screenshots/product-after.png" alt="WinSport product page"> -->
+              <div class="placeholder-icon" style="color: rgba(255,255,255,0.2);">&#x1F6CD;</div>
+              <div class="placeholder-text" style="color: rgba(255,255,255,0.3);">Screenshot: WinSport product</div>
+            </div>
+          </div>
+        </div>
+        <div class="changes">
+          <ul>
+            <li>Background: white → <strong>dark navy (scheme-2)</strong></li>
+            <li>Simplified: removed image-with-text + multicolumn sections</li>
+            <li>Added <strong>collapsible tabs</strong>: Materials, Produced In, Categories</li>
+            <li>Related products on <strong>light background</strong> (scheme-1) for contrast</li>
+            <li>Variant pills with minimal borders, uppercase labels</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SLIDE 8: COLLECTION PAGE — BEFORE/AFTER
+           ============================================================ -->
+      <section data-background-color="#fff">
+        <h2>Collection <em>Grid</em></h2>
+        <div class="comparison">
+          <div class="comparison-col">
+            <div class="label label--before">Before — Dawn Default</div>
+            <div class="img-slot">
+              <img src="screenshots/collection-before.png" alt="Dawn collection page">
+            </div>
+          </div>
+          <div class="comparison-col">
+            <div class="label label--after">After — WinSport</div>
+            <div class="img-slot">
+              <!-- Replace with: <img src="screenshots/collection-after.png" alt="WinSport collection page"> -->
+              <div class="placeholder-icon">&#x1F4F7;</div>
+              <div class="placeholder-text">Screenshot: WinSport collection</div>
+            </div>
+          </div>
+        </div>
+        <div class="changes">
+          <ul>
+            <li>Image ratio: adapt → <strong>portrait</strong> (fashion-optimized)</li>
+            <li>Grid: default → <strong>4 columns desktop</strong>, 2 columns mobile</li>
+            <li>Filters: <strong>horizontal layout</strong> with minimal borders</li>
+            <li>Quick-add buttons <strong>hidden</strong> — clean card aesthetic</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SLIDE 9: FOOTER — BEFORE/AFTER
+           ============================================================ -->
+      <section class="slide-navy">
+        <h2>Footer</h2>
+        <div class="comparison">
+          <div class="comparison-col">
+            <div class="label" style="color: rgba(255,255,255,0.5);">Before — Dawn Default</div>
+            <div class="img-slot" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15);">
+              <img src="screenshots/footer-before.png" alt="Dawn footer">
+            </div>
+          </div>
+          <div class="comparison-col">
+            <div class="label" style="color: rgba(255,255,255,0.8);">After — WinSport</div>
+            <div class="img-slot" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15);">
+              <!-- Replace with: <img src="screenshots/footer-after.png" alt="WinSport footer"> -->
+              <div class="placeholder-icon" style="color: rgba(255,255,255,0.2);">&#x2709;</div>
+              <div class="placeholder-text" style="color: rgba(255,255,255,0.3);">Screenshot: WinSport footer</div>
+            </div>
+          </div>
+        </div>
+        <div class="changes">
+          <ul>
+            <li>Background: white → <strong>dark navy (scheme-2)</strong></li>
+            <li>Newsletter input: <strong>underline-only</strong> minimal style</li>
+            <li>Headings: uppercase, Work Sans, wide letter-spacing</li>
+            <li>Links: <strong>opacity hover</strong> transition (0.6)</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SLIDE 10: TECHNICAL SUMMARY
+           ============================================================ -->
+      <section data-background-color="#F5F0EB">
+        <h2>Technical <em>Details</em></h2>
+        <div class="file-list">
+          <ul style="list-style: none; padding: 0; font-size: 0.65em; columns: 2; column-gap: 2rem;">
+            <li style="padding: 0.3em 0;">&#x2714; <code>winsport-custom.css</code> — 453 lines custom CSS</li>
+            <li style="padding: 0.3em 0;">&#x2714; <code>theme.liquid</code> — font loading + CSS include</li>
+            <li style="padding: 0.3em 0;">&#x2714; <code>settings_data.json</code> — 5 color schemes</li>
+            <li style="padding: 0.3em 0;">&#x2714; <code>header-group.json</code> — centered layout</li>
+            <li style="padding: 0.3em 0;">&#x2714; <code>header.liquid</code> — SHOP + BAG links</li>
+            <li style="padding: 0.3em 0;">&#x2714; <code>footer-group.json</code> — dark navy scheme</li>
+            <li style="padding: 0.3em 0;">&#x2714; <code>index.json</code> — hero + brand story</li>
+            <li style="padding: 0.3em 0;">&#x2714; <code>product.json</code> — dark scheme + tabs</li>
+            <li style="padding: 0.3em 0;">&#x2714; <code>collection.json</code> — portrait 4-col grid</li>
+            <li style="padding: 0.3em 0;">&#x2714; <code>cart.json</code> — clean white scheme</li>
+          </ul>
+        </div>
+        <div class="divider"></div>
+        <div style="font-size: 0.65em; text-align: left; margin-top: 1rem;">
+          <h3 style="font-size: 1.3em; margin-bottom: 0.5em;">Approach</h3>
+          <ul style="list-style: none; padding: 0;">
+            <li style="padding: 0.2em 0;">&#x2192; Zero modifications to Dawn's core Liquid logic</li>
+            <li style="padding: 0.2em 0;">&#x2192; All styling via single custom CSS overlay (<code>winsport-custom.css</code>)</li>
+            <li style="padding: 0.2em 0;">&#x2192; Layout changes via JSON settings only — fully admin-configurable</li>
+            <li style="padding: 0.2em 0;">&#x2192; Italic accents via <code>&lt;em&gt;</code> tags + font variant loading</li>
+            <li style="padding: 0.2em 0;">&#x2192; Mobile-first responsive with breakpoints at 749px and 990px</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SLIDE 11: CLOSING
+           ============================================================ -->
+      <section data-background-color="#F5F0EB">
+        <h1 style="font-size: 2.2em;">Dawn → <em>WinSport</em></h1>
+        <div class="divider"></div>
+        <p>Figma-to-Shopify conversion<br>demonstrating custom design system implementation<br>on Shopify 2.0 architecture.</p>
+        <p class="small" style="margin-top: 2rem;">
+          WinSport Theme &middot; Phase 2 Complete<br>
+          Built on Dawn v15.4.1 &middot; Shopify Online Store 2.0
+        </p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      transition: 'fade',
+      transitionSpeed: 'slow',
+      controls: true,
+      progress: true,
+      center: true,
+      width: 1200,
+      height: 700,
+    });
+  </script>
+</body>
+</html>
