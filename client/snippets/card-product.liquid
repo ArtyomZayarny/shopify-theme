@@ -106,6 +106,14 @@
             </div>
           </div>
         {%- endif -%}
+        {%- comment -%}Phase 5: App-data badge — resilient to missing/empty metafields{%- endcomment -%}
+        {%- assign app_badge_enabled = card_product.metafields.app_data.badge_enabled.value -%}
+        {%- if app_badge_enabled == true -%}
+          {%- assign app_badge_text = card_product.metafields.app_data.badge_text.value -%}
+          {%- if app_badge_text != blank -%}
+            <span class="card__app-badge">{{ app_badge_text | escape }}</span>
+          {%- endif -%}
+        {%- endif -%}
         <div class="card__content">
           <div class="card__information">
             <h3

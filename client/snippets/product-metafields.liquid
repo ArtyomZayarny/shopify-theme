@@ -3,8 +3,9 @@
 {%- assign care = product.metafields.custom.care_instructions.value -%}
 {%- assign is_new = product.metafields.custom.is_new_arrival.value -%}
 {%- assign difficulty = product.metafields.custom.difficulty_rating.value -%}
+{%- assign app_info = product.metafields.app_data.extra_info.value -%}
 
-{%- if is_new == true or care != blank or difficulty != blank -%}
+{%- if is_new == true or care != blank or difficulty != blank or app_info != blank -%}
   <div class="product-metafields" {{ block.shopify_attributes }}>
 
     {%- if is_new == true -%}
@@ -48,6 +49,59 @@
           </summary>
           <div class="product-metafields__care-content">
             {{ care | newline_to_br }}
+          </div>
+        </details>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%}
+      Phase 5: App-data simulation — extra product info from an "app".
+      Reads a JSON metafield (app_data.extra_info) with optional keys:
+        warranty, origin, certifications (array).
+      Defensive: each key is checked independently. Theme renders
+      correctly whether the metafield is blank, partially filled,
+      or the app is uninstalled entirely.
+    {%- endcomment -%}
+    {%- if app_info != blank -%}
+      <div class="product-metafields__app-data">
+        <details>
+          <summary>
+            <h2 class="product-metafields__app-data-title">Product Certifications</h2>
+            <svg
+              class="product-metafields__care-icon"
+              viewBox="0 0 14 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="10"
+              aria-hidden="true"
+            >
+              <path d="M1 1L7 7L13 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </summary>
+          <div class="product-metafields__app-data-content">
+            {%- if app_info.warranty != blank -%}
+              <div class="product-metafields__app-data-row">
+                <span class="product-metafields__app-data-label">Warranty</span>
+                <span class="product-metafields__app-data-value">{{ app_info.warranty | escape }}</span>
+              </div>
+            {%- endif -%}
+            {%- if app_info.origin != blank -%}
+              <div class="product-metafields__app-data-row">
+                <span class="product-metafields__app-data-label">Made in</span>
+                <span class="product-metafields__app-data-value">{{ app_info.origin | escape }}</span>
+              </div>
+            {%- endif -%}
+            {%- if app_info.certifications != blank -%}
+              <div class="product-metafields__app-data-row">
+                <span class="product-metafields__app-data-label">Certifications</span>
+                <span class="product-metafields__app-data-value">
+                  {%- for cert in app_info.certifications -%}
+                    <span class="product-metafields__cert-tag">{{ cert | escape }}</span>
+                  {%- endfor -%}
+                </span>
+              </div>
+            {%- endif -%}
           </div>
         </details>
       </div>
