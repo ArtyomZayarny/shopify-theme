@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 7: JavaScript Interactions — Web Components on PDP</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;1,400;1,600&family=Work+Sans:wght@300;400;500;600&display=swap');
+
+    :root {
+      --ws-beige: #F5F0EB;
+      --ws-navy: #3A3A4A;
+      --ws-navy-dark: #2C2C3A;
+      --ws-warm: #E8DFD6;
+      --ws-text: #1a1a1a;
+    }
+
+    /* ---- Base ---- */
+    .reveal { font-family: 'Work Sans', sans-serif; color: var(--ws-text); }
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: 'Cormorant', serif;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      color: var(--ws-text);
+      margin-bottom: 0.4em;
+    }
+    .reveal h1 { font-size: 2em; line-height: 1.1; }
+    .reveal h2 { font-size: 1.6em; }
+    .reveal h3 { font-size: 1.2em; }
+    .reveal h1 em, .reveal h2 em, .reveal h3 em { font-style: italic; font-weight: inherit; }
+    .reveal p, .reveal li { font-size: 0.62em; line-height: 1.55; letter-spacing: 0.02em; }
+    .reveal .small { font-size: 0.5em; opacity: 0.6; }
+    .reveal .slides section { padding: 1.6rem 2rem; box-sizing: border-box; }
+    .reveal ul { margin: 0; }
+
+    /* ---- Divider ---- */
+    .divider { width: 48px; height: 1px; background: var(--ws-navy); margin: 0.8rem auto; opacity: 0.25; }
+
+    /* ---- Stats ---- */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .stat { text-align: center; }
+    .stat-number { font-family: 'Cormorant', serif; font-size: 2.2em; line-height: 1; color: var(--ws-navy); }
+    .stat-label { font-size: 0.5em; text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.2rem; opacity: 0.6; }
+
+    /* ---- Feature cards ---- */
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem; }
+    .feature-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 6px;
+      padding: 1.2rem 1rem;
+      text-align: left;
+    }
+    .feature-tag {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.42em;
+      background: var(--ws-warm);
+      color: var(--ws-navy);
+      padding: 0.2em 0.6em;
+      border-radius: 3px;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+    .feature-card h4 {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 0.58em;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0.3rem 0 0.2rem;
+    }
+    .feature-card p { font-size: 0.48em; opacity: 0.6; margin: 0; line-height: 1.5; }
+
+    /* ---- Changes list ---- */
+    .changes ul { list-style: none; padding: 0; margin: 0; }
+    .changes li { padding: 0.25em 0 0.25em 1.4em; position: relative; }
+    .changes li::before { content: '\2192'; position: absolute; left: 0; color: var(--ws-navy); }
+
+    /* ---- Code block ---- */
+    .code-block {
+      background: var(--ws-navy-dark);
+      color: #e0ddd8;
+      border-radius: 6px;
+      padding: 1rem 1.4rem;
+      text-align: left;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.48em;
+      line-height: 1.55;
+      margin-top: 0.8rem;
+    }
+    .code-block .keyword { color: #c792ea; }
+    .code-block .string  { color: #c3e88d; }
+    .code-block .tag     { color: #89ddff; }
+    .code-block .comment { color: #676e95; font-style: italic; }
+    .code-block .number  { color: #f78c6c; }
+    .code-block .fn      { color: #82aaff; }
+    .code-block .attr    { color: #ffcb6b; }
+
+    /* ---- Architecture diagram ---- */
+    .arch-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+    .arch-box {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.48em;
+      text-align: center;
+      min-width: 100px;
+    }
+    .arch-box strong { display: block; font-size: 1.1em; margin-bottom: 0.2em; }
+    .arch-box small { opacity: 0.5; font-size: 0.85em; }
+    .arch-arrow { font-size: 0.7em; color: var(--ws-navy); opacity: 0.4; }
+
+    /* ---- Demo tabs ---- */
+    .demo-tabs {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 0.6rem;
+    }
+    .demo-tabs__header {
+      display: flex;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    .demo-tabs__tab {
+      padding: 0.6rem 1.2rem;
+      font-size: 0.48em;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.4);
+      border-bottom: 2px solid transparent;
+      cursor: default;
+    }
+    .demo-tabs__tab--active {
+      color: var(--ws-text);
+      font-weight: 600;
+      border-bottom-color: var(--ws-navy);
+    }
+    .demo-tabs__panel {
+      padding: 1rem 1.2rem;
+      font-size: 0.48em;
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    /* ---- Demo sticky bar ---- */
+    .demo-sticky {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 6px;
+      padding: 0.8rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.6rem;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
+    }
+    .demo-sticky__info { display: flex; align-items: center; gap: 0.8rem; }
+    .demo-sticky__title { font-size: 0.52em; font-weight: 600; }
+    .demo-sticky__price { font-size: 0.52em; }
+    .demo-sticky__btn {
+      background: var(--ws-navy);
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1.5rem;
+      font-size: 0.44em;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 3px;
+      cursor: default;
+    }
+
+    /* ---- Demo variant desc ---- */
+    .demo-variant {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 6px;
+      padding: 0.8rem 1.2rem;
+      margin-top: 0.6rem;
+    }
+    .demo-variant__note {
+      font-size: 0.52em;
+      line-height: 1.5;
+      color: var(--ws-navy);
+      font-style: italic;
+    }
+    .demo-variant__label {
+      font-size: 0.42em;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.5;
+      margin-bottom: 0.3rem;
+    }
+
+    /* ---- Labels ---- */
+    .label {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.52em;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- SLIDE 1: TITLE -->
+      <section data-background-color="#F5F0EB">
+        <h1>Phase 7:<br><em>JavaScript Interactions</em></h1>
+        <div class="divider"></div>
+        <p>Custom Web Components on PDP &mdash; Tabs, Variant Descriptions &amp; Sticky Add-to-Cart</p>
+        <p class="small">WinSport Theme &middot; Custom Elements &middot; Pub/Sub Events &middot; IntersectionObserver</p>
+      </section>
+
+      <!-- SLIDE 2: THE CONCEPT -->
+      <section data-background-color="#fff">
+        <h2>Why <em>Web Components?</em></h2>
+        <div class="stats-grid">
+          <div class="stat">
+            <div class="stat-number">3</div>
+            <div class="stat-label">Components</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">0</div>
+            <div class="stat-label">Dependencies</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">5</div>
+            <div class="stat-label">New Files</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Dawn-native</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <p>Dawn&rsquo;s architecture uses Custom Elements (Web Components) with a pub/sub event system for decoupled communication. Phase 7 adds three interactive components that follow this exact pattern &mdash; <strong>no jQuery, no frameworks, no global side effects</strong>. Each component self-registers, manages its own lifecycle, and conditionally loads only when its block exists.</p>
+      </section>
+
+      <!-- SLIDE 3: THREE COMPONENTS -->
+      <section data-background-color="#E8DFD6">
+        <h2>Three <em>Components</em></h2>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <span class="feature-tag">&lt;product-tabs&gt;</span>
+            <h4>Tabbed Content</h4>
+            <p>Multiple content panels behind tab headers. Full ARIA support: role="tablist/tab/tabpanel", aria-selected, keyboard navigation with Arrow/Home/End keys.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-tag">&lt;variant-description&gt;</span>
+            <h4>Conditional Text</h4>
+            <p>Listens to variantChange via pub/sub. Shows variant-specific text (e.g. "Limited edition color") and hides others. Falls back to default message.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-tag">&lt;sticky-atc&gt;</span>
+            <h4>Sticky Add to Cart</h4>
+            <p>IntersectionObserver on the main ATC button. When it scrolls out of view, a fixed bottom bar slides up with product name, price, and buy button.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: PRODUCT TABS DEEP DIVE -->
+      <section data-background-color="#F5F0EB">
+        <h2>Product <em>Tabs</em></h2>
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.4rem; margin-top: 0.6rem; align-items: start;">
+          <div>
+            <span class="label" style="text-align: center; display: block;">Interactive Preview</span>
+            <div class="demo-tabs">
+              <div class="demo-tabs__header">
+                <div class="demo-tabs__tab demo-tabs__tab--active">Details</div>
+                <div class="demo-tabs__tab">Shipping</div>
+                <div class="demo-tabs__tab">Returns</div>
+              </div>
+              <div class="demo-tabs__panel">
+                Premium alpine ski boots crafted from Italian leather with carbon fiber reinforcement. Designed for advanced skiers seeking precise control on steep terrain.
+              </div>
+            </div>
+            <div class="code-block" style="margin-top: 0.8rem; font-size: 0.42em;">
+              <span class="keyword">class</span> <span class="fn">ProductTabs</span> <span class="keyword">extends</span> <span class="tag">HTMLElement</span> {<br>
+              &nbsp;&nbsp;<span class="fn">connectedCallback</span>() {<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.buttons = <span class="keyword">this</span>.<span class="fn">querySelectorAll</span>(<span class="string">'[role="tab"]'</span>);<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.panels = <span class="keyword">this</span>.<span class="fn">querySelectorAll</span>(<span class="string">'[role="tabpanel"]'</span>);<br>
+              &nbsp;&nbsp;}<br>
+              &nbsp;&nbsp;<span class="fn">activateTab</span>(<span class="attr">index</span>) { <span class="comment">/* toggle ARIA + hidden */</span> }<br>
+              &nbsp;&nbsp;<span class="fn">handleKeydown</span>(<span class="attr">e</span>) { <span class="comment">/* Arrow/Home/End */</span> }<br>
+              }
+            </div>
+          </div>
+          <div class="changes" style="margin-top: 1rem;">
+            <ul>
+              <li><strong>ARIA pattern:</strong> role="tablist" container, role="tab" buttons, role="tabpanel" content areas</li>
+              <li><strong>aria-selected</strong> toggles with active tab; inactive tabs get <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">tabindex="-1"</code></li>
+              <li><strong>Keyboard:</strong> ArrowLeft/Right cycles tabs, Home/End jump to first/last</li>
+              <li><strong>Focus management:</strong> activateTab() calls focus() on new tab button</li>
+              <li>Up to <strong>3 tabs</strong> configurable in theme customizer with richtext content</li>
+              <li>CSS fade-in animation with <strong>prefers-reduced-motion</strong> respect</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: VARIANT DESCRIPTION + STICKY ATC -->
+      <section data-background-color="#fff">
+        <h2>Variant Description &amp; <em>Sticky ATC</em></h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; margin-top: 0.6rem; align-items: start;">
+          <div>
+            <span class="label" style="text-align: center; display: block;">Variant-Conditional Text</span>
+            <div class="demo-variant">
+              <div class="demo-variant__label">When "Midnight Blue" selected:</div>
+              <div class="demo-variant__note">"This color is a limited edition &mdash; only 200 pairs produced worldwide."</div>
+            </div>
+            <div class="changes" style="margin-top: 0.6rem;">
+              <ul>
+                <li>Subscribes to <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">PUB_SUB_EVENTS.variantChange</code></li>
+                <li>Matches <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">[data-variant-id]</code> to selected variant</li>
+                <li>Falls back to <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">[data-variant-default]</code> when no match</li>
+                <li>Unsubscribes in disconnectedCallback</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <span class="label" style="text-align: center; display: block;">Sticky Add-to-Cart Bar</span>
+            <div class="demo-sticky">
+              <div class="demo-sticky__info">
+                <span class="demo-sticky__title">Alpine Pro Boot</span>
+                <span class="demo-sticky__price">&pound;299.99</span>
+              </div>
+              <div class="demo-sticky__btn">Add to Cart</div>
+            </div>
+            <div class="changes" style="margin-top: 0.6rem;">
+              <ul>
+                <li><strong>IntersectionObserver</strong> watches main ATC button</li>
+                <li>Toggles <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">.is-visible</code> class on scroll</li>
+                <li>Syncs price/availability via <strong>variantChange</strong></li>
+                <li>Delegates submit to main product-form</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: CODE HIGHLIGHTS -->
+      <section data-background-color="#E8DFD6">
+        <h2>Code <em>Highlights</em></h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.6rem;">
+          <div class="code-block" style="margin-top: 0;">
+            <span class="comment">// variant-description.js</span><br>
+            <span class="fn">connectedCallback</span>() {<br>
+            &nbsp;&nbsp;<span class="keyword">this</span>.onVariantChangeUnsubscriber =<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">subscribe</span>(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PUB_SUB_EVENTS.<span class="attr">variantChange</span>,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="fn">handleVariantChange</span>.<span class="fn">bind</span>(<span class="keyword">this</span>)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;);<br>
+            }<br>
+            <br>
+            <span class="fn">handleVariantChange</span>({ <span class="attr">data</span>: { <span class="attr">variant</span> } }) {<br>
+            &nbsp;&nbsp;<span class="keyword">const</span> match = <span class="keyword">this</span>.<span class="fn">querySelector</span>(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">`[data-variant-id="${variant.id}"]`</span><br>
+            &nbsp;&nbsp;);<br>
+            &nbsp;&nbsp;<span class="comment">// show match, hide others</span><br>
+            }<br>
+            <br>
+            <span class="fn">disconnectedCallback</span>() {<br>
+            &nbsp;&nbsp;<span class="keyword">this</span>.onVariantChangeUnsubscriber();<br>
+            }
+          </div>
+          <div class="code-block" style="margin-top: 0;">
+            <span class="comment">// sticky-atc.js</span><br>
+            <span class="fn">connectedCallback</span>() {<br>
+            &nbsp;&nbsp;<span class="keyword">this</span>.observer = <span class="keyword">new</span> <span class="fn">IntersectionObserver</span>(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="fn">handleIntersect</span>.<span class="fn">bind</span>(<span class="keyword">this</span>),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{ <span class="attr">threshold</span>: <span class="number">0</span> }<br>
+            &nbsp;&nbsp;);<br>
+            &nbsp;&nbsp;<span class="keyword">this</span>.observer.<span class="fn">observe</span>(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;document.<span class="fn">querySelector</span>(<span class="string">'[data-atc-trigger]'</span>)<br>
+            &nbsp;&nbsp;);<br>
+            }<br>
+            <br>
+            <span class="fn">handleIntersect</span>(<span class="attr">entries</span>) {<br>
+            &nbsp;&nbsp;entries.<span class="fn">forEach</span>((<span class="attr">entry</span>) =&gt; {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.classList.<span class="fn">toggle</span>(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'is-visible'</span>,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!entry.<span class="attr">isIntersecting</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;);<br>
+            &nbsp;&nbsp;});<br>
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: ARCHITECTURE -->
+      <section data-background-color="#fff">
+        <h2>Data <em>Flow</em></h2>
+        <div class="arch-flow">
+          <div class="arch-box">
+            <strong>Dawn Pub/Sub</strong>
+            <small>pubsub.js<br>constants.js</small>
+          </div>
+          <span class="arch-arrow">&rarr;</span>
+          <div class="arch-box">
+            <strong>variantChange</strong>
+            <small>Published by<br>product-info.js</small>
+          </div>
+          <span class="arch-arrow">&rarr;</span>
+          <div class="arch-box">
+            <strong>Subscribers</strong>
+            <small>variant-description<br>sticky-atc</small>
+          </div>
+        </div>
+        <div class="arch-flow" style="margin-top: 0.6rem;">
+          <div class="arch-box">
+            <strong>IntersectionObserver</strong>
+            <small>[data-atc-trigger]<br>on buy_buttons</small>
+          </div>
+          <span class="arch-arrow">&rarr;</span>
+          <div class="arch-box">
+            <strong>&lt;sticky-atc&gt;</strong>
+            <small>.is-visible toggle<br>CSS transition</small>
+          </div>
+          <span class="arch-arrow">&rarr;</span>
+          <div class="arch-box">
+            <strong>product-form</strong>
+            <small>Delegated submit<br>requestSubmit()</small>
+          </div>
+        </div>
+        <div class="arch-flow" style="margin-top: 0.6rem;">
+          <div class="arch-box">
+            <strong>Liquid Blocks</strong>
+            <small>3 new types in<br>main-product schema</small>
+          </div>
+          <span class="arch-arrow">&rarr;</span>
+          <div class="arch-box">
+            <strong>Conditional Load</strong>
+            <small>JS/CSS only when<br>block is added</small>
+          </div>
+          <span class="arch-arrow">&rarr;</span>
+          <div class="arch-box">
+            <strong>Theme Customizer</strong>
+            <small>Add/remove/reorder<br>in admin UI</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: KEY TAKEAWAYS -->
+      <section data-background-color="#F5F0EB">
+        <h2>Key <em>Takeaways</em></h2>
+        <div class="changes" style="max-width: 680px; margin: 0.8rem auto 0;">
+          <ul>
+            <li><strong>Dawn-native architecture</strong> &mdash; Custom Elements + pub/sub, same patterns as product-info, product-form, cart-drawer</li>
+            <li><strong>Zero dependencies</strong> &mdash; vanilla JS only, no frameworks, no jQuery, no bundler needed</li>
+            <li><strong>Full accessibility</strong> &mdash; ARIA tablist pattern, keyboard navigation, focus management, prefers-reduced-motion</li>
+            <li><strong>Conditional loading</strong> &mdash; JS/CSS files only load when their block is added in the customizer &mdash; zero cost otherwise</li>
+            <li><strong>Lifecycle cleanup</strong> &mdash; all event listeners and observers disconnected in disconnectedCallback</li>
+            <li><strong>Decoupled via events</strong> &mdash; components don&rsquo;t reference each other, communicate only through pub/sub</li>
+          </ul>
+        </div>
+        <div class="divider"></div>
+        <p class="small" style="text-align: center;">WinSport Theme &middot; Phase 7 Complete &middot; Dawn v15.4.1 &middot; Shopify 2.0</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      transition: 'fade',
+      transitionSpeed: 'default',
+      controls: true,
+      progress: true,
+      center: false,
+      width: 1200,
+      height: 700,
+      margin: 0.04,
+    });
+  </script>
+</body>
+</html>
