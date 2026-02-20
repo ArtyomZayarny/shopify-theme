@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 10: Documentation — Project Summary</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;1,400;1,600&family=Work+Sans:wght@300;400;500;600&display=swap');
+
+    :root {
+      --ws-beige: #F5F0EB;
+      --ws-navy: #3A3A4A;
+      --ws-navy-dark: #2C2C3A;
+      --ws-warm: #E8DFD6;
+      --ws-text: #1a1a1a;
+    }
+
+    .reveal { font-family: 'Work Sans', sans-serif; color: var(--ws-text); }
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: 'Cormorant', serif;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      color: var(--ws-text);
+      margin-bottom: 0.4em;
+    }
+    .reveal h1 { font-size: 2em; line-height: 1.1; }
+    .reveal h2 { font-size: 1.6em; }
+    .reveal h1 em, .reveal h2 em { font-style: italic; font-weight: inherit; }
+    .reveal p, .reveal li { font-size: 0.62em; line-height: 1.55; letter-spacing: 0.02em; }
+    .reveal .small { font-size: 0.5em; opacity: 0.6; }
+    .reveal .slides section { padding: 1.6rem 2rem; box-sizing: border-box; }
+    .reveal ul { margin: 0; }
+
+    .divider { width: 48px; height: 1px; background: var(--ws-navy); margin: 0.8rem auto; opacity: 0.25; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .stat { text-align: center; }
+    .stat-number { font-family: 'Cormorant', serif; font-size: 2.2em; line-height: 1; color: var(--ws-navy); }
+    .stat-label { font-size: 0.5em; text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.2rem; opacity: 0.6; }
+
+    .phase-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.8rem;
+      margin-top: 0.8rem;
+    }
+    .phase-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 6px;
+      padding: 0.8rem 1rem;
+      text-align: left;
+    }
+    .phase-card__num {
+      font-family: 'Cormorant', serif;
+      font-size: 1.4em;
+      color: var(--ws-navy);
+      float: left;
+      margin-right: 0.6rem;
+      line-height: 1;
+    }
+    .phase-card h4 {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 0.52em;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0 0 0.2rem;
+    }
+    .phase-card p { font-size: 0.44em; opacity: 0.6; margin: 0; line-height: 1.4; }
+
+    .changes ul { list-style: none; padding: 0; margin: 0; }
+    .changes li { padding: 0.25em 0 0.25em 1.4em; position: relative; }
+    .changes li::before { content: '\2192'; position: absolute; left: 0; color: var(--ws-navy); }
+
+    .feature-tag {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.42em;
+      background: var(--ws-warm);
+      color: var(--ws-navy);
+      padding: 0.2em 0.6em;
+      border-radius: 3px;
+      display: inline-block;
+      margin-bottom: 0.3rem;
+    }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
+      margin-top: 0.8rem;
+    }
+    .tech-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 6px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .tech-card h4 {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 0.52em;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0.3rem 0 0.2rem;
+    }
+    .tech-card p { font-size: 0.44em; opacity: 0.6; margin: 0; line-height: 1.4; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- SLIDE 1: TITLE -->
+      <section data-background-color="#F5F0EB">
+        <h1>WinSport<br><em>Portfolio Theme</em></h1>
+        <div class="divider"></div>
+        <p>A complete Shopify 2.0 theme demonstrating professional development skills across 10 phases</p>
+        <p class="small">Dawn v15.4.1 &middot; Liquid &middot; Vanilla JS &middot; Mobile-First CSS &middot; Shopify CLI</p>
+      </section>
+
+      <!-- SLIDE 2: PROJECT STATS -->
+      <section data-background-color="#fff">
+        <h2>Project <em>Overview</em></h2>
+        <div class="stats-grid">
+          <div class="stat">
+            <div class="stat-number">10</div>
+            <div class="stat-label">Phases</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">7</div>
+            <div class="stat-label">Presentations</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">6</div>
+            <div class="stat-label">Pull Requests</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">0</div>
+            <div class="stat-label">Dependencies</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <p>Built from scratch on Dawn, this theme covers 80&ndash;90% of real Shopify freelance work: custom design, sections architecture, metafields, pricing logic, JavaScript interactions, and performance optimization.</p>
+      </section>
+
+      <!-- SLIDE 3: ALL PHASES -->
+      <section data-background-color="#E8DFD6">
+        <h2>All <em>Phases</em></h2>
+        <div class="phase-grid">
+          <div class="phase-card">
+            <span class="phase-card__num">0&ndash;1</span>
+            <h4>Bootstrap &amp; Structure</h4>
+            <p>Dawn clone, sections/snippets architecture, JSON templates</p>
+          </div>
+          <div class="phase-card">
+            <span class="phase-card__num">2</span>
+            <h4>Figma &rarr; Code</h4>
+            <p>Warm beige + navy design system, mobile-first, no page builders</p>
+          </div>
+          <div class="phase-card">
+            <span class="phase-card__num">3</span>
+            <h4>Dynamic Sections</h4>
+            <p>Product Specs with admin-reorderable dynamic blocks</p>
+          </div>
+          <div class="phase-card">
+            <span class="phase-card__num">4</span>
+            <h4>Metafields</h4>
+            <p>Text, boolean, image metafields with conditional rendering</p>
+          </div>
+          <div class="phase-card">
+            <span class="phase-card__num">5</span>
+            <h4>App Data Simulation</h4>
+            <p>app_data.* namespace, double-guard pattern, resilient rendering</p>
+          </div>
+          <div class="phase-card">
+            <span class="phase-card__num">6</span>
+            <h4>Custom VAT Pricing</h4>
+            <p>Inc/exc tax toggle, per-product control, sale price support</p>
+          </div>
+          <div class="phase-card">
+            <span class="phase-card__num">7</span>
+            <h4>JS Interactions</h4>
+            <p>3 Web Components: tabs, variant text, sticky ATC</p>
+          </div>
+          <div class="phase-card">
+            <span class="phase-card__num">8</span>
+            <h4>Performance</h4>
+            <p>Deferred CSS, content-visibility, LCP/CLS optimization</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: TECH STACK -->
+      <section data-background-color="#fff">
+        <h2>Tech <em>Stack</em></h2>
+        <div class="tech-grid">
+          <div class="tech-card">
+            <span class="feature-tag">Platform</span>
+            <h4>Shopify 2.0</h4>
+            <p>Online Store 2.0 with JSON templates, sections everywhere, metafields API</p>
+          </div>
+          <div class="tech-card">
+            <span class="feature-tag">Templating</span>
+            <h4>Liquid</h4>
+            <p>Server-rendered HTML, conditional rendering, metafield access, schema blocks</p>
+          </div>
+          <div class="tech-card">
+            <span class="feature-tag">JavaScript</span>
+            <h4>Vanilla JS</h4>
+            <p>Custom Elements, pub/sub events, IntersectionObserver, zero frameworks</p>
+          </div>
+          <div class="tech-card">
+            <span class="feature-tag">CSS</span>
+            <h4>Mobile-First</h4>
+            <p>No preprocessors, deferred loading, content-visibility, CSS containment</p>
+          </div>
+          <div class="tech-card">
+            <span class="feature-tag">Theme Base</span>
+            <h4>Dawn v15.4.1</h4>
+            <p>Shopify&rsquo;s reference theme with performance and accessibility built in</p>
+          </div>
+          <div class="tech-card">
+            <span class="feature-tag">Workflow</span>
+            <h4>Git + CLI</h4>
+            <p>Feature branches, PRs, Shopify CLI for dev/push/check</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: KEY SKILLS DEMONSTRATED -->
+      <section data-background-color="#F5F0EB">
+        <h2>Skills <em>Demonstrated</em></h2>
+        <div class="changes" style="max-width: 700px; margin: 0.8rem auto 0;">
+          <ul>
+            <li><strong>Theme Architecture</strong> &mdash; sections/snippets separation, JSON templates, settings schema, clean code organization</li>
+            <li><strong>Design Implementation</strong> &mdash; Figma-to-code without page builders, mobile-first responsive, custom design system</li>
+            <li><strong>Shopify 2.0 Features</strong> &mdash; dynamic blocks, metafield definitions, app data namespaces, conditional rendering</li>
+            <li><strong>Custom Business Logic</strong> &mdash; VAT pricing with per-product toggle, sale price support across all pages</li>
+            <li><strong>JavaScript Engineering</strong> &mdash; Web Components following Dawn patterns, ARIA accessibility, pub/sub decoupling</li>
+            <li><strong>Performance Optimization</strong> &mdash; Core Web Vitals (LCP, CLS), deferred CSS, content-visibility, image optimization</li>
+            <li><strong>Professional Workflow</strong> &mdash; feature branches, meaningful commits, PR descriptions, documentation</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: THANK YOU -->
+      <section data-background-color="#E8DFD6">
+        <h1>Project <em>Complete</em></h1>
+        <div class="divider"></div>
+        <p>10 phases &middot; 6 pull requests &middot; 7 presentations &middot; 20+ screenshots</p>
+        <p style="margin-top: 1rem;"><a href="https://github.com/ArtyomZayarny/shopify-theme" style="color: var(--ws-navy); text-decoration: underline;">github.com/ArtyomZayarny/shopify-theme</a></p>
+        <p class="small" style="margin-top: 1.5rem;">WinSport Theme &middot; Dawn v15.4.1 &middot; Shopify 2.0</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      transition: 'fade',
+      transitionSpeed: 'default',
+      controls: true,
+      progress: true,
+      center: false,
+      width: 1200,
+      height: 700,
+      margin: 0.04,
+    });
+  </script>
+</body>
+</html>
