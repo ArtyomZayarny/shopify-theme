@@ -401,7 +401,28 @@ variant-selects .product-form__input label.active {
 }
 
 /* --------------------------------------------------------------------------
-   13. ANIMATIONS & TRANSITIONS
+   13. PERFORMANCE
+   -------------------------------------------------------------------------- */
+
+/* content-visibility: skip rendering of below-fold sections until needed */
+.shopify-section:not(:first-child) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}
+
+/* Prevent CLS from lazy-loaded images by enforcing aspect-ratio */
+img[loading="lazy"] {
+  content-visibility: auto;
+}
+
+/* Reduce paint area for card hover animations */
+.card__media {
+  will-change: auto;
+  contain: layout style;
+}
+
+/* --------------------------------------------------------------------------
+   14. ANIMATIONS & TRANSITIONS
    -------------------------------------------------------------------------- */
 
 /* Smooth fade-in for sections on scroll */
