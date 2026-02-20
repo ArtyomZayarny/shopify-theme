@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WinSport Portfolio Theme — Video Presentation</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;1,400;1,600&family=Work+Sans:wght@300;400;500;600&display=swap');
+
+    :root {
+      --ws-beige: #F5F0EB;
+      --ws-navy: #3A3A4A;
+      --ws-navy-dark: #2C2C3A;
+      --ws-warm: #E8DFD6;
+      --ws-text: #1a1a1a;
+      --ws-accent: #8B7355;
+    }
+
+    /* ---- Base ---- */
+    .reveal { font-family: 'Work Sans', sans-serif; color: var(--ws-text); }
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: 'Cormorant', serif;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      color: var(--ws-text);
+      margin-bottom: 0.4em;
+    }
+    .reveal h1 { font-size: 2.4em; line-height: 1.1; }
+    .reveal h2 { font-size: 1.6em; }
+    .reveal h3 { font-size: 1.2em; }
+    .reveal h1 em, .reveal h2 em, .reveal h3 em { font-style: italic; font-weight: inherit; }
+    .reveal p, .reveal li { font-size: 0.62em; line-height: 1.55; letter-spacing: 0.02em; }
+    .reveal .small { font-size: 0.5em; opacity: 0.6; }
+    .reveal .slides section { padding: 1.6rem 2rem; box-sizing: border-box; }
+    .reveal ul { margin: 0; }
+
+    /* ---- Animations ---- */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .animate-up { animation: fadeInUp 0.8s ease-out both; }
+    .animate-fade { animation: fadeIn 0.8s ease-out both; }
+    .animate-scale { animation: scaleIn 0.6s ease-out both; }
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+    .delay-4 { animation-delay: 0.8s; }
+
+    /* ---- Divider ---- */
+    .divider { width: 48px; height: 1px; background: var(--ws-navy); margin: 0.8rem auto; opacity: 0.25; }
+
+    /* ---- Phase badge ---- */
+    .phase-badge {
+      display: inline-block;
+      font-family: 'Work Sans', sans-serif;
+      font-size: 0.42em;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      background: var(--ws-navy);
+      color: #fff;
+      padding: 0.3em 1em;
+      border-radius: 2px;
+      margin-bottom: 0.8rem;
+    }
+
+    /* ---- Stats grid ---- */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .stats-grid--4 { grid-template-columns: repeat(4, 1fr); }
+    .stat { text-align: center; }
+    .stat-number { font-family: 'Cormorant', serif; font-size: 2.2em; line-height: 1; color: var(--ws-navy); }
+    .stat-label { font-size: 0.5em; text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.2rem; opacity: 0.6; }
+
+    /* ---- Feature cards ---- */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .feature-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 6px;
+      padding: 1.2rem 1rem;
+      text-align: left;
+    }
+    .feature-card h4 {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 0.58em;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0 0 0.3rem;
+    }
+    .feature-card p { font-size: 0.48em; opacity: 0.6; margin: 0; line-height: 1.5; }
+
+    /* ---- Tech tag ---- */
+    .tech-tag {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.42em;
+      background: var(--ws-warm);
+      color: var(--ws-navy);
+      padding: 0.2em 0.6em;
+      border-radius: 3px;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ---- Changes list ---- */
+    .changes ul { list-style: none; padding: 0; margin: 0; }
+    .changes li { padding: 0.25em 0 0.25em 1.4em; position: relative; font-size: 0.58em; }
+    .changes li::before { content: '\2192'; position: absolute; left: 0; color: var(--ws-navy); }
+
+    /* ---- Labels ---- */
+    .label {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.52em;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .label--before { color: #999; }
+    .label--after { color: var(--ws-navy); }
+
+    /* ---- Img slots ---- */
+    .img-slot {
+      background: #f0f0f0;
+      border: 1.5px dashed #ccc;
+      border-radius: 6px;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .img-slot img {
+      max-width: 100%;
+      max-height: 340px;
+      object-fit: contain;
+      border-radius: 3px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    }
+    .img-slot--tall img { max-height: 420px; }
+
+    /* ---- Code block ---- */
+    .code-block {
+      background: var(--ws-navy-dark);
+      color: #e0ddd8;
+      border-radius: 6px;
+      padding: 1rem 1.4rem;
+      text-align: left;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.46em;
+      line-height: 1.55;
+      margin-top: 0.8rem;
+    }
+    .code-block .keyword { color: #c792ea; }
+    .code-block .string  { color: #c3e88d; }
+    .code-block .tag     { color: #89ddff; }
+    .code-block .comment { color: #676e95; font-style: italic; }
+    .code-block .func    { color: #82aaff; }
+
+    /* ---- Skills grid ---- */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+      margin-top: 0.8rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .skill-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 4px;
+      padding: 0.5rem 0.8rem;
+      font-size: 0.5em;
+      text-align: left;
+    }
+    .skill-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--ws-warm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85em;
+      flex-shrink: 0;
+    }
+
+    /* ---- Video progress bar override ---- */
+    .reveal .progress { height: 4px; color: var(--ws-navy); }
+    .reveal .progress span { background: var(--ws-navy); }
+
+    /* ---- Pause overlay ---- */
+    .pause-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.3);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    .pause-overlay.visible { display: flex; }
+    .pause-icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.15);
+    }
+    .pause-icon::before {
+      content: '';
+      display: inline-block;
+      width: 10px; height: 28px;
+      border-left: 4px solid var(--ws-navy);
+      border-right: 4px solid var(--ws-navy);
+    }
+
+    /* ---- Two-col layout ---- */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.4rem;
+      margin-top: 0.6rem;
+      align-items: start;
+    }
+    .two-col--equal { grid-template-columns: 1fr 1fr; }
+    .two-col--img-right { grid-template-columns: 1fr 1.2fr; }
+
+    /* ---- Color swatches ---- */
+    .color-row {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 0.8rem;
+    }
+    .color-swatch {
+      text-align: center;
+    }
+    .color-swatch .swatch {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin: 0 auto 0.3rem;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    .color-swatch .swatch-label {
+      font-size: 0.42em;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      opacity: 0.6;
+    }
+
+    /* ---- Typography demo ---- */
+    .type-demo {
+      text-align: center;
+      margin-top: 0.6rem;
+    }
+    .type-demo .serif {
+      font-family: 'Cormorant', serif;
+      font-size: 1.4em;
+      margin-bottom: 0.2rem;
+    }
+    .type-demo .sans {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 0.7em;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ============================================================ -->
+      <!-- INTRO                                                        -->
+      <!-- ============================================================ -->
+
+      <!-- SLIDE 1: TITLE -->
+      <section data-background-color="#F5F0EB" data-auto-animate>
+        <div class="animate-up">
+          <p class="small" style="text-transform: uppercase; letter-spacing: 0.3em; opacity: 0.4; margin-bottom: 0.4rem;">Shopify 2.0 Portfolio</p>
+          <h1 style="font-size: 2.8em;">WinSport<br><em>Theme</em></h1>
+          <div class="divider"></div>
+        </div>
+        <p class="animate-fade delay-2">End-to-end Shopify theme development &mdash; from Dawn base to production-ready store</p>
+        <p class="small animate-fade delay-3">10 Phases &middot; Custom Design &middot; Zero Dependencies</p>
+      </section>
+
+      <!-- SLIDE 2: OVERVIEW -->
+      <section data-background-color="#fff">
+        <span class="phase-badge animate-fade">Project Overview</span>
+        <h2 class="animate-up">The <em>Numbers</em></h2>
+        <div class="stats-grid--4 stats-grid animate-scale delay-1">
+          <div class="stat">
+            <div class="stat-number">10</div>
+            <div class="stat-label">Phases</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">6</div>
+            <div class="stat-label">Pull Requests</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">0</div>
+            <div class="stat-label">Dependencies</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">95+</div>
+            <div class="stat-label">Liquid Files</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <p class="animate-fade delay-2">Structure &rarr; Design &rarr; Sections &rarr; Metafields &rarr; App Data &rarr; VAT Pricing &rarr; JS Interactions &rarr; Performance &rarr; Git &rarr; Docs</p>
+      </section>
+
+      <!-- SLIDE 3: TECH STACK -->
+      <section data-background-color="#E8DFD6">
+        <span class="phase-badge animate-fade">Tech Stack</span>
+        <h2 class="animate-up">Built <em>With</em></h2>
+        <div class="feature-grid animate-scale delay-1">
+          <div class="feature-card">
+            <span class="tech-tag">Platform</span>
+            <h4>Shopify 2.0</h4>
+            <p>Online Store 2.0 architecture with JSON templates and section-everywhere support</p>
+          </div>
+          <div class="feature-card">
+            <span class="tech-tag">Templating</span>
+            <h4>Liquid</h4>
+            <p>Shopify's templating language with filters, conditional rendering, and metafield access</p>
+          </div>
+          <div class="feature-card">
+            <span class="tech-tag">JavaScript</span>
+            <h4>Vanilla JS</h4>
+            <p>Web Components, custom elements, zero jQuery &mdash; event delegation and module pattern</p>
+          </div>
+        </div>
+        <div class="feature-grid animate-scale delay-2" style="margin-top: 1rem;">
+          <div class="feature-card">
+            <span class="tech-tag">CSS</span>
+            <h4>Mobile-First</h4>
+            <p>Responsive design, CSS custom properties, no preprocessors</p>
+          </div>
+          <div class="feature-card">
+            <span class="tech-tag">Base Theme</span>
+            <h4>Dawn v15.4.1</h4>
+            <p>Shopify's reference theme &mdash; fully customized and extended</p>
+          </div>
+          <div class="feature-card">
+            <span class="tech-tag">Tooling</span>
+            <h4>Shopify CLI</h4>
+            <p>Local development, theme push/pull, Lighthouse audits</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- PHASE 2: DESIGN                                              -->
+      <!-- ============================================================ -->
+
+      <!-- SLIDE 4: BEFORE -->
+      <section data-background-color="#F5F0EB">
+        <span class="phase-badge">Phase 2</span>
+        <h2>Before: <em>Dawn Default</em></h2>
+        <div class="img-slot img-slot--tall animate-scale delay-1">
+          <img src="screenshots/hero-before.png" alt="Dawn default homepage">
+        </div>
+        <p class="small" style="margin-top: 0.5rem;">Stock Dawn theme &mdash; generic, no brand identity</p>
+      </section>
+
+      <!-- SLIDE 5: AFTER -->
+      <section data-background-color="#fff">
+        <span class="phase-badge">Phase 2</span>
+        <h2>After: <em>WinSport Design</em></h2>
+        <div class="img-slot img-slot--tall animate-scale delay-1">
+          <img src="screenshots/phase-3-pdp-after.png" alt="WinSport PDP design">
+        </div>
+        <p class="small" style="margin-top: 0.5rem;">Custom luxury sports aesthetic &mdash; Cormorant + Work Sans, beige &amp; navy palette</p>
+      </section>
+
+      <!-- SLIDE 6: DESIGN SYSTEM -->
+      <section data-background-color="#E8DFD6">
+        <span class="phase-badge">Phase 2</span>
+        <h2>Design <em>System</em></h2>
+        <div class="two-col--equal two-col" style="margin-top: 0.8rem;">
+          <div>
+            <div class="type-demo">
+              <div class="serif">Cormorant Garamond</div>
+              <div class="sans">Work Sans &mdash; UI &amp; Body</div>
+            </div>
+            <div class="color-row" style="margin-top: 1rem;">
+              <div class="color-swatch">
+                <div class="swatch" style="background: #F5F0EB;"></div>
+                <div class="swatch-label">#F5F0EB</div>
+              </div>
+              <div class="color-swatch">
+                <div class="swatch" style="background: #E8DFD6;"></div>
+                <div class="swatch-label">#E8DFD6</div>
+              </div>
+              <div class="color-swatch">
+                <div class="swatch" style="background: #3A3A4A;"></div>
+                <div class="swatch-label">#3A3A4A</div>
+              </div>
+              <div class="color-swatch">
+                <div class="swatch" style="background: #1a1a1a;"></div>
+                <div class="swatch-label">#1a1a1a</div>
+              </div>
+            </div>
+          </div>
+          <div class="changes">
+            <ul>
+              <li>Pixel-accurate Figma implementation</li>
+              <li>Mobile-first responsive approach</li>
+              <li>No page builders &mdash; all code</li>
+              <li>CSS custom properties for theming</li>
+              <li>Consistent spacing &amp; typography scale</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- PHASE 3-4: SECTIONS & METAFIELDS                            -->
+      <!-- ============================================================ -->
+
+      <!-- SLIDE 7: DYNAMIC BLOCKS -->
+      <section data-background-color="#F5F0EB">
+        <span class="phase-badge">Phase 3</span>
+        <h2>Dynamic <em>Blocks</em></h2>
+        <div class="two-col">
+          <div>
+            <span class="label label--after" style="text-align: center;">Admin Theme Customizer</span>
+            <div class="img-slot animate-scale delay-1">
+              <img src="screenshots/phase-3-admin-blocks.png" alt="Admin block reordering">
+            </div>
+          </div>
+          <div class="changes" style="margin-top: 1.8rem;">
+            <ul>
+              <li>Custom sections with <strong>{% schema %}</strong> blocks</li>
+              <li>Drag-and-drop reordering in admin</li>
+              <li>JSON templates for section-everywhere</li>
+              <li>Specs showcase section on PDP</li>
+              <li>Product Features with dynamic content</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: METAFIELDS -->
+      <section data-background-color="#fff">
+        <span class="phase-badge">Phase 4</span>
+        <h2>Product <em>Metafields</em></h2>
+        <div class="two-col">
+          <div>
+            <span class="label label--after" style="text-align: center;">Conditional Rendering on PDP</span>
+            <div class="img-slot animate-scale delay-1">
+              <img src="screenshots/phase-4-pdp-after.png" alt="PDP with metafields">
+            </div>
+          </div>
+          <div class="changes" style="margin-top: 1.8rem;">
+            <ul>
+              <li><strong>care_instructions</strong> &mdash; multi-line text</li>
+              <li><strong>difficulty_rating</strong> &mdash; numeric scale</li>
+              <li><strong>is_new_arrival</strong> &mdash; boolean badge</li>
+              <li>Show <strong>only if filled</strong> &mdash; zero output when empty</li>
+              <li>Collapsible accordion UI pattern</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 9: ADMIN SETUP -->
+      <section data-background-color="#E8DFD6">
+        <span class="phase-badge">Phase 4</span>
+        <h2>Admin <em>Setup</em></h2>
+        <div class="two-col--equal two-col">
+          <div>
+            <span class="label label--after" style="display: block; margin-bottom: 0.4rem;">Metafield Definitions</span>
+            <div class="img-slot animate-scale delay-1">
+              <img src="screenshots/phase-4-admin-definitions.png" alt="Admin metafield definitions">
+            </div>
+          </div>
+          <div>
+            <span class="label label--after" style="display: block; margin-bottom: 0.4rem;">Product Values</span>
+            <div class="img-slot animate-scale delay-2">
+              <img src="screenshots/phase-4-admin-product.png" alt="Admin product metafield values">
+            </div>
+          </div>
+        </div>
+        <p class="small" style="margin-top: 0.6rem;">Settings &rarr; Custom data &rarr; Products &mdash; merchant-friendly setup</p>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- PHASE 5: APP DATA                                            -->
+      <!-- ============================================================ -->
+
+      <!-- SLIDE 10: COLLECTION BADGE -->
+      <section data-background-color="#F5F0EB">
+        <span class="phase-badge">Phase 5</span>
+        <h2>App Data: <em>Collection Badge</em></h2>
+        <div class="two-col">
+          <div>
+            <span class="label label--after" style="text-align: center;">Product Card with App Badge</span>
+            <div class="img-slot animate-scale delay-1">
+              <img src="screenshots/phase-5-collection-badge.png" alt="Collection badge">
+            </div>
+          </div>
+          <div class="changes" style="margin-top: 1.8rem;">
+            <ul>
+              <li>Simulates external app data via <strong>app_data.*</strong> namespace</li>
+              <li>Double guard: <strong>badge_enabled</strong> + <strong>badge_text</strong></li>
+              <li>Defensive coding &mdash; zero errors if app removed</li>
+              <li>Positioned independently from Sale/Sold Out badges</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 11: PDP CERTIFICATIONS -->
+      <section data-background-color="#fff">
+        <span class="phase-badge">Phase 5</span>
+        <h2>App Data: <em>PDP Certifications</em></h2>
+        <div class="two-col">
+          <div>
+            <span class="label label--after" style="text-align: center;">JSON Metafield &rarr; Structured UI</span>
+            <div class="img-slot animate-scale delay-1">
+              <img src="screenshots/phase-5-pdp-certifications.png" alt="PDP certifications">
+            </div>
+          </div>
+          <div class="changes" style="margin-top: 1.8rem;">
+            <ul>
+              <li><strong>extra_info</strong> JSON: warranty, origin, certifications[]</li>
+              <li>Each key checked independently before render</li>
+              <li>Certifications as pill tags via <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">for cert in</code></li>
+              <li>App-uninstall safe &mdash; graceful degradation</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- PHASE 6: VAT PRICING                                        -->
+      <!-- ============================================================ -->
+
+      <!-- SLIDE 12: VAT DISPLAY -->
+      <section data-background-color="#E8DFD6">
+        <span class="phase-badge">Phase 6</span>
+        <h2>Custom <em>VAT Pricing</em></h2>
+        <div class="two-col">
+          <div>
+            <span class="label label--after" style="text-align: center;">Inc/Exc Tax Toggle on PDP</span>
+            <div class="img-slot animate-scale delay-1">
+              <img src="screenshots/phase-6-pdp-vat.png" alt="VAT pricing display">
+            </div>
+          </div>
+          <div class="changes" style="margin-top: 1.8rem;">
+            <ul>
+              <li>Per-product <strong>custom.show_tax</strong> boolean metafield</li>
+              <li>Price incl. VAT &amp; excl. VAT display</li>
+              <li>Sale price support with compare_at_price</li>
+              <li>Consistent across PDP, Collection, Cart</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 13: PRICE LOGIC CODE -->
+      <section data-background-color="#F5F0EB">
+        <span class="phase-badge">Phase 6</span>
+        <h2>Price <em>Logic</em></h2>
+        <div class="code-block animate-scale delay-1">
+          <span class="comment">{%- Unified price snippet — PDP, Collection, Cart -%}</span><br><br>
+          <span class="tag">{%-</span> <span class="keyword">assign</span> show_tax = product.metafields.custom.show_tax.value <span class="tag">-%}</span><br>
+          <span class="tag">{%-</span> <span class="keyword">assign</span> tax_rate = settings.tax_rate | <span class="func">divided_by</span>: 100.0 <span class="tag">-%}</span><br><br>
+          <span class="tag">{%-</span> <span class="keyword">if</span> show_tax <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">assign</span> price_inc = price | <span class="func">times</span>: 1 <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">assign</span> price_exc = price | <span class="func">divided_by</span>: tax_factor <span class="tag">-%}</span><br><br>
+          &nbsp;&nbsp;&lt;span class=<span class="string">"price--inc"</span>&gt;<span class="tag">{{</span> price_inc | <span class="func">money</span> <span class="tag">}}</span> incl. VAT&lt;/span&gt;<br>
+          &nbsp;&nbsp;&lt;span class=<span class="string">"price--exc"</span>&gt;<span class="tag">{{</span> price_exc | <span class="func">money</span> <span class="tag">}}</span> excl. VAT&lt;/span&gt;<br>
+          <span class="tag">{%-</span> <span class="keyword">endif</span> <span class="tag">-%}</span><br><br>
+          <span class="comment">{%- compare_at_price support for sale badges -%}</span><br>
+          <span class="tag">{%-</span> <span class="keyword">if</span> compare_at_price > price <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;&lt;s class=<span class="string">"price--was"</span>&gt;<span class="tag">{{</span> compare_at_price | <span class="func">money</span> <span class="tag">}}</span>&lt;/s&gt;<br>
+          <span class="tag">{%-</span> <span class="keyword">endif</span> <span class="tag">-%}</span>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- PHASE 7: JS INTERACTIONS                                     -->
+      <!-- ============================================================ -->
+
+      <!-- SLIDE 14: THREE COMPONENTS -->
+      <section data-background-color="#fff">
+        <span class="phase-badge">Phase 7</span>
+        <h2>JavaScript <em>Interactions</em></h2>
+        <div class="feature-grid animate-scale delay-1">
+          <div class="feature-card">
+            <span class="tech-tag">Web Component</span>
+            <h4>Product Tabs</h4>
+            <p>Custom &lt;product-tabs&gt; element with keyboard navigation, ARIA attributes, and section rendering API</p>
+          </div>
+          <div class="feature-card">
+            <span class="tech-tag">Web Component</span>
+            <h4>Variant Picker</h4>
+            <p>Dynamic variant selection updating price, availability, and images without page reload</p>
+          </div>
+          <div class="feature-card">
+            <span class="tech-tag">Web Component</span>
+            <h4>Sticky ATC</h4>
+            <p>Intersection Observer-based sticky Add to Cart bar &mdash; appears on scroll past main button</p>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <p class="animate-fade delay-2">Zero jQuery &middot; Custom Elements API &middot; Event Delegation &middot; data-* Attributes</p>
+      </section>
+
+      <!-- SLIDE 15: PRODUCT TABS -->
+      <section data-background-color="#E8DFD6">
+        <span class="phase-badge">Phase 7</span>
+        <h2>Product <em>Tabs</em></h2>
+        <div class="img-slot img-slot--tall animate-scale delay-1">
+          <img src="screenshots/phase-7-product-tabs.png" alt="Product tabs component">
+        </div>
+        <p class="small" style="margin-top: 0.5rem;">Description, Specifications, Shipping &mdash; accessible tab navigation with ARIA roles</p>
+      </section>
+
+      <!-- SLIDE 16: VARIANT + STICKY -->
+      <section data-background-color="#F5F0EB">
+        <span class="phase-badge">Phase 7</span>
+        <h2>Variant Picker &amp; <em>Sticky ATC</em></h2>
+        <div class="two-col--equal two-col">
+          <div>
+            <span class="label label--after" style="display: block; margin-bottom: 0.4rem;">Tabs + Variant Selection</span>
+            <div class="img-slot animate-scale delay-1">
+              <img src="screenshots/phase-7-tabs-variant.png" alt="Tabs with variant picker">
+            </div>
+          </div>
+          <div>
+            <span class="label label--after" style="display: block; margin-bottom: 0.4rem;">Sticky Add to Cart</span>
+            <div class="img-slot animate-scale delay-2">
+              <img src="screenshots/phase-7-sticky-atc.png" alt="Sticky add to cart bar">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 17: WEB COMPONENTS CODE -->
+      <section data-background-color="#fff">
+        <span class="phase-badge">Phase 7</span>
+        <h2>Web Components <em>Pattern</em></h2>
+        <div class="code-block animate-scale delay-1">
+          <span class="keyword">class</span> <span class="func">ProductTabs</span> <span class="keyword">extends</span> HTMLElement {<br>
+          &nbsp;&nbsp;<span class="func">constructor</span>() {<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">super</span>();<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.buttons = <span class="keyword">this</span>.querySelectorAll(<span class="string">'[role="tab"]'</span>);<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.panels  = <span class="keyword">this</span>.querySelectorAll(<span class="string">'[role="tabpanel"]'</span>);<br>
+          &nbsp;&nbsp;}<br><br>
+          &nbsp;&nbsp;<span class="func">connectedCallback</span>() {<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.addEventListener(<span class="string">'click'</span>, <span class="keyword">this</span>.handleClick);<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.addEventListener(<span class="string">'keydown'</span>, <span class="keyword">this</span>.handleKeydown);<br>
+          &nbsp;&nbsp;}<br><br>
+          &nbsp;&nbsp;<span class="func">switchTab</span>(target) {<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.buttons.forEach(btn =&gt; btn.setAttribute(<span class="string">'aria-selected'</span>, <span class="string">'false'</span>));<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;target.setAttribute(<span class="string">'aria-selected'</span>, <span class="string">'true'</span>);<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// ... panel visibility logic</span><br>
+          &nbsp;&nbsp;}<br>
+          }<br>
+          customElements.define(<span class="string">'product-tabs'</span>, <span class="func">ProductTabs</span>);
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- PHASE 8: PERFORMANCE                                         -->
+      <!-- ============================================================ -->
+
+      <!-- SLIDE 18: OPTIMIZATIONS -->
+      <section data-background-color="#E8DFD6">
+        <span class="phase-badge">Phase 8</span>
+        <h2>Performance <em>Optimizations</em></h2>
+        <div class="feature-grid animate-scale delay-1">
+          <div class="feature-card">
+            <span class="tech-tag">CSS</span>
+            <h4>Deferred Styles</h4>
+            <p>Non-critical CSS loaded asynchronously via media="print" swap pattern, eliminating render-blocking</p>
+          </div>
+          <div class="feature-card">
+            <span class="tech-tag">Layout</span>
+            <h4>Content Visibility</h4>
+            <p>content-visibility: auto on below-fold sections, reducing initial rendering work by ~40%</p>
+          </div>
+          <div class="feature-card">
+            <span class="tech-tag">Images</span>
+            <h4>LCP Optimization</h4>
+            <p>Hero image preload with fetchpriority="high", responsive srcset, WebP via Shopify CDN</p>
+          </div>
+        </div>
+        <div class="feature-grid animate-scale delay-2" style="margin-top: 1rem;">
+          <div class="feature-card">
+            <span class="tech-tag">Lazy Load</span>
+            <h4>Smart Loading</h4>
+            <p>loading="lazy" below fold, eager for LCP &mdash; no lazy on hero images</p>
+          </div>
+          <div class="feature-card">
+            <span class="tech-tag">CLS</span>
+            <h4>Layout Stability</h4>
+            <p>Explicit width/height on all images, aspect-ratio CSS, no above-fold shifts</p>
+          </div>
+          <div class="feature-card">
+            <span class="tech-tag">DOM</span>
+            <h4>Minimal Markup</h4>
+            <p>Semantic HTML, reduced wrapper nesting, efficient Liquid loops</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 19: PERFORMANCE CODE -->
+      <section data-background-color="#F5F0EB">
+        <span class="phase-badge">Phase 8</span>
+        <h2>Render-Blocking <em>Reduction</em></h2>
+        <div class="code-block animate-scale delay-1">
+          <span class="comment">&lt;!-- Defer non-critical CSS --&gt;</span><br>
+          &lt;link rel=<span class="string">"stylesheet"</span> href=<span class="string">"component-card.css"</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;media=<span class="string">"print"</span> onload=<span class="string">"this.media='all'"</span>&gt;<br><br>
+          <span class="comment">&lt;!-- LCP hero preload --&gt;</span><br>
+          &lt;link rel=<span class="string">"preload"</span> as=<span class="string">"image"</span> fetchpriority=<span class="string">"high"</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;href=<span class="string">"{{ hero_image | image_url: width: 1200 }}"</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;imagesrcset=<span class="string">"..."</span>&gt;<br><br>
+          <span class="comment">&lt;!-- Content visibility for below-fold --&gt;</span><br>
+          .section--below-fold {<br>
+          &nbsp;&nbsp;<span class="keyword">content-visibility</span>: <span class="string">auto</span>;<br>
+          &nbsp;&nbsp;<span class="keyword">contain-intrinsic-size</span>: <span class="string">auto 500px</span>;<br>
+          }
+        </div>
+        <div class="divider"></div>
+        <p class="small animate-fade delay-2">Every optimization follows Shopify best practices &mdash; no external dependencies needed</p>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- OUTRO                                                        -->
+      <!-- ============================================================ -->
+
+      <!-- SLIDE 20: SKILLS SUMMARY -->
+      <section data-background-color="#fff">
+        <span class="phase-badge animate-fade">Summary</span>
+        <h2 class="animate-up">Skills <em>Demonstrated</em></h2>
+        <div class="skills-grid animate-scale delay-1">
+          <div class="skill-item">
+            <div class="skill-icon">1</div>
+            <div><strong>Theme Architecture</strong> &mdash; sections, snippets, JSON templates</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-icon">2</div>
+            <div><strong>Design Implementation</strong> &mdash; Figma to Liquid, mobile-first</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-icon">3</div>
+            <div><strong>Shopify 2.0</strong> &mdash; dynamic blocks, admin customization</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-icon">4</div>
+            <div><strong>Metafields</strong> &mdash; text, boolean, JSON, conditional rendering</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-icon">5</div>
+            <div><strong>App Integration</strong> &mdash; resilient app-data handling</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-icon">6</div>
+            <div><strong>Custom Pricing</strong> &mdash; VAT logic across all surfaces</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-icon">7</div>
+            <div><strong>Vanilla JS</strong> &mdash; Web Components, ARIA, event delegation</div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-icon">8</div>
+            <div><strong>Performance</strong> &mdash; deferred CSS, LCP, content-visibility</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 21: THANK YOU -->
+      <section data-background-color="#F5F0EB">
+        <div class="animate-up">
+          <h1 style="font-size: 2.4em; margin-bottom: 0.2em;"><em>Thank You</em></h1>
+          <div class="divider"></div>
+        </div>
+        <div class="animate-fade delay-2">
+          <p style="font-size: 0.7em; margin-bottom: 0.4rem;">WinSport Portfolio Theme</p>
+          <p class="small">Shopify 2.0 &middot; Liquid &middot; Vanilla JS &middot; Mobile-First &middot; Dawn v15.4.1</p>
+        </div>
+        <div class="animate-fade delay-3" style="margin-top: 1.5rem;">
+          <div style="display: inline-flex; gap: 1.5rem; align-items: center;">
+            <a href="https://github.com/ArtyomZayarny/shopify-theme" target="_blank"
+               style="font-family: 'Work Sans', sans-serif; font-size: 0.55em; color: var(--ws-navy); text-decoration: none; border-bottom: 1px solid var(--ws-navy); padding-bottom: 2px;">
+              GitHub Repository
+            </a>
+          </div>
+        </div>
+        <p class="small animate-fade delay-4" style="margin-top: 2rem; opacity: 0.3;">Press Space or click to navigate &middot; Auto-advances every 6 seconds</p>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Pause overlay -->
+  <div class="pause-overlay" id="pauseOverlay">
+    <div class="pause-icon"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>
+    const deck = Reveal.initialize({
+      hash: true,
+      transition: 'fade',
+      transitionSpeed: 'slow',
+      controls: false,
+      progress: true,
+      center: false,
+      width: 1200,
+      height: 700,
+      margin: 0.04,
+      autoSlide: 6000,
+      autoSlideStoppable: true,
+      loop: false,
+    });
+
+    // Pause overlay UX
+    const overlay = document.getElementById('pauseOverlay');
+    let isPaused = false;
+
+    Reveal.on('autoslideresumed', () => {
+      isPaused = false;
+      overlay.classList.remove('visible');
+    });
+
+    Reveal.on('autoslidepaused', () => {
+      isPaused = true;
+      overlay.classList.add('visible');
+    });
+
+    // Re-trigger animations on slide change
+    Reveal.on('slidechanged', (event) => {
+      const slide = event.currentSlide;
+      slide.querySelectorAll('.animate-up, .animate-fade, .animate-scale').forEach(el => {
+        el.style.animation = 'none';
+        el.offsetHeight; // trigger reflow
+        el.style.animation = '';
+      });
+    });
+  </script>
+</body>
+</html>
