@@ -1,4 +1,4 @@
-# WinSport — Shopify 2.0 Portfolio Theme
+# Artyom Zayarny — Shopify Developer Portfolio
 
 ![Shopify 2.0](https://img.shields.io/badge/Shopify-2.0-7AB55C?logo=shopify&logoColor=white)
 ![Dawn v15.4.1](https://img.shields.io/badge/Dawn-v15.4.1-000000)
@@ -6,15 +6,15 @@
 ![0 Dependencies](https://img.shields.io/badge/Dependencies-0-brightgreen)
 ![Mobile-First](https://img.shields.io/badge/CSS-Mobile--First-1572B6?logo=css3&logoColor=white)
 
-A production-ready Shopify 2.0 theme built on Dawn, demonstrating professional-level skills across theme architecture, design, metafields, custom pricing, JavaScript interactions, and performance optimization.
+Custom Shopify 2.0 theme built on Dawn — demonstrating design implementation, dynamic sections, metafields, VAT pricing, interactive JS features, and performance optimization.
 
-**[View Portfolio Page](https://artyomzayarny.github.io/shopify-theme/)** &nbsp;|&nbsp; **[Live Store](https://portfolio-dev-store.myshopify.com)**
+**[View Portfolio](https://artyomzayarny.github.io/shopify-theme/)** &nbsp;|&nbsp; **[Live Store](https://portfolio-dev-store.myshopify.com)** &nbsp;|&nbsp; **[Hire me on Upwork](https://www.upwork.com/freelancers/~0117172d4e1802cbc7)**
 
 ---
 
 ## Before & After
 
-The most dramatic transformation — Phase 3 Dynamic Sections on PDP:
+Product page transformation — custom specs section:
 
 | Before | After |
 |--------|-------|
@@ -22,17 +22,17 @@ The most dramatic transformation — Phase 3 Dynamic Sections on PDP:
 
 ---
 
-## Implementation Phases
+## Features
 
-| Phase | Feature | Key Skills | Presentation |
-|-------|---------|------------|--------------|
-| 2 | **Figma → Code** | Mobile-first CSS, serif/sans font pairing, responsive layout | [Slides](https://artyomzayarny.github.io/shopify-theme/phase-2-presentation.html) |
-| 3 | **Dynamic Sections** | `{% schema %}` blocks, admin reordering, accordion UI | [Slides](https://artyomzayarny.github.io/shopify-theme/phase-3-presentation.html) |
-| 4 | **Metafields** | Text/boolean/image metafields, conditional rendering | [Slides](https://artyomzayarny.github.io/shopify-theme/phase-4-presentation.html) |
-| 5 | **App Data Simulation** | `app_data.*` namespace, double-guard pattern, JSON traversal | [Slides](https://artyomzayarny.github.io/shopify-theme/phase-5-presentation.html) |
-| 6 | **VAT Pricing** | Per-product tax toggle, bidirectional calculation, sale support | [Slides](https://artyomzayarny.github.io/shopify-theme/phase-6-presentation.html) |
-| 7 | **JS Interactions** | Custom Elements, ARIA tabs, pub/sub, IntersectionObserver | [Slides](https://artyomzayarny.github.io/shopify-theme/phase-7-presentation.html) |
-| 8 | **Performance** | Deferred CSS, content-visibility, fetchpriority, CSS containment | [Slides](https://artyomzayarny.github.io/shopify-theme/phase-8-presentation.html) |
+| Feature | What It Does | Details |
+|---------|-------------|---------|
+| **Custom Design** | Figma to a fully responsive Shopify theme | [View](https://artyomzayarny.github.io/shopify-theme/phase-2-presentation.html) |
+| **Admin-Customizable Specs** | Store owners add/reorder product specs from Theme Customizer | [View](https://artyomzayarny.github.io/shopify-theme/phase-3-presentation.html) |
+| **Dynamic Product Content** | Materials, badges, images managed from Shopify admin | [View](https://artyomzayarny.github.io/shopify-theme/phase-4-presentation.html) |
+| **App Data Integration** | Badges and certifications from third-party app data | [View](https://artyomzayarny.github.io/shopify-theme/phase-5-presentation.html) |
+| **Flexible Tax Display** | Incl/excl VAT per product — ideal for European stores | [View](https://artyomzayarny.github.io/shopify-theme/phase-6-presentation.html) |
+| **Interactive Product Page** | Tabs, sticky cart button, variant-specific content | [View](https://artyomzayarny.github.io/shopify-theme/phase-7-presentation.html) |
+| **Speed Optimization** | Optimized images, deferred styles, Core Web Vitals best practices | [View](https://artyomzayarny.github.io/shopify-theme/phase-8-presentation.html) |
 
 ---
 
@@ -43,9 +43,9 @@ The most dramatic transformation — Phase 3 Dynamic Sections on PDP:
 | **Platform** | Shopify Online Store 2.0 |
 | **Theme Base** | Dawn v15.4.1 |
 | **Templating** | Liquid |
-| **JavaScript** | Vanilla JS — Custom Elements, pub/sub, IntersectionObserver |
-| **CSS** | Mobile-first, no preprocessors, deferred non-critical loading |
-| **Dev Tools** | Shopify CLI, Git feature branches, PR workflow |
+| **JavaScript** | Vanilla JS — no jQuery, no dependencies |
+| **CSS** | Mobile-first, responsive, no frameworks |
+| **Dev Tools** | Shopify CLI, Git, feature branches, PR workflow |
 
 ## Quick Start
 
