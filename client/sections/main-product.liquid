@@ -39,8 +39,34 @@
     }
   {%- endstyle -%}
 
+  {%- assign has_tabs_block = false -%}
+  {%- assign has_sticky_atc_block = false -%}
+  {%- assign has_variant_desc_block = false -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'product_tabs' -%}{%- assign has_tabs_block = true -%}{%- endif -%}
+    {%- if block.type == 'sticky_atc' -%}{%- assign has_sticky_atc_block = true -%}{%- endif -%}
+    {%- if block.type == 'variant_description' -%}{%- assign has_variant_desc_block = true -%}{%- endif -%}
+  {%- endfor -%}
+
+  {%- if has_tabs_block -%}
+    {{ 'product-tabs.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
+  {%- if has_sticky_atc_block -%}
+    {{ 'sticky-atc.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
+
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+  {%- if has_tabs_block -%}
+    <script src="{{ 'product-tabs.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
+  {%- if has_variant_desc_block -%}
+    <script src="{{ 'variant-description.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
+  {%- if has_sticky_atc_block -%}
+    <script src="{{ 'sticky-atc.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
   {%- if product.quantity_price_breaks_configured? -%}
     <script src="{{ 'show-more.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
@@ -479,13 +505,15 @@
               {%- when 'variant_picker' -%}
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
               {%- when 'buy_buttons' -%}
-                {%- render 'buy-buttons',
-                  block: block,
-                  product: product,
-                  product_form_id: product_form_id,
-                  section_id: section.id,
-                  show_pickup_availability: true
-                -%}
+                <div data-atc-trigger>
+                  {%- render 'buy-buttons',
+                    block: block,
+                    product: product,
+                    product_form_id: product_form_id,
+                    section_id: section.id,
+                    show_pickup_availability: true
+                  -%}
+                </div>
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
                   <div class="rating-wrapper">
@@ -675,6 +703,62 @@
                 </product-recommendations>
               {%- when 'icon-with-text' -%}
                 {% render 'icon-with-text', block: block %}
+              {%- when 'product_tabs' -%}
+                <div class="product__tabs" {{ block.shopify_attributes }}>
+                  <product-tabs>
+                    <div role="tablist" aria-label="{{ block.settings.heading | default: 'Product information' | escape }}">
+                      {%- if block.settings.tab_1_heading != blank -%}
+                        <button role="tab" data-tab-index="0" aria-selected="true" aria-controls="TabPanel-{{ block.id }}-0" id="Tab-{{ block.id }}-0">
+                          {{ block.settings.tab_1_heading | escape }}
+                        </button>
+                      {%- endif -%}
+                      {%- if block.settings.tab_2_heading != blank -%}
+                        <button role="tab" data-tab-index="1" aria-selected="false" aria-controls="TabPanel-{{ block.id }}-1" id="Tab-{{ block.id }}-1" tabindex="-1">
+                          {{ block.settings.tab_2_heading | escape }}
+                        </button>
+                      {%- endif -%}
+                      {%- if block.settings.tab_3_heading != blank -%}
+                        <button role="tab" data-tab-index="2" aria-selected="false" aria-controls="TabPanel-{{ block.id }}-2" id="Tab-{{ block.id }}-2" tabindex="-1">
+                          {{ block.settings.tab_3_heading | escape }}
+                        </button>
+                      {%- endif -%}
+                    </div>
+                    {%- if block.settings.tab_1_heading != blank -%}
+                      <div role="tabpanel" data-tab-panel="0" id="TabPanel-{{ block.id }}-0" aria-labelledby="Tab-{{ block.id }}-0">
+                        <div class="rte">{{ block.settings.tab_1_content }}</div>
+                      </div>
+                    {%- endif -%}
+                    {%- if block.settings.tab_2_heading != blank -%}
+                      <div role="tabpanel" data-tab-panel="1" id="TabPanel-{{ block.id }}-1" aria-labelledby="Tab-{{ block.id }}-1" hidden>
+                        <div class="rte">{{ block.settings.tab_2_content }}</div>
+                      </div>
+                    {%- endif -%}
+                    {%- if block.settings.tab_3_heading != blank -%}
+                      <div role="tabpanel" data-tab-panel="2" id="TabPanel-{{ block.id }}-2" aria-labelledby="Tab-{{ block.id }}-2" hidden>
+                        <div class="rte">{{ block.settings.tab_3_content }}</div>
+                      </div>
+                    {%- endif -%}
+                  </product-tabs>
+                </div>
+              {%- when 'variant_description' -%}
+                <div class="product__variant-description" {{ block.shopify_attributes }}>
+                  <variant-description>
+                    {%- for variant in product.variants -%}
+                      {%- assign variant_desc_key = 'variant_desc_' | append: forloop.index -%}
+                      {%- assign variant_desc_value = block.settings[variant_desc_key] -%}
+                      {%- if variant_desc_value != blank -%}
+                        <div data-variant-id="{{ variant.id }}" {% unless variant == product.selected_or_first_available_variant %}hidden{% endunless %}>
+                          <p class="product__variant-note">{{ variant_desc_value }}</p>
+                        </div>
+                      {%- endif -%}
+                    {%- endfor -%}
+                    {%- if block.settings.default_description != blank -%}
+                      <div data-variant-default {% if product.variants.size > 1 %}hidden{% endif %}>
+                        <p class="product__variant-note">{{ block.settings.default_description }}</p>
+                      </div>
+                    {%- endif -%}
+                  </variant-description>
+                </div>
               {%- when 'metafields' -%}
                 {% render 'product-metafields', product: product, block: block %}
             {%- endcase -%}
@@ -739,6 +823,30 @@
       {{ product | structured_data }}
     </script>
   </div>
+
+  {%- if has_sticky_atc_block -%}
+    {%- assign current_variant = product.selected_or_first_available_variant -%}
+    <sticky-atc data-atc-trigger="[data-atc-trigger]">
+      <div class="sticky-atc__inner page-width">
+        <div class="sticky-atc__info">
+          <span class="sticky-atc__title" data-sticky-title>{{ product.title | escape }}</span>
+          <span class="sticky-atc__price" data-sticky-price>{{ current_variant.price | money }}</span>
+        </div>
+        <button
+          type="button"
+          class="sticky-atc__button"
+          data-sticky-submit
+          {% unless current_variant.available %}disabled{% endunless %}
+        >
+          {%- if current_variant.available -%}
+            {{ 'products.product.add_to_cart' | t }}
+          {%- else -%}
+            {{ 'products.product.sold_out' | t }}
+          {%- endif -%}
+        </button>
+      </div>
+    </sticky-atc>
+  {%- endif -%}
 </product-info>
 
 {% schema %}
@@ -2087,6 +2195,104 @@
           "default": "t:sections.main-product.blocks.icon_with_text.settings.heading_3.default",
           "label": "t:sections.main-product.blocks.icon_with_text.settings.heading_3.label",
           "info": "t:sections.main-product.blocks.icon_with_text.settings.heading.info"
+        }
+      ]
+    },
+    {
+      "type": "product_tabs",
+      "name": "Product Tabs",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Tabs section label (accessibility)",
+          "default": "Product information"
+        },
+        {
+          "type": "text",
+          "id": "tab_1_heading",
+          "label": "Tab 1 heading",
+          "default": "Details"
+        },
+        {
+          "type": "richtext",
+          "id": "tab_1_content",
+          "label": "Tab 1 content"
+        },
+        {
+          "type": "text",
+          "id": "tab_2_heading",
+          "label": "Tab 2 heading",
+          "default": "Shipping"
+        },
+        {
+          "type": "richtext",
+          "id": "tab_2_content",
+          "label": "Tab 2 content"
+        },
+        {
+          "type": "text",
+          "id": "tab_3_heading",
+          "label": "Tab 3 heading"
+        },
+        {
+          "type": "richtext",
+          "id": "tab_3_content",
+          "label": "Tab 3 content"
+        }
+      ]
+    },
+    {
+      "type": "variant_description",
+      "name": "Variant Description",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Show conditional text based on the selected variant. Enter text for each variant by position (1st, 2nd, 3rd...)."
+        },
+        {
+          "type": "text",
+          "id": "default_description",
+          "label": "Default description",
+          "info": "Shown when no variant-specific text is set"
+        },
+        {
+          "type": "text",
+          "id": "variant_desc_1",
+          "label": "Variant 1 description"
+        },
+        {
+          "type": "text",
+          "id": "variant_desc_2",
+          "label": "Variant 2 description"
+        },
+        {
+          "type": "text",
+          "id": "variant_desc_3",
+          "label": "Variant 3 description"
+        },
+        {
+          "type": "text",
+          "id": "variant_desc_4",
+          "label": "Variant 4 description"
+        },
+        {
+          "type": "text",
+          "id": "variant_desc_5",
+          "label": "Variant 5 description"
+        }
+      ]
+    },
+    {
+      "type": "sticky_atc",
+      "name": "Sticky Add to Cart",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Shows a sticky bar at the bottom when the main Add to Cart button scrolls out of view."
         }
       ]
     },
