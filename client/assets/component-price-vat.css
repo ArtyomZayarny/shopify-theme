@@ -1,0 +1,52 @@
+.price-vat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-top: 0.4rem;
+}
+
+.price-vat__line {
+  font-size: 1.1rem;
+  color: rgba(var(--color-foreground), 0.7);
+  line-height: 1.4;
+}
+
+.price-vat__label {
+  font-weight: 500;
+}
+
+/* Sale price: strikethrough for compare_at_price */
+.price-vat--sale .price-vat__compare {
+  color: rgba(var(--color-foreground), 0.45);
+  text-decoration: line-through;
+  margin-right: 0.4rem;
+}
+
+/* Cart footer/drawer totals VAT summary */
+.price-vat--totals {
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 0.1rem solid rgba(var(--color-foreground), 0.08);
+  gap: 0.3rem;
+}
+
+.price-vat--totals .price-vat__line {
+  font-size: 1.2rem;
+}
+
+.price-vat--totals .price-vat__label {
+  min-width: 8rem;
+  display: inline-block;
+}
+
+@media screen and (min-width: 750px) {
+  .price-vat {
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .price-vat--totals {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+}

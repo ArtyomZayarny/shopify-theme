@@ -113,6 +113,7 @@
                     show_badges: true,
                     price_class: 'price--large'
                   -%}
+                  {%- render 'price-vat', product: product, price: product.selected_or_first_available_variant.price, compare_at_price: product.selected_or_first_available_variant.compare_at_price -%}
                 </div>
                 {%- if product.quantity_price_breaks_configured? -%}
                   <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
