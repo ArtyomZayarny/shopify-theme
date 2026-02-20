@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WinSport Portfolio Theme — Shopify 2.0 Developer Portfolio</title>
-<meta name="description" content="Shopify 2.0 portfolio theme: Figma-to-code, dynamic sections, metafields, VAT pricing, Web Components, performance optimization. 10 phases, zero dependencies.">
+<title>Artyom Zayarny — Shopify Developer | Custom Themes & Store Optimization</title>
+<meta name="description" content="Shopify developer specializing in custom themes from design to a fast, optimized store. Figma to Shopify, Sections 2.0, metafields, VAT pricing, performance optimization.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -31,6 +31,8 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.2}
 .nav__links{display:flex;gap:1.5rem;align-items:center}
 .nav__links a{color:rgba(245,240,235,.75);font-size:.85rem;font-weight:500;letter-spacing:.03em;transition:color .2s}
 .nav__links a:hover{color:var(--bg)}
+.nav__links a.nav__cta{color:var(--bg);background:var(--accent);padding:.35rem .9rem;border-radius:4px;font-weight:600}
+.nav__links a.nav__cta:hover{background:var(--accent-light)}
 
 /* ── Hero ── */
 .hero{background:var(--navy-dark);color:var(--bg);padding:5rem 0 4rem;text-align:center}
@@ -61,7 +63,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.2}
 .compare__img{position:relative}
 .compare__label{position:absolute;top:.75rem;left:.75rem;background:var(--navy-dark);color:var(--bg);font-size:.7rem;font-weight:500;padding:.25rem .75rem;border-radius:4px;text-transform:uppercase;letter-spacing:.06em}
 
-/* ── Phase Showcase ── */
+/* ── Feature Showcase ── */
 .phases{display:flex;flex-direction:column;gap:4rem}
 .phase{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center}
 .phase--reverse{direction:rtl}
@@ -72,24 +74,19 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.2}
 .phase__text p{font-size:.92rem;font-weight:300;line-height:1.65;opacity:.75;margin-bottom:1rem}
 .phase__link{font-size:.85rem;font-weight:500;display:inline-flex;align-items:center;gap:.3rem}
 
-/* ── Phase 8 perf card ── */
+/* ── Perf card ── */
 .perf-card{background:var(--navy-dark);color:var(--bg);border-radius:8px;padding:2rem;box-shadow:0 4px 24px rgba(0,0,0,.08)}
 .perf-card ul{list-style:none;display:flex;flex-direction:column;gap:.75rem}
 .perf-card li{display:flex;align-items:baseline;gap:.75rem;font-size:.9rem;font-weight:300}
 .perf-card li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent-light);flex-shrink:0;margin-top:.45rem}
 .perf-card li strong{font-weight:500;color:var(--bg)}
 
-/* ── Code Highlights ── */
-.code-blocks{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-.code-block{background:var(--navy-dark);border-radius:8px;overflow:hidden}
-.code-block__header{display:flex;align-items:center;gap:.5rem;padding:.75rem 1.25rem;background:rgba(0,0,0,.2);font-size:.78rem;font-weight:500;color:rgba(245,240,235,.6)}
-.code-block__dot{width:8px;height:8px;border-radius:50%;background:var(--accent-light)}
-.code-block pre{padding:1.25rem;overflow-x:auto;font-size:.8rem;line-height:1.65;color:rgba(245,240,235,.85);font-family:'SF Mono',Menlo,Consolas,monospace;tab-size:2;-moz-tab-size:2}
-.code-block pre .kw{color:#C9A87C}
-.code-block pre .fn{color:#7EC8E3}
-.code-block pre .str{color:#A8D5A2}
-.code-block pre .cm{color:rgba(245,240,235,.35);font-style:italic}
-.code-block pre .tag{color:#E6A07C}
+/* ── How I Work (Process) ── */
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;counter-reset:step}
+.process-step{background:var(--white);border-radius:8px;padding:2rem 1.5rem;text-align:center;border:1px solid rgba(58,58,74,.08);position:relative}
+.process-step::before{counter-increment:step;content:counter(step);display:flex;align-items:center;justify-content:center;width:2.5rem;height:2.5rem;border-radius:50%;background:var(--navy-dark);color:var(--bg);font-family:var(--serif);font-size:1.2rem;font-weight:600;margin:0 auto 1rem}
+.process-step h3{font-size:1.1rem;margin-bottom:.5rem}
+.process-step p{font-size:.85rem;font-weight:300;line-height:1.55;opacity:.7}
 
 /* ── Tech Stack ── */
 .tech-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
@@ -97,8 +94,14 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.2}
 .tech-card h3{font-size:1.05rem;margin-bottom:.35rem}
 .tech-card p{font-size:.82rem;font-weight:300;opacity:.65;line-height:1.5}
 
+/* ── CTA ── */
+.cta{background:var(--navy-dark);color:var(--bg);padding:4.5rem 0;text-align:center}
+.cta h2{font-size:clamp(1.6rem,3.5vw,2.2rem);margin-bottom:1.5rem}
+.cta__btn{display:inline-block;background:var(--accent);color:var(--bg);font-family:var(--sans);font-size:1.05rem;font-weight:600;padding:.9rem 2.2rem;border-radius:6px;letter-spacing:.02em;transition:background .2s}
+.cta__btn:hover{background:var(--accent-light);color:var(--bg)}
+
 /* ── Footer ── */
-.footer{background:var(--navy-dark);color:var(--bg);padding:3rem 0;text-align:center}
+.footer{background:var(--navy-dark);color:var(--bg);padding:3rem 0;text-align:center;border-top:1px solid rgba(245,240,235,.1)}
 .footer__links{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;margin-bottom:1.5rem}
 .footer__links a{color:rgba(245,240,235,.7);font-size:.9rem;font-weight:400;transition:color .2s}
 .footer__links a:hover{color:var(--bg)}
@@ -114,13 +117,14 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.2}
   .compare__pair{grid-template-columns:1fr}
   .phase{grid-template-columns:1fr}
   .phase--reverse{direction:ltr}
-  .code-blocks{grid-template-columns:1fr}
-  .code-block pre{font-size:.72rem}
+  .process-grid{grid-template-columns:1fr 1fr}
+  .cta{padding:3rem 0}
 }
 @media(max-width:480px){
   .nav__links a:nth-child(2){display:none}
   .hero__stat strong{font-size:1.5rem}
   .skills-grid,.tech-grid{grid-template-columns:1fr}
+  .process-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -129,13 +133,13 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.2}
 <!-- ═══ Nav ═══ -->
 <nav class="nav">
   <div class="nav__inner">
-    <a class="nav__logo" href="#">WinSport</a>
+    <a class="nav__logo" href="#">Artyom Zayarny</a>
     <div class="nav__links">
+      <a href="#results">Results</a>
       <a href="#skills">Skills</a>
-      <a href="#before-after">Before&middot;After</a>
-      <a href="#phases">Phases</a>
-      <a href="#code">Code</a>
-      <a href="https://github.com/ArtyomZayarny/shopify-theme" target="_blank" rel="noopener">GitHub &#8599;</a>
+      <a href="#features">Features</a>
+      <a href="#process">Process</a>
+      <a class="nav__cta" href="https://www.upwork.com/freelancers/~0117172d4e1802cbc7" target="_blank" rel="noopener">Hire Me</a>
     </div>
   </div>
 </nav>
@@ -143,193 +147,193 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.2}
 <!-- ═══ A. Hero ═══ -->
 <section class="hero">
   <div class="container">
-    <h1>WinSport Portfolio Theme</h1>
-    <p class="hero__sub">Shopify 2.0 &middot; Dawn v15.4.1 &middot; Built from scratch, zero dependencies</p>
+    <h1>Artyom Zayarny</h1>
+    <p class="hero__sub">Shopify Developer &mdash; Custom Themes from Design to a Fast, Optimized Store</p>
     <div class="hero__stats">
-      <div class="hero__stat"><strong>10</strong><span>Phases</span></div>
-      <div class="hero__stat"><strong>0</strong><span>Dependencies</span></div>
-      <div class="hero__stat"><strong>3</strong><span>Web Components</span></div>
-      <div class="hero__stat"><strong>6</strong><span>Pull Requests</span></div>
+      <div class="hero__stat"><strong>7</strong><span>Custom Features</span></div>
+      <div class="hero__stat"><strong>Mobile</strong><span>Optimized</span></div>
+      <div class="hero__stat"><strong>0</strong><span>jQuery &amp; Dependencies</span></div>
+      <div class="hero__stat"><strong>Dawn</strong><span>v15 Base</span></div>
     </div>
   </div>
 </section>
 
-<!-- ═══ B. Skills Matrix ═══ -->
+<!-- ═══ B. Before / After — first after Hero ═══ -->
+<section class="section section--alt" id="results">
+  <div class="container">
+    <h2 class="section__title">Before &amp; After</h2>
+    <p class="section__desc">Real results from a custom Shopify theme build — see the transformation.</p>
+    <div class="compare">
+      <div class="compare__pair">
+        <h3>Product Page &mdash; Custom Specs Section</h3>
+        <div class="compare__img">
+          <span class="compare__label">Before</span>
+          <img src="screenshots/phase-3-pdp-before.png" alt="Product page before — standard Dawn layout" loading="lazy">
+        </div>
+        <div class="compare__img">
+          <span class="compare__label">After</span>
+          <img src="screenshots/phase-3-pdp-after.png" alt="Product page after — custom specs showcase with dynamic blocks" loading="lazy">
+        </div>
+      </div>
+      <div class="compare__pair">
+        <h3>Product Page &mdash; Dynamic Content from Admin</h3>
+        <div class="compare__img">
+          <span class="compare__label">Before</span>
+          <img src="screenshots/phase-4-pdp-before.png" alt="Product page before — no custom content" loading="lazy">
+        </div>
+        <div class="compare__img">
+          <span class="compare__label">After</span>
+          <img src="screenshots/phase-4-pdp-after.png" alt="Product page after — materials, featured badge, extra image from admin" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ C. Skills Matrix ═══ -->
 <section class="section" id="skills">
   <div class="container">
-    <h2 class="section__title">What This Theme Demonstrates</h2>
-    <p class="section__desc">Each skill was implemented as a separate phase with its own branch, PR, and presentation.</p>
+    <h2 class="section__title">What I Can Do for Your Store</h2>
+    <p class="section__desc">Every skill demonstrated in a real Shopify theme — with code you can review.</p>
     <div class="skills-grid">
       <div class="skill-card">
         <div class="skill-card__icon">&#9998;</div>
         <h3>Figma &rarr; Shopify</h3>
-        <p>Pixel-accurate implementation of a luxury sport brand design. Mobile-first responsive layout with serif/sans font pairing, no page builders.</p>
+        <p>I turn your design files into a pixel-perfect Shopify theme. No page builders — clean, maintainable code.</p>
       </div>
       <div class="skill-card">
         <div class="skill-card__icon">&#9635;</div>
         <h3>Sections 2.0</h3>
-        <p>Dynamic blocks with admin reordering. Custom "Product Specs" section with accordion items — store owners add/remove specs from Theme Customizer.</p>
+        <p>Sections you can rearrange in Theme Customizer. Add, remove, reorder — no developer needed for content changes.</p>
       </div>
       <div class="skill-card">
         <div class="skill-card__icon">&#9881;</div>
         <h3>Metafields</h3>
-        <p>Text, boolean, image, JSON metafields on PDP. Conditional rendering — only displayed when populated. Defensive null checks throughout.</p>
+        <p>Custom product fields in Shopify admin: materials, badges, extra images. They only show on the storefront when filled in.</p>
       </div>
       <div class="skill-card">
         <div class="skill-card__icon">&#37;</div>
         <h3>VAT Pricing</h3>
-        <p>Per-product VAT toggle via boolean metafield. Bidirectional tax calculation (incl &harr; excl) with configurable rate. Works across PDP, collection, and cart.</p>
+        <p>Show prices with and without tax per product. Configurable tax rate. Works on product pages, collections, and cart.</p>
       </div>
       <div class="skill-card">
         <div class="skill-card__icon">&lt;/&gt;</div>
         <h3>Vanilla JS</h3>
-        <p>Three Custom Elements following Dawn patterns: product tabs with ARIA keyboard nav, variant descriptions via pub/sub, sticky ATC with IntersectionObserver.</p>
+        <p>Interactive product tabs, sticky "Add to Cart" button, variant-specific content. Accessible, fast, no jQuery.</p>
       </div>
       <div class="skill-card">
         <div class="skill-card__icon">&#9889;</div>
         <h3>Performance</h3>
-        <p>Deferred CSS loading, content-visibility: auto, fetchpriority on LCP images, CSS containment. Zero render-blocking resources added.</p>
+        <p>Your store loads fast. Optimized images, deferred styles, best practices for Core Web Vitals.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ C. Before / After ═══ -->
-<section class="section section--alt" id="before-after">
+<!-- ═══ D. Feature Showcase ═══ -->
+<section class="section section--alt" id="features">
   <div class="container">
-    <h2 class="section__title">Before &amp; After</h2>
-    <p class="section__desc">Side-by-side comparison of PDP transformations across implementation phases.</p>
-    <div class="compare">
-      <div class="compare__pair">
-        <h3>Phase 3 — Dynamic Sections</h3>
-        <div class="compare__img">
-          <span class="compare__label">Before</span>
-          <img src="screenshots/phase-3-pdp-before.png" alt="Product page before Phase 3 — standard Dawn layout" loading="lazy">
-        </div>
-        <div class="compare__img">
-          <span class="compare__label">After</span>
-          <img src="screenshots/phase-3-pdp-after.png" alt="Product page after Phase 3 — custom specs showcase with dynamic blocks" loading="lazy">
-        </div>
-      </div>
-      <div class="compare__pair">
-        <h3>Phase 4 — Metafields</h3>
-        <div class="compare__img">
-          <span class="compare__label">Before</span>
-          <img src="screenshots/phase-4-pdp-before.png" alt="Product page before Phase 4 — no metafield content" loading="lazy">
-        </div>
-        <div class="compare__img">
-          <span class="compare__label">After</span>
-          <img src="screenshots/phase-4-pdp-after.png" alt="Product page after Phase 4 — materials, featured badge, extra image from metafields" loading="lazy">
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ D. Phase Showcase ═══ -->
-<section class="section" id="phases">
-  <div class="container">
-    <h2 class="section__title">Implementation Phases</h2>
-    <p class="section__desc">Each phase is an independent feature branch with a detailed presentation.</p>
+    <h2 class="section__title">Features I Built</h2>
+    <p class="section__desc">Each feature is a standalone implementation with its own detailed presentation.</p>
     <div class="phases">
 
-      <!-- Phase 2 -->
+      <!-- Custom Design Implementation -->
       <article class="phase">
         <div class="phase__img">
-          <img src="screenshots/hero-before.png" alt="WinSport homepage hero — Figma-to-code result" loading="lazy">
+          <img src="screenshots/hero-before.png" alt="Custom homepage design — Figma to Shopify" loading="lazy">
         </div>
         <div class="phase__text">
-          <span>Phase 2</span>
-          <h3>Figma &rarr; Code</h3>
-          <p>Warm beige + navy design system with Cormorant/Work Sans font pairing. Full-viewport hero banner, responsive product cards, custom footer. Mobile-first — no page builders, no frameworks.</p>
-          <a class="phase__link" href="phase-2-presentation.html">View presentation &#8594;</a>
+          <span>Design</span>
+          <h3>Custom Design Implementation</h3>
+          <p>Figma or PSD to a fully responsive Shopify theme. Custom typography, color system, full-viewport hero, responsive product cards — mobile-first, no frameworks.</p>
+          <a class="phase__link" href="phase-2-presentation.html">View details &#8594;</a>
         </div>
       </article>
 
-      <!-- Phase 3 -->
+      <!-- Admin-Customizable Product Specs -->
       <article class="phase phase--reverse">
         <div class="phase__img">
-          <img src="screenshots/phase-3-pdp-after.png" alt="Product page with custom specs showcase section" loading="lazy">
+          <img src="screenshots/phase-3-pdp-after.png" alt="Product page with admin-customizable specs section" loading="lazy">
         </div>
         <div class="phase__text">
-          <span>Phase 3</span>
-          <h3>Dynamic Sections</h3>
-          <p>Custom "Product Specs Showcase" section with dynamic blocks. Store owners add, remove, and reorder accordion items directly from Theme Customizer. Full Shopify 2.0 section schema.</p>
-          <a class="phase__link" href="phase-3-presentation.html">View presentation &#8594;</a>
+          <span>Sections</span>
+          <h3>Admin-Customizable Product Specs</h3>
+          <p>Store owners add and reorder specs without touching code. Custom accordion section with dynamic blocks — fully manageable from Theme Customizer.</p>
+          <a class="phase__link" href="phase-3-presentation.html">View details &#8594;</a>
         </div>
       </article>
 
-      <!-- Phase 4 -->
+      <!-- Dynamic Product Content -->
       <article class="phase">
         <div class="phase__img">
-          <img src="screenshots/phase-4-pdp-after.png" alt="PDP with metafield content — materials, featured badge, extra image" loading="lazy">
+          <img src="screenshots/phase-4-pdp-after.png" alt="Product page with dynamic content from Shopify admin" loading="lazy">
         </div>
         <div class="phase__text">
-          <span>Phase 4</span>
-          <h3>Metafields</h3>
-          <p>Product metafields (text, boolean, image) rendered on PDP with conditional display. Content only appears when metafield is populated — defensive checks prevent empty markup.</p>
-          <a class="phase__link" href="phase-4-presentation.html">View presentation &#8594;</a>
+          <span>Metafields</span>
+          <h3>Dynamic Product Content</h3>
+          <p>Materials, badges, extra images — all managed from Shopify admin. Content only appears when filled in, keeping pages clean.</p>
+          <a class="phase__link" href="phase-4-presentation.html">View details &#8594;</a>
         </div>
       </article>
 
-      <!-- Phase 5 -->
+      <!-- Third-Party App Integration -->
       <article class="phase phase--reverse">
         <div class="phase__img">
-          <img src="screenshots/phase-5-collection-badge.png" alt="Collection page with app-data badge on product cards" loading="lazy">
+          <img src="screenshots/phase-5-collection-badge.png" alt="Collection page with app-data badges on product cards" loading="lazy">
         </div>
         <div class="phase__text">
-          <span>Phase 5</span>
-          <h3>App Data Simulation</h3>
-          <p>Simulated third-party app data via <code>app_data.*</code> namespace. Badge on collection cards, certifications accordion on PDP. Double-guard pattern: existence check + value check.</p>
-          <a class="phase__link" href="phase-5-presentation.html">View presentation &#8594;</a>
+          <span>App Data</span>
+          <h3>Third-Party App Integration</h3>
+          <p>Badges and certifications from app data on collection and product pages. Resilient to app changes — content degrades gracefully.</p>
+          <a class="phase__link" href="phase-5-presentation.html">View details &#8594;</a>
         </div>
       </article>
 
-      <!-- Phase 6 -->
+      <!-- Flexible Tax Display -->
       <article class="phase">
         <div class="phase__img">
-          <img src="screenshots/phase-6-pdp-vat.png" alt="Product page with VAT pricing — incl/excl tax display" loading="lazy">
+          <img src="screenshots/phase-6-pdp-vat.png" alt="Product page with inclusive and exclusive VAT pricing" loading="lazy">
         </div>
         <div class="phase__text">
-          <span>Phase 6</span>
-          <h3>Custom VAT Pricing</h3>
-          <p>Per-product VAT toggle via boolean metafield. Bidirectional tax calculation with configurable rate. Supports sale prices (<code>compare_at_price</code>) across PDP, collection, and cart.</p>
-          <a class="phase__link" href="phase-6-presentation.html">View presentation &#8594;</a>
+          <span>Pricing</span>
+          <h3>Flexible Tax Display</h3>
+          <p>Incl/excl VAT per product — ideal for European stores. Configurable rate, supports sale prices, works across product pages, collections, and cart.</p>
+          <a class="phase__link" href="phase-6-presentation.html">View details &#8594;</a>
         </div>
       </article>
 
-      <!-- Phase 7 -->
+      <!-- Interactive Product Experience -->
       <article class="phase phase--reverse">
         <div class="phase__img">
-          <img src="screenshots/phase-7-product-tabs.png" alt="Product tabs Web Component with ARIA keyboard navigation" loading="lazy">
+          <img src="screenshots/phase-7-product-tabs.png" alt="Interactive product tabs with keyboard navigation" loading="lazy">
         </div>
         <div class="phase__text">
-          <span>Phase 7</span>
-          <h3>JavaScript Interactions</h3>
-          <p>Three Web Components: <code>&lt;product-tabs&gt;</code> with ARIA keyboard nav, <code>&lt;variant-description&gt;</code> via pub/sub, <code>&lt;sticky-atc&gt;</code> with IntersectionObserver. Zero dependencies, conditional loading.</p>
-          <a class="phase__link" href="phase-7-presentation.html">View presentation &#8594;</a>
+          <span>Interactivity</span>
+          <h3>Interactive Product Experience</h3>
+          <p>Tabs, sticky cart button, variant-specific content. Accessible keyboard navigation, fast loading, zero external dependencies.</p>
+          <a class="phase__link" href="phase-7-presentation.html">View details &#8594;</a>
         </div>
       </article>
 
-      <!-- Phase 8 -->
+      <!-- Speed Optimization -->
       <article class="phase">
         <div class="phase__img">
           <div class="perf-card">
             <ul>
-              <li><strong>7 CSS files</strong> deferred via media=print &rarr; onload pattern</li>
-              <li><strong>content-visibility: auto</strong> on below-fold sections</li>
-              <li><strong>fetchpriority="high"</strong> on hero/LCP images</li>
-              <li><strong>CSS containment</strong> on card media for isolated reflow</li>
-              <li><strong>srcset + WebP</strong> via Shopify CDN (7 breakpoints)</li>
-              <li><strong>Zero render-blocking</strong> resources added to Dawn baseline</li>
+              <li><strong>7 CSS files</strong> deferred for non-blocking page load</li>
+              <li><strong>Below-fold sections</strong> skip rendering until scrolled to</li>
+              <li><strong>Hero images</strong> load first for fastest visual response</li>
+              <li><strong>Product cards</strong> optimized for smooth scrolling</li>
+              <li><strong>Responsive images</strong> via Shopify CDN (7 breakpoints)</li>
+              <li><strong>Zero render-blocking</strong> resources added to the theme</li>
             </ul>
           </div>
         </div>
         <div class="phase__text">
-          <span>Phase 8</span>
-          <h3>Performance</h3>
-          <p>Systematic optimization of every custom addition. Deferred non-critical CSS, content-visibility for paint containment, fetchpriority for LCP. All techniques are progressive — no functionality lost if unsupported.</p>
-          <a class="phase__link" href="phase-8-presentation.html">View presentation &#8594;</a>
+          <span>Speed</span>
+          <h3>Speed Optimization</h3>
+          <p>Fast loading, optimized images, zero render-blocking additions. Every custom feature was built with Core Web Vitals in mind.</p>
+          <a class="phase__link" href="phase-8-presentation.html">View details &#8594;</a>
         </div>
       </article>
 
@@ -337,140 +341,84 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.2}
   </div>
 </section>
 
-<!-- ═══ E. Code Highlights ═══ -->
-<section class="section section--alt" id="code">
+<!-- ═══ E. How I Work ═══ -->
+<section class="section" id="process">
   <div class="container">
-    <h2 class="section__title">Code Highlights</h2>
-    <p class="section__desc">Real code from the theme — no pseudocode, no simplifications.</p>
-    <div class="code-blocks">
-
-      <!-- price-vat.liquid -->
-      <div class="code-block">
-        <div class="code-block__header">
-          <span class="code-block__dot"></span> price-vat.liquid
-        </div>
-<pre><span class="cm">&lt;!-- Metafield guard + bidirectional VAT --&gt;</span>
-<span class="tag">{%- if</span> settings.vat_enabled
-    <span class="kw">and</span> product.metafields.custom.show_tax.value == <span class="str">true</span> <span class="tag">-%}</span>
-
-  <span class="tag">{%- assign</span> vat_rate = settings.vat_rate <span class="tag">-%}</span>
-
-  <span class="tag">{%- if</span> settings.vat_prices_include_tax <span class="tag">-%}</span>
-    <span class="cm">{%- comment -%} excl = price × 100 / (100 + rate) {%- endcomment -%}</span>
-    <span class="tag">{%- assign</span> divisor = <span class="fn">100</span> | plus: vat_rate <span class="tag">-%}</span>
-    <span class="tag">{%- assign</span> excl_price = price | times: <span class="fn">100</span>
-                                | divided_by: divisor <span class="tag">-%}</span>
-  <span class="tag">{%- else -%}</span>
-    <span class="cm">{%- comment -%} incl = price × (100 + rate) / 100 {%- endcomment -%}</span>
-    <span class="tag">{%- assign</span> multiplier = <span class="fn">100</span> | plus: vat_rate <span class="tag">-%}</span>
-    <span class="tag">{%- assign</span> incl_price = price | times: multiplier
-                                 | divided_by: <span class="fn">100</span> <span class="tag">-%}</span>
-  <span class="tag">{%- endif -%}</span>
-
-  &lt;<span class="fn">div</span> class=<span class="str">"price-vat"</span>&gt;
-    Incl. VAT: {{ incl_price | <span class="kw">money</span> }}
-    Excl. VAT: {{ excl_price | <span class="kw">money</span> }}
-  &lt;/<span class="fn">div</span>&gt;
-<span class="tag">{%- endif -%}</span></pre>
+    <h2 class="section__title">How I Work</h2>
+    <p class="section__desc">A clear, structured process from first message to a finished store.</p>
+    <div class="process-grid">
+      <div class="process-step">
+        <h3>Discuss</h3>
+        <p>We discuss your requirements, timeline, and budget</p>
       </div>
-
-      <!-- product-tabs.js -->
-      <div class="code-block">
-        <div class="code-block__header">
-          <span class="code-block__dot"></span> product-tabs.js
-        </div>
-<pre><span class="kw">if</span> (!customElements.<span class="fn">get</span>(<span class="str">'product-tabs'</span>)) {
-  customElements.<span class="fn">define</span>(<span class="str">'product-tabs'</span>,
-    <span class="kw">class</span> <span class="fn">ProductTabs</span> <span class="kw">extends</span> HTMLElement {
-      <span class="fn">connectedCallback</span>() {
-        <span class="kw">this</span>.buttons = Array.<span class="fn">from</span>(
-          <span class="kw">this</span>.<span class="fn">querySelectorAll</span>(<span class="str">'[role="tab"]'</span>));
-        <span class="kw">this</span>.panels = Array.<span class="fn">from</span>(
-          <span class="kw">this</span>.<span class="fn">querySelectorAll</span>(<span class="str">'[role="tabpanel"]'</span>));
-
-        <span class="kw">this</span>.buttons.<span class="fn">forEach</span>((btn, i) =&gt; {
-          btn.<span class="fn">setAttribute</span>(<span class="str">'aria-selected'</span>,
-            i === <span class="fn">0</span> ? <span class="str">'true'</span> : <span class="str">'false'</span>);
-          btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>,
-            () =&gt; <span class="kw">this</span>.<span class="fn">activateTab</span>(i));
-          btn.<span class="fn">addEventListener</span>(<span class="str">'keydown'</span>,
-            (e) =&gt; <span class="kw">this</span>.<span class="fn">handleKeydown</span>(e, i));
-        });
-      }
-
-      <span class="fn">handleKeydown</span>(event, currentIndex) {
-        <span class="kw">const</span> { key } = event;
-        <span class="kw">let</span> newIndex;
-        <span class="kw">switch</span> (key) {
-          <span class="kw">case</span> <span class="str">'ArrowRight'</span>:
-            newIndex = (currentIndex + <span class="fn">1</span>)
-              % <span class="kw">this</span>.buttons.length; <span class="kw">break</span>;
-          <span class="kw">case</span> <span class="str">'ArrowLeft'</span>:
-            newIndex = (currentIndex - <span class="fn">1</span>
-              + <span class="kw">this</span>.buttons.length)
-              % <span class="kw">this</span>.buttons.length; <span class="kw">break</span>;
-          <span class="kw">case</span> <span class="str">'Home'</span>: newIndex = <span class="fn">0</span>; <span class="kw">break</span>;
-          <span class="kw">case</span> <span class="str">'End'</span>:
-            newIndex = <span class="kw">this</span>.buttons.length - <span class="fn">1</span>;
-            <span class="kw">break</span>;
-          <span class="kw">default</span>: <span class="kw">return</span>;
-        }
-        event.<span class="fn">preventDefault</span>();
-        <span class="kw">this</span>.<span class="fn">activateTab</span>(newIndex);
-      }
-    }
-  );
-}</pre>
+      <div class="process-step">
+        <h3>Design</h3>
+        <p>I review your designs or help create a concept</p>
       </div>
-
+      <div class="process-step">
+        <h3>Develop</h3>
+        <p>Clean Shopify 2.0 code, mobile-first, tested across devices</p>
+      </div>
+      <div class="process-step">
+        <h3>Deliver</h3>
+        <p>Theme pushed to your store, documentation, and support</p>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ═══ F. Tech Stack ═══ -->
-<section class="section" id="tech">
+<section class="section section--alt" id="tech">
   <div class="container">
     <h2 class="section__title">Tech Stack</h2>
     <p class="section__desc">No frameworks, no build tools, no preprocessors — just the platform.</p>
     <div class="tech-grid">
       <div class="tech-card">
         <h3>Shopify 2.0</h3>
-        <p>Online Store 2.0 architecture with JSON templates, section groups, and app blocks</p>
+        <p>Modern Shopify architecture — flexible, admin-friendly</p>
       </div>
       <div class="tech-card">
         <h3>Liquid</h3>
-        <p>Advanced templating: metafield access, conditional rendering, snippet composition, schema blocks</p>
+        <p>Shopify's templating language — I know it deeply</p>
       </div>
       <div class="tech-card">
         <h3>Vanilla JS</h3>
-        <p>Custom Elements v1, pub/sub events, IntersectionObserver — zero external dependencies</p>
+        <p>No jQuery, no heavy libraries — just fast, clean code</p>
       </div>
       <div class="tech-card">
         <h3>Mobile-First CSS</h3>
-        <p>Responsive design without preprocessors. Deferred loading, content-visibility, CSS containment</p>
+        <p>Responsive on every device, no frameworks needed</p>
       </div>
       <div class="tech-card">
         <h3>Dawn v15.4.1</h3>
-        <p>Shopify's reference theme as a foundation — extended, not replaced</p>
+        <p>Official Shopify theme as a solid foundation</p>
       </div>
       <div class="tech-card">
         <h3>Git + Shopify CLI</h3>
-        <p>Feature branches, meaningful commits, PR workflow. Theme dev/push/check via CLI</p>
+        <p>Professional workflow — version control, code review, deployments</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ G. Footer ═══ -->
+<!-- ═══ G. CTA ═══ -->
+<section class="cta">
+  <div class="container">
+    <h2>Ready to improve your Shopify store?</h2>
+    <a class="cta__btn" href="https://www.upwork.com/freelancers/~0117172d4e1802cbc7" target="_blank" rel="noopener">Hire me on Upwork &#8594;</a>
+  </div>
+</section>
+
+<!-- ═══ H. Footer ═══ -->
 <footer class="footer">
   <div class="container">
     <div class="footer__links">
       <a href="https://github.com/ArtyomZayarny/shopify-theme" target="_blank" rel="noopener">GitHub Repository</a>
       <a href="https://portfolio-dev-store.myshopify.com" target="_blank" rel="noopener">Live Store</a>
-      <a href="phase-2-presentation.html">Phase Presentations</a>
+      <a href="https://www.upwork.com/freelancers/~0117172d4e1802cbc7" target="_blank" rel="noopener">Upwork Profile</a>
       <a href="video-presentation.html">Video Overview</a>
     </div>
-    <p class="footer__copy">WinSport Portfolio Theme &copy; 2025 &middot; Built on Dawn by Shopify</p>
+    <p class="footer__copy">Artyom Zayarny &copy; 2026 &middot; Built on Dawn by Shopify</p>
   </div>
 </footer>
 
