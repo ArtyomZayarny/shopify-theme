@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 6: Custom VAT Pricing — Inc/Exc Tax Toggle</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;1,400;1,600&family=Work+Sans:wght@300;400;500;600&display=swap');
+
+    :root {
+      --ws-beige: #F5F0EB;
+      --ws-navy: #3A3A4A;
+      --ws-navy-dark: #2C2C3A;
+      --ws-warm: #E8DFD6;
+      --ws-text: #1a1a1a;
+    }
+
+    /* ---- Base ---- */
+    .reveal { font-family: 'Work Sans', sans-serif; color: var(--ws-text); }
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: 'Cormorant', serif;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      color: var(--ws-text);
+      margin-bottom: 0.4em;
+    }
+    .reveal h1 { font-size: 2em; line-height: 1.1; }
+    .reveal h2 { font-size: 1.6em; }
+    .reveal h3 { font-size: 1.2em; }
+    .reveal h1 em, .reveal h2 em, .reveal h3 em { font-style: italic; font-weight: inherit; }
+    .reveal p, .reveal li { font-size: 0.62em; line-height: 1.55; letter-spacing: 0.02em; }
+    .reveal .small { font-size: 0.5em; opacity: 0.6; }
+    .reveal .slides section { padding: 1.6rem 2rem; box-sizing: border-box; }
+    .reveal ul { margin: 0; }
+
+    /* ---- Divider ---- */
+    .divider { width: 48px; height: 1px; background: var(--ws-navy); margin: 0.8rem auto; opacity: 0.25; }
+
+    /* ---- Stats ---- */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .stat { text-align: center; }
+    .stat-number { font-family: 'Cormorant', serif; font-size: 2.2em; line-height: 1; color: var(--ws-navy); }
+    .stat-label { font-size: 0.5em; text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.2rem; opacity: 0.6; }
+
+    /* ---- Feature cards ---- */
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem; }
+    .feature-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 6px;
+      padding: 1.2rem 1rem;
+      text-align: left;
+    }
+    .feature-tag {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.42em;
+      background: var(--ws-warm);
+      color: var(--ws-navy);
+      padding: 0.2em 0.6em;
+      border-radius: 3px;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+    .feature-card h4 {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 0.58em;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0.3rem 0 0.2rem;
+    }
+    .feature-card p { font-size: 0.48em; opacity: 0.6; margin: 0; line-height: 1.5; }
+
+    /* ---- Settings cards ---- */
+    .settings-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem; }
+    .setting-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 6px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .setting-card .setting-id {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.42em;
+      background: var(--ws-warm);
+      color: var(--ws-navy);
+      padding: 0.2em 0.6em;
+      border-radius: 3px;
+      display: inline-block;
+      margin-bottom: 0.4rem;
+    }
+    .setting-card h4 {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 0.54em;
+      font-weight: 600;
+      margin: 0.2rem 0;
+    }
+    .setting-card p { font-size: 0.44em; opacity: 0.5; margin: 0; }
+
+    /* ---- Demo VAT display ---- */
+    .demo-vat {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 6px;
+      padding: 1rem 1.4rem;
+      text-align: left;
+      margin-top: 0.6rem;
+    }
+    .demo-vat__price { font-family: 'Cormorant', serif; font-size: 1.4em; color: var(--ws-navy); }
+    .demo-vat__price s { color: #999; text-decoration: line-through; margin-right: 0.4em; }
+    .demo-vat__line { font-size: 0.48em; color: rgba(0,0,0,0.55); line-height: 1.6; }
+    .demo-vat__line s { color: rgba(0,0,0,0.3); text-decoration: line-through; margin-right: 0.3em; }
+    .demo-vat__label { font-weight: 500; }
+
+    /* ---- Demo cart totals ---- */
+    .demo-cart-totals {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 6px;
+      padding: 1rem 1.4rem;
+      text-align: left;
+      margin-top: 0.6rem;
+    }
+    .demo-cart-totals__row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.52em;
+      padding: 0.3em 0;
+    }
+    .demo-cart-totals__row--total {
+      font-weight: 600;
+      font-size: 0.6em;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      padding-bottom: 0.5em;
+      margin-bottom: 0.3em;
+    }
+    .demo-cart-totals__row--vat {
+      color: rgba(0,0,0,0.55);
+      border-top: 1px solid rgba(0,0,0,0.06);
+      padding-top: 0.5em;
+    }
+
+    /* ---- Changes list ---- */
+    .changes ul { list-style: none; padding: 0; margin: 0; }
+    .changes li { padding: 0.25em 0 0.25em 1.4em; position: relative; }
+    .changes li::before { content: '\2192'; position: absolute; left: 0; color: var(--ws-navy); }
+
+    /* ---- Labels ---- */
+    .label {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.52em;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .label--before { color: #999; }
+    .label--after { color: var(--ws-navy); }
+
+    /* ---- Img slots ---- */
+    .img-slot {
+      background: #f0f0f0;
+      border: 1.5px dashed #ccc;
+      border-radius: 6px;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .img-slot img { max-width: 100%; max-height: 270px; object-fit: contain; border-radius: 3px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+
+    /* ---- Code block ---- */
+    .code-block {
+      background: var(--ws-navy-dark);
+      color: #e0ddd8;
+      border-radius: 6px;
+      padding: 1rem 1.4rem;
+      text-align: left;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.48em;
+      line-height: 1.55;
+      margin-top: 0.8rem;
+    }
+    .code-block .keyword { color: #c792ea; }
+    .code-block .string  { color: #c3e88d; }
+    .code-block .tag     { color: #89ddff; }
+    .code-block .comment { color: #676e95; font-style: italic; }
+    .code-block .number  { color: #f78c6c; }
+
+    /* ---- Architecture diagram ---- */
+    .arch-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+    .arch-box {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.48em;
+      text-align: center;
+      min-width: 100px;
+    }
+    .arch-box strong { display: block; font-size: 1.1em; margin-bottom: 0.2em; }
+    .arch-box small { opacity: 0.5; font-size: 0.85em; }
+    .arch-arrow { font-size: 0.7em; color: var(--ws-navy); opacity: 0.4; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- SLIDE 1: TITLE -->
+      <section data-background-color="#F5F0EB">
+        <h1>Phase 6:<br><em>Custom VAT Pricing</em></h1>
+        <div class="divider"></div>
+        <p>Inc/exc tax toggle with sale price support across PDP, collection &amp; cart</p>
+        <p class="small">WinSport Theme &middot; price-vat Snippet &middot; Theme Settings &middot; Metafield-gated</p>
+      </section>
+
+      <!-- SLIDE 2: THE CONCEPT -->
+      <section data-background-color="#fff">
+        <h2>Why <em>Custom VAT?</em></h2>
+        <div class="stats-grid">
+          <div class="stat">
+            <div class="stat-number">4</div>
+            <div class="stat-label">Surfaces</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">3</div>
+            <div class="stat-label">Settings</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">1</div>
+            <div class="stat-label">Snippet</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">0</div>
+            <div class="stat-label">JS Required</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <p>B2B and international stores need flexible tax display. Shopify&rsquo;s built-in tax logic is limited to store-level settings. Phase 6 adds <strong>per-product VAT control</strong> via metafields, a <strong>theme-level toggle</strong> with configurable rate, and <strong>sale price support</strong> &mdash; all in pure Liquid with zero JavaScript.</p>
+      </section>
+
+      <!-- SLIDE 3: THEME SETTINGS -->
+      <section data-background-color="#E8DFD6">
+        <h2>Theme <em>Settings</em></h2>
+        <div class="settings-grid">
+          <div class="setting-card">
+            <span class="setting-id">vat_enabled</span>
+            <h4>Enable VAT Display</h4>
+            <p>Global toggle &mdash; checkbox in theme settings. Off = zero VAT output anywhere.</p>
+          </div>
+          <div class="setting-card">
+            <span class="setting-id">vat_rate</span>
+            <h4>VAT Rate (%)</h4>
+            <p>Range slider 0&ndash;30%, step 0.5%. Default 20%. Used in all calculations.</p>
+          </div>
+          <div class="setting-card">
+            <span class="setting-id">vat_prices_include_tax</span>
+            <h4>Prices Include Tax</h4>
+            <p>Determines formula direction: extract excl. from incl., or add incl. to excl.</p>
+          </div>
+        </div>
+        <div class="divider" style="margin-top: 1.2rem;"></div>
+        <p style="text-align: center;">Per-product gating: <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">custom.show_tax</code> boolean metafield &mdash; only products with <strong>true</strong> show VAT</p>
+      </section>
+
+      <!-- SLIDE 4: VAT ON PDP -->
+      <section data-background-color="#F5F0EB">
+        <h2>PDP <em>VAT Display</em></h2>
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.4rem; margin-top: 0.6rem; align-items: start;">
+          <div>
+            <span class="label label--after" style="text-align: center; display: block;">Regular Price</span>
+            <div class="demo-vat">
+              <div class="demo-vat__price">&pound;199.99</div>
+              <div class="demo-vat__line"><span class="demo-vat__label">Incl. VAT:</span> &pound;199.99</div>
+              <div class="demo-vat__line"><span class="demo-vat__label">Excl. VAT:</span> &pound;166.66</div>
+            </div>
+            <div style="height: 0.6rem;"></div>
+            <span class="label label--after" style="text-align: center; display: block;">Sale Price</span>
+            <div class="demo-vat">
+              <div class="demo-vat__price"><s>&pound;249.99</s> &pound;199.99</div>
+              <div class="demo-vat__line"><span class="demo-vat__label">Incl. VAT:</span> <s>&pound;249.99</s> &pound;199.99</div>
+              <div class="demo-vat__line"><span class="demo-vat__label">Excl. VAT:</span> <s>&pound;208.33</s> &pound;166.66</div>
+            </div>
+          </div>
+          <div class="changes" style="margin-top: 1rem;">
+            <ul>
+              <li>Rendered by <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">price-vat.liquid</code> snippet below the price block</li>
+              <li><strong>compare_at_price</strong> passed from variant &mdash; triggers sale mode</li>
+              <li>Old prices shown with <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">&lt;s&gt;</code> strikethrough</li>
+              <li>Formula: prices include tax &rarr; <em>excl = price &times; 100 / (100 + rate)</em></li>
+              <li>Formula: prices exclude tax &rarr; <em>incl = price &times; (100 + rate) / 100</em></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: COLLECTION & CART LINE ITEMS -->
+      <section data-background-color="#fff">
+        <h2>Collection &amp; <em>Cart Items</em></h2>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <span class="feature-tag">card-product.liquid</span>
+            <h4>Collection Cards</h4>
+            <p>VAT breakdown below each card price. Passes <code>compare_at_price</code> for sale items. Inline on desktop, stacked on mobile.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-tag">main-cart-items.liquid</span>
+            <h4>Cart Line Items</h4>
+            <p>Per-item VAT below line price. Uses <code>item.final_line_price</code> which accounts for quantity and discounts.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-tag">cart-drawer.liquid</span>
+            <h4>Cart Drawer Items</h4>
+            <p>Same per-item VAT in the slide-out drawer. Consistent display across both cart experiences.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: CART TOTALS -->
+      <section data-background-color="#E8DFD6">
+        <h2>Cart <em>VAT Totals</em></h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; margin-top: 0.6rem; align-items: start;">
+          <div>
+            <span class="label label--after" style="text-align: center; display: block;">Cart Footer VAT Summary</span>
+            <div class="demo-cart-totals">
+              <div class="demo-cart-totals__row demo-cart-totals__row--total">
+                <span>Estimated total</span> <span>&pound;599.97</span>
+              </div>
+              <div class="demo-cart-totals__row demo-cart-totals__row--vat">
+                <span>Excl. VAT:</span> <span>&pound;499.98</span>
+              </div>
+              <div class="demo-cart-totals__row">
+                <span>VAT (20%):</span> <span>&pound;99.99</span>
+              </div>
+              <div class="demo-cart-totals__row">
+                <span>Incl. VAT:</span> <span>&pound;599.97</span>
+              </div>
+            </div>
+          </div>
+          <div class="changes" style="margin-top: 1.4rem;">
+            <ul>
+              <li>Iterates <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">cart.items</code> and sums VAT for items with <strong>show_tax = true</strong></li>
+              <li>Non-taxed items excluded from VAT subtotal &mdash; only relevant products contribute</li>
+              <li>Same logic in both <strong>main-cart-footer</strong> and <strong>cart-drawer</strong></li>
+              <li>Shows only when at least one taxed item exists in cart</li>
+              <li>Separated from main total by a subtle border</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: CODE HIGHLIGHTS -->
+      <section data-background-color="#fff">
+        <h2>Code <em>Highlights</em></h2>
+        <div class="code-block">
+          <span class="comment">{# price-vat.liquid — sale price support #}</span><br>
+          <span class="tag">{%-</span> <span class="keyword">if</span> settings.vat_enabled <span class="keyword">and</span> product.metafields.custom.show_tax.value == <span class="string">true</span> <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">if</span> compare_at_price <span class="keyword">and</span> compare_at_price &gt; price <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">assign</span> on_sale = <span class="string">true</span> <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">endif</span> <span class="tag">-%}</span><br>
+          <br>
+          &nbsp;&nbsp;<span class="comment">{# Calculate VAT for current price #}</span><br>
+          &nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">assign</span> divisor = <span class="number">100</span> | plus: vat_rate <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">assign</span> excl_price = price | times: <span class="number">100</span> | divided_by: divisor <span class="tag">-%}</span><br>
+          <br>
+          &nbsp;&nbsp;<span class="comment">{# Strikethrough for original price when on sale #}</span><br>
+          &nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">if</span> on_sale <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;s class=<span class="string">"price-vat__compare"</span>&gt;<span class="tag">{{</span> compare_incl | money <span class="tag">}}</span>&lt;/s&gt;<br>
+          &nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">endif</span> <span class="tag">-%}</span><br>
+          <br>
+          <span class="comment">{# Cart totals — aggregate VAT across items #}</span><br>
+          <span class="tag">{%-</span> <span class="keyword">for</span> item <span class="keyword">in</span> cart.items <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">if</span> item.product.metafields.custom.show_tax.value == <span class="string">true</span> <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">assign</span> cart_vat_total = cart_vat_total | plus: line_vat <span class="tag">-%}</span><br>
+          &nbsp;&nbsp;<span class="tag">{%-</span> <span class="keyword">endif</span> <span class="tag">-%}</span><br>
+          <span class="tag">{%-</span> <span class="keyword">endfor</span> <span class="tag">-%}</span>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: ARCHITECTURE -->
+      <section data-background-color="#F5F0EB">
+        <h2>Data <em>Flow</em></h2>
+        <div class="arch-flow">
+          <div class="arch-box">
+            <strong>Theme Settings</strong>
+            <small>vat_enabled<br>vat_rate<br>vat_prices_include_tax</small>
+          </div>
+          <span class="arch-arrow">&rarr;</span>
+          <div class="arch-box">
+            <strong>price-vat.liquid</strong>
+            <small>Shared snippet<br>VAT calculation</small>
+          </div>
+          <span class="arch-arrow">&rarr;</span>
+          <div class="arch-box">
+            <strong>4 Surfaces</strong>
+            <small>PDP &middot; Cards<br>Cart &middot; Drawer</small>
+          </div>
+        </div>
+        <div class="arch-flow" style="margin-top: 0.6rem;">
+          <div class="arch-box">
+            <strong>Metafield Gate</strong>
+            <small>custom.show_tax<br>per-product boolean</small>
+          </div>
+          <span class="arch-arrow">&rarr;</span>
+          <div class="arch-box">
+            <strong>Cart Totals</strong>
+            <small>Aggregated loop<br>Only taxed items</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 9: KEY TAKEAWAYS -->
+      <section data-background-color="#E8DFD6">
+        <h2>Key <em>Takeaways</em></h2>
+        <div class="changes" style="max-width: 680px; margin: 0.8rem auto 0;">
+          <ul>
+            <li><strong>Pure Liquid</strong> &mdash; all VAT calculations use Liquid math filters, zero JavaScript</li>
+            <li><strong>Single snippet, multiple surfaces</strong> &mdash; <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">price-vat.liquid</code> reused across PDP, collection cards, and cart</li>
+            <li><strong>Sale price awareness</strong> &mdash; <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">compare_at_price</code> parameter shows strikethrough VAT for discounted items</li>
+            <li><strong>Per-product control</strong> &mdash; <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">custom.show_tax</code> metafield gates visibility per product</li>
+            <li><strong>Cart-level aggregation</strong> &mdash; footer and drawer sum VAT only for taxed items</li>
+            <li><strong>Fully configurable</strong> &mdash; rate, direction (incl/excl), and toggle all in theme settings</li>
+          </ul>
+        </div>
+        <div class="divider"></div>
+        <p class="small" style="text-align: center;">WinSport Theme &middot; Phase 6 Complete &middot; Dawn v15.4.1 &middot; Shopify 2.0</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      transition: 'fade',
+      transitionSpeed: 'default',
+      controls: true,
+      progress: true,
+      center: false,
+      width: 1200,
+      height: 700,
+      margin: 0.04,
+    });
+  </script>
+</body>
+</html>
