@@ -285,27 +285,8 @@
         <h2>Product <em>Tabs</em></h2>
         <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.4rem; margin-top: 0.6rem; align-items: start;">
           <div>
-            <span class="label" style="text-align: center; display: block;">Interactive Preview</span>
-            <div class="demo-tabs">
-              <div class="demo-tabs__header">
-                <div class="demo-tabs__tab demo-tabs__tab--active">Details</div>
-                <div class="demo-tabs__tab">Shipping</div>
-                <div class="demo-tabs__tab">Returns</div>
-              </div>
-              <div class="demo-tabs__panel">
-                Premium alpine ski boots crafted from Italian leather with carbon fiber reinforcement. Designed for advanced skiers seeking precise control on steep terrain.
-              </div>
-            </div>
-            <div class="code-block" style="margin-top: 0.8rem; font-size: 0.42em;">
-              <span class="keyword">class</span> <span class="fn">ProductTabs</span> <span class="keyword">extends</span> <span class="tag">HTMLElement</span> {<br>
-              &nbsp;&nbsp;<span class="fn">connectedCallback</span>() {<br>
-              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.buttons = <span class="keyword">this</span>.<span class="fn">querySelectorAll</span>(<span class="string">'[role="tab"]'</span>);<br>
-              &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.panels = <span class="keyword">this</span>.<span class="fn">querySelectorAll</span>(<span class="string">'[role="tabpanel"]'</span>);<br>
-              &nbsp;&nbsp;}<br>
-              &nbsp;&nbsp;<span class="fn">activateTab</span>(<span class="attr">index</span>) { <span class="comment">/* toggle ARIA + hidden */</span> }<br>
-              &nbsp;&nbsp;<span class="fn">handleKeydown</span>(<span class="attr">e</span>) { <span class="comment">/* Arrow/Home/End */</span> }<br>
-              }
-            </div>
+            <span class="label" style="text-align: center; display: block;">Live Screenshot</span>
+            <img src="screenshots/phase-7-product-tabs.png" alt="Product Tabs — Details and Shipping tabs on PDP" style="width: 100%; border-radius: 6px; border: 1px solid rgba(0,0,0,0.08); box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
           </div>
           <div class="changes" style="margin-top: 1rem;">
             <ul>
@@ -325,11 +306,8 @@
         <h2>Variant Description &amp; <em>Sticky ATC</em></h2>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; margin-top: 0.6rem; align-items: start;">
           <div>
-            <span class="label" style="text-align: center; display: block;">Variant-Conditional Text</span>
-            <div class="demo-variant">
-              <div class="demo-variant__label">When "Midnight Blue" selected:</div>
-              <div class="demo-variant__note">"This color is a limited edition &mdash; only 200 pairs produced worldwide."</div>
-            </div>
+            <span class="label" style="text-align: center; display: block;">Tabs + Variant Text</span>
+            <img src="screenshots/phase-7-tabs-variant.png" alt="Product Tabs with variant description on PDP" style="width: 100%; border-radius: 6px; border: 1px solid rgba(0,0,0,0.08); box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
             <div class="changes" style="margin-top: 0.6rem;">
               <ul>
                 <li>Subscribes to <code style="background:rgba(0,0,0,0.06);padding:0 0.3em;border-radius:3px;">PUB_SUB_EVENTS.variantChange</code></li>
@@ -341,13 +319,7 @@
           </div>
           <div>
             <span class="label" style="text-align: center; display: block;">Sticky Add-to-Cart Bar</span>
-            <div class="demo-sticky">
-              <div class="demo-sticky__info">
-                <span class="demo-sticky__title">Alpine Pro Boot</span>
-                <span class="demo-sticky__price">&pound;299.99</span>
-              </div>
-              <div class="demo-sticky__btn">Add to Cart</div>
-            </div>
+            <img src="screenshots/phase-7-sticky-atc.png" alt="Sticky Add to Cart bar at bottom of page" style="width: 100%; border-radius: 6px; border: 1px solid rgba(0,0,0,0.08); box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
             <div class="changes" style="margin-top: 0.6rem;">
               <ul>
                 <li><strong>IntersectionObserver</strong> watches main ATC button</li>
