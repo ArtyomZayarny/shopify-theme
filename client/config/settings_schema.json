@@ -1400,6 +1400,34 @@
     ]
   },
   {
+    "name": "Pricing & VAT",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "vat_enabled",
+        "label": "Enable VAT display",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "vat_rate",
+        "label": "VAT rate (%)",
+        "min": 0,
+        "max": 30,
+        "step": 0.5,
+        "default": 20,
+        "unit": "%"
+      },
+      {
+        "type": "checkbox",
+        "id": "vat_prices_include_tax",
+        "label": "Entered prices include tax",
+        "default": true,
+        "info": "Enable if product prices already include VAT"
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.cart.name",
     "settings": [
       {

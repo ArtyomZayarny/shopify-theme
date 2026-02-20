@@ -2,6 +2,7 @@
 {{ 'component-totals.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
+{{ 'component-price-vat.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -62,6 +63,45 @@
                   <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
                   <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
                 </div>
+
+                {%- if settings.vat_enabled -%}
+                  {%- assign vat_rate = settings.vat_rate -%}
+                  {%- assign cart_vat_total = 0 -%}
+                  {%- assign cart_excl_total = 0 -%}
+                  {%- assign cart_incl_total = 0 -%}
+                  {%- for item in cart.items -%}
+                    {%- if item.product.metafields.custom.show_tax.value == true -%}
+                      {%- assign line_total = item.final_line_price -%}
+                      {%- if settings.vat_prices_include_tax -%}
+                        {%- assign divisor = 100 | plus: vat_rate -%}
+                        {%- assign line_excl = line_total | times: 100 | divided_by: divisor -%}
+                        {%- assign line_vat = line_total | minus: line_excl -%}
+                        {%- assign cart_incl_total = cart_incl_total | plus: line_total -%}
+                        {%- assign cart_excl_total = cart_excl_total | plus: line_excl -%}
+                      {%- else -%}
+                        {%- assign multiplier = 100 | plus: vat_rate -%}
+                        {%- assign line_incl = line_total | times: multiplier | divided_by: 100 -%}
+                        {%- assign line_vat = line_incl | minus: line_total -%}
+                        {%- assign cart_incl_total = cart_incl_total | plus: line_incl -%}
+                        {%- assign cart_excl_total = cart_excl_total | plus: line_total -%}
+                      {%- endif -%}
+                      {%- assign cart_vat_total = cart_vat_total | plus: line_vat -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                  {%- if cart_vat_total > 0 -%}
+                    <div class="price-vat price-vat--totals">
+                      <span class="price-vat__line">
+                        <span class="price-vat__label">Excl. VAT:</span> {{ cart_excl_total | money }}
+                      </span>
+                      <span class="price-vat__line">
+                        <span class="price-vat__label">VAT ({{ vat_rate }}%):</span> {{ cart_vat_total | money }}
+                      </span>
+                      <span class="price-vat__line">
+                        <span class="price-vat__label">Incl. VAT:</span> {{ cart_incl_total | money }}
+                      </span>
+                    </div>
+                  {%- endif -%}
+                {%- endif -%}
 
                 <small class="tax-note caption-large rte">
                   {%- if cart.duties_included and cart.taxes_included -%}
